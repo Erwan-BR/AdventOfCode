@@ -820,13 +820,94 @@ class Year2015_Solution(Solution):
     
     @staticmethod
     def day_09_Part_2() -> int:
-        matrixOfDistances: list[list[int]]
+        """
+        Get solution for day 9, Part 2
+        https://adventofcode.com/2015/day/9
 
+        Returns:
+            Distance of the longest route Santa can take to go through all locations.
+        """
+        matrixOfDistances: list[list[int]]  # Matrix containing all the distances between every locations
+
+        # Set the solution to min value to make the comparaison logical with max function
         Year2015_Solution.day_09_distanceSolution = 0
 
+        # Retrieve the matrix thanks to the helper function
         matrixOfDistances = Year2015_Solution.day_09_helper_buildDictOfCitiesAndMatrixOfDistances()
         
+        # Find the longest route by starting from each cities.
         for indexStart in range(len(matrixOfDistances)):
             Year2015_Solution.day_09_helper_dfs([indexStart], matrixOfDistances, 0, False)
-
+        
+        # Return the longest path found
         return Year2015_Solution.day_09_distanceSolution
+    
+    @staticmethod
+    def day_10_helper_getLookAndSayLengthAfterOccurences(numberOfOccurences: int) -> int:
+        """
+        Helper for the solution for day 10. Find the length of the message of look-and-say after a given number of iterations.
+        https://adventofcode.com/2015/day/10
+
+        Returns:
+            Length of the string after numberOfOccurences play of look-and-say
+        
+        Args:
+            numberOfOccurences (int): Number of game the Elves will play.
+        """
+        line: str                           # Input of the problem, stored on a string.
+        charIndex: int                      # Index of the instruction the Santa has to follow
+        newReadValue: str                   # New version of what is read by the elves at step n
+        numberOfOccurenceLastDigit: int     # Number of time the last integer is written
+        
+        # Retrieve the input of the problem.
+        line = getLine(Year2015_Solution.year, 10)
+
+        # Play the game numberOfOccurences times
+        for _ in range(numberOfOccurences):
+            newReadValue = ""
+            numberOfOccurenceLastDigit = 1
+            
+            # Iterating among all value written in the string.
+            for charIndex in range(1, len(line)):
+                # If we see the same character as before, we say it and add it to the string
+                if line[charIndex] == line[charIndex - 1]:
+                    numberOfOccurenceLastDigit += 1
+                # Else, keep counting the same character
+                else:
+                    newReadValue += str(numberOfOccurenceLastDigit) + line[charIndex - 1]
+                    numberOfOccurenceLastDigit = 1
+            
+            # The elves has to say the last character they see.
+            newReadValue += str(numberOfOccurenceLastDigit) + line[-1]
+
+            # Update the content of the input for next iteration
+            line = newReadValue
+        
+        # Return the number of characters in the sentence said by the elves after numberOfOccurences games.
+        return len(line)
+    
+    @staticmethod
+    def day_10_Part_1() -> int:
+        """
+        Get solution for day 10, Part 1
+        https://adventofcode.com/2015/day/10
+
+        Returns:
+            Numbers of elements in the string after the Elves made 40 games of look-and-say.
+        """
+        solutionAfterFortyGames: int = Year2015_Solution.day_10_helper_getLookAndSayLengthAfterOccurences(40)  # Length of the string after 40 games of look-and-say
+        
+        return solutionAfterFortyGames
+    
+    @staticmethod
+    def day_10_Part_2() -> int:
+        """
+        Get solution for day 10, Part 2
+        https://adventofcode.com/2015/day/10
+
+        Returns:
+            Numbers of elements in the string after the Elves made 50 games of look-and-say.
+        """
+        solutionAfterFiftyGames: int = Year2015_Solution.day_10_helper_getLookAndSayLengthAfterOccurences(50)  # Length of the string after 40 games of look-and-say
+
+        return solutionAfterFiftyGames
