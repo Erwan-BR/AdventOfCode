@@ -214,7 +214,7 @@ class Year2015_Solution(Solution):
     @staticmethod
     def day_04_helper_findFirstWithNZerosWhenEncoded(input: str, numberOfZeros: int) -> int:
         """
-        Helper for the solution for day 4.
+        Helper for the solution for day 4. Find the first number to concatenate at the end of the input to have numberOfZeros when encoded.
         https://adventofcode.com/2015/day/4
 
         Returns:
@@ -456,4 +456,164 @@ class Year2015_Solution(Solution):
         
         # Compute the total brightness.
         return sum(sum(lightsGrid[i]) for i in range(1000))
+    
+    @staticmethod
+    def day_07_helper_getDictAndOperations() -> tuple[dict[str, int], list[tuple[str, str, str, str]]]:
+        """
+        Helper for the solution for day 7. Construct dictionnaries of wires and the list of all the operations.
+        https://adventofcode.com/2015/day/7
+
+        Returns:
+            A tuple containing two elements:
+                - A dictionnary. Keys: Name of wire / integer: Both are strings. Values: Value of the signal in the key.
+                - A tuple containing 4 elements:
+                    - 0 and 2 are the input of the operation.
+                    - 1 is the string reprenseting the operation.
+                    - 3 is the output wire.
+        """
+        dictOfValues: dict[str, int] = {}                   # First part of the output.
+        operations: list[tuple[str, str, str, str]] = []    # Second part of the output
+        patternString: str = r"\b[a-zA-Z0-9]+\b"            # Patterns for finding the elements of the operation in each line
+        lines: list[str]                                    # All files of the input of the problem.
+        line: str                                           # String representing the input and the strings that might be nine.
+        tabOfVal: list[str]                                 # Table that will contains the elements of the REGEX.
+        
+        # Retrieve all lines of the input file
+        lines = getLines(Year2015_Solution.year, 7)
+            
+        # Retrieve every operations that needs to be done.
+        for line in lines:
+
+            # Retrieve the operation
+            tabOfVal = findall(patternString, line)
+
+            # len 2 is only for direct afectation
+            if 2 == len(tabOfVal):
+                # If the first value is numeric, then we can store the value of the wire in the dict.
+                if tabOfVal[0].isnumeric():
+                    dictOfValues[tabOfVal[1]] = int(tabOfVal[0])
+                
+                # Else, both wire should be saved (if not done) in the dict to make the equal latter.
+                else:
+                    operations.append((tabOfVal[0], "EQUAL", "", tabOfVal[1]))
+                    if tabOfVal[0] not in dictOfValues:
+                        dictOfValues[tabOfVal[0]] = -1
+                    if tabOfVal[1] not in dictOfValues:
+                        dictOfValues[tabOfVal[1]] = -1
+            
+            # len 3 is only when a NOT operator is done.
+            # Both wire should be saved (if not done) in the dict to make the not latter.
+            elif 3 == len(tabOfVal):
+                operations.append((tabOfVal[1], "NOT", "" , tabOfVal[2]))
+                if tabOfVal[1] not in dictOfValues:
+                        dictOfValues[tabOfVal[1]] = -1
+                if tabOfVal[2] not in dictOfValues:
+                        dictOfValues[tabOfVal[2]] = -1
+            
+            # len 4 is for all other operators: AND, OR, LSHIFT, RSHIFT
+            # Wires should be saved (if not done) in the dict to make the operator latter.
+            else :
+                operations.append(tuple(tabOfVal))
+                if tabOfVal[0] not in dictOfValues:
+                    dictOfValues[tabOfVal[0]] = int(tabOfVal[0]) if tabOfVal[0].isnumeric() else -1
+                if tabOfVal[2] not in dictOfValues:
+                    dictOfValues[tabOfVal[2]] = int(tabOfVal[2]) if tabOfVal[2].isnumeric() else -1
+                if tabOfVal[3] not in dictOfValues:
+                    dictOfValues[tabOfVal[3]] = -1
+        
+        return (dictOfValues, operations)
+
+    @staticmethod
+    def day_07_helper_findValueOfWireA(dictOfValues: dict[str, int], operations: list[tuple[str, str, str, str]]) -> int:
+        """
+        Helper for the solution for day 7. Compute the different operations while the value of wire A is not found.
+        https://adventofcode.com/2015/day/7
+
+        Args:
+            - dictOfValues (dict[str, int]): Dictionnary containing all wire and their values
+            - operations: list[tuple[str, str, str, str]]: List of tuple containing all operations that needs to be done.
+        Returns:
+            Value of the Wire A as soon as we got it.
+        """
+
+        dictOfValuesLocal: dict[str, int] = dictOfValues.copy()                 # Copy of the dict, to avoid overwritting values
+        operationsLocal: list[tuple[str, str, str, str]] = operations[:]        # Copy of the operation, to avoid delete the needed operation
+        
+        functionsMap = {"AND": lambda a, b: a & b,                              # Map of the function, that allows to take a string and make the
+                        "OR": lambda a, b: a ^ b,                               # corresponding operation
+                        "LSHIFT": lambda a, b: a << b,
+                        "RSHIFT": lambda a, b: a >> b}
+
+        # While the value of the Wire a is not found, we iterate among all operations to make those that are possible
+        while -1 == dictOfValuesLocal["a"]:
+            for operationIndex in range(len(operationsLocal) -1, -1, -1):
+                
+                # NOT and EQUAL operations only
+                if "" == operationsLocal[operationIndex][2]:
+                    if -1 != dictOfValuesLocal[operationsLocal[operationIndex][0]]:
+                        if "NOT" == operationsLocal[operationIndex][1]:
+                            dictOfValuesLocal[operationsLocal[operationIndex][3]] = 65535 - dictOfValuesLocal[operationsLocal[operationIndex][0]]
+                        elif "EQUAL" == operationsLocal[operationIndex][1]:
+                            dictOfValuesLocal[operationsLocal[operationIndex][3]] = dictOfValuesLocal[operationsLocal[operationIndex][0]]
+                        
+                        del operationsLocal[operationIndex]
+                
+                # All other operations: OR, AND, LSHIFT, RSHIFT. Use the operation declared in functionsMap
+                elif -1 != dictOfValuesLocal[operationsLocal[operationIndex][0]] and -1 != dictOfValuesLocal[operationsLocal[operationIndex][2]] :
+                    if operationsLocal[operationIndex][1] in ("AND", "OR", "LSHIFT", "RSHIFT"):
+                        dictOfValuesLocal[operationsLocal[operationIndex][3]] = functionsMap[operationsLocal[operationIndex][1]](dictOfValuesLocal[operationsLocal[operationIndex][0]], dictOfValuesLocal[operationsLocal[operationIndex][2]])
+                    
+                    del operationsLocal[operationIndex]
+        
+        return dictOfValuesLocal["a"]
+    
+    @staticmethod
+    def day_07_Part_1() -> int:
+        """
+        Get solution for day 7, Part 1
+        https://adventofcode.com/2015/day/7
+
+        Returns:
+            Integer representing the value of the signal in the wire A.
+        """
+        dictOfValues: dict[str, int]                                                        # Dict containing the information of all wires.
+        operations: list[tuple[str, str, str, str]]                                         # List of all the operations given in the input.
+        outputOfA: int                                                                      # Value returned by the helper function.
+
+        # Retrieve dict and list from the helper function
+        dictOfValues, operations = Year2015_Solution.day_07_helper_getDictAndOperations()
+
+        # Compute the value of the wires until the value of A is found
+        outputOfA = Year2015_Solution.day_07_helper_findValueOfWireA(dictOfValues, operations)
+
+        # Return the value of the wire A
+        return outputOfA
+    
+    @staticmethod
+    def day_07_Part_2() -> int:
+        """
+        Get solution for day 7, Part 2
+        https://adventofcode.com/2015/day/7
+
+        Returns:
+            Integer representing the value of the signal in the wire A after 2 iteration (value of A overwrite the value of B).
+        """
+        dictOfValues: dict[str, int]                                                        # Dict containing the information of all wires.
+        operations: list[tuple[str, str, str, str]]                                         # List of all the operations given in the input.
+        outputOfA: int                                                                      # Value returned by the helper function.
+
+        # Retrieve dict and list from the helper function
+        dictOfValues, operations = Year2015_Solution.day_07_helper_getDictAndOperations()
+
+        # Compute the value of the wires until the value of A is found
+        outputOfA = Year2015_Solution.day_07_helper_findValueOfWireA(dictOfValues, operations)
+
+        # Overwrite the value of wire B and reset the value of A
+        dictOfValues["b"] = outputOfA
+        
+        # Compute the value of the wires until the value of A is found
+        outputOfA = Year2015_Solution.day_07_helper_findValueOfWireA(dictOfValues, operations)
+
+        # Return the value of the wire A
+        return outputOfA
     
