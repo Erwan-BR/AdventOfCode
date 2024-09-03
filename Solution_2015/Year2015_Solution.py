@@ -1,6 +1,6 @@
 from Global.globals import getLines, getLine
 from Solution.Solution import Solution
-from re import split
+from re import split, findall
 from hashlib import md5
 import numpy as np
 
@@ -59,7 +59,7 @@ class Year2015_Solution(Solution):
         """
         indexOfCharacter: int = 0   # Index of the current character.
         floorNumber: int = 0        # Floor number where Santa is currently.
-        line: str                  # Input of the problem, stored on a string.
+        line: str                   # Input of the problem, stored on a string.
 
         # Retrieve the input of the problem.
         line = getLine(Year2015_Solution.year, 1)
@@ -374,3 +374,86 @@ class Year2015_Solution(Solution):
 
         # Return the number of string that are nice.
         return numberOfNiceString
+    
+    @staticmethod
+    def day_06_Part_1() -> int:
+        """
+        Get solution for day 6, Part 1
+        https://adventofcode.com/2015/day/6
+
+        Returns:
+            Integer representing the number of lights are lit.
+        """
+        lightsGrid: list[int] = [[0 for _ in range(1000)] for _ in range(1000)]     # Grid that contains the lights information
+        lines: list[str]                                                            # All files of the input of the problem.
+        line: str                                                                   # String representing the input and the strings that might be nine.
+
+        # Retrieve all lines of the input file
+        lines = getLines(Year2015_Solution.year, 6)
+
+        # Iterating among all instructions
+        for line in lines:
+            # Retrieve the integers values
+            numbers = findall(r'\b\d+\b', line)
+            numbers = [int(e) for e in numbers]
+
+            # Switch on all lights on the rectangle
+            if line.startswith("turn on"):
+                for i in range(numbers[0], numbers[2] + 1):
+                    for j in range(numbers[1], numbers[3] + 1):
+                        lightsGrid[i][j] = 1
+            # Switch off all lights on the rectangle
+            elif line.startswith("turn off"):
+                for i in range(numbers[0], numbers[2] + 1):
+                    for j in range(numbers[1], numbers[3] + 1):
+                        lightsGrid[i][j] = 0
+            # Toggle all lights on the rectangle
+            elif line.startswith("toggle"):
+                for i in range(numbers[0], numbers[2] + 1):
+                    for j in range(numbers[1], numbers[3] + 1):
+                        lightsGrid[i][j] = 1 - lightsGrid[i][j]
+        
+        # Compute the number of lights that are on.
+        return sum(sum(lightsGrid[i]) for i in range(1000))
+    
+    @staticmethod
+    def day_06_Part_2() -> int:
+        """
+        Get solution for day 6, Part 1
+        https://adventofcode.com/2015/day/6
+
+        Returns:
+            Integer representing the total brightness.
+        """
+        lightsGrid: list[int] = [[0 for _ in range(1000)] for _ in range(1000)]     # Grid that contains the lights information
+        lines: list[str]                                                            # All files of the input of the problem.
+        line: str                                                                   # String representing the input and the strings that might be nine.
+
+        # Retrieve all lines of the input file
+        lines = getLines(Year2015_Solution.year, 6)
+
+        # Iterating among all instructions
+        for line in lines:
+            # Retrieve the integers values
+            numbers = findall(r'\b\d+\b', line)
+            numbers = [int(e) for e in numbers]
+
+            # Increase the brightness on the rectangle
+            if line.startswith("turn on"):
+                for i in range(numbers[0], numbers[2] + 1):
+                    for j in range(numbers[1], numbers[3] + 1):
+                        lightsGrid[i][j] += 1
+            # Decrease the brightness on the rectangle
+            elif line.startswith("turn off"):
+                for i in range(numbers[0], numbers[2] + 1):
+                    for j in range(numbers[1], numbers[3] + 1):
+                        lightsGrid[i][j] = max(0, lightsGrid[i][j] - 1)
+            # Increase two times the brightness on the rectangle
+            elif line.startswith("toggle"):
+                for i in range(numbers[0], numbers[2] + 1):
+                    for j in range(numbers[1], numbers[3] + 1):
+                        lightsGrid[i][j] += 2
+        
+        # Compute the total brightness.
+        return sum(sum(lightsGrid[i]) for i in range(1000))
+    
