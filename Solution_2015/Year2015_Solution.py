@@ -88,7 +88,7 @@ class Year2015_Solution(Solution):
             Integer representing the number of square feet needed to wrap the gifts.
         """
         squareFootWrapping: int = 0     # Number of square foot of wrapping paper needed.
-        lines: list[str]                # All files of the input of the problem.
+        lines: list[str]                # All lines of the input of the problem.
         line: str                       # String representing the input and the dimension of each gift
         
         # Retrieve the input of the problem.
@@ -115,7 +115,7 @@ class Year2015_Solution(Solution):
             Integer representing the length of the ribbon needed.
         """
         lengthRibbon: int = 0     # Length of ribbon needed.
-        lines: list[str]          # All files of the input of the problem.
+        lines: list[str]          # All lines of the input of the problem.
         line: str                 # String representing the input and the dimension of each gift
         
         # Retrieve the input of the problem.
@@ -289,7 +289,7 @@ class Year2015_Solution(Solution):
         numberOfNiceString: int = 0                             # Number of nice strings found.
         listOfNaughty: list[str] = ["ab", "cd", "pq", "xy"]     # Set containing the naughty characters that should not be in the string.
         listOfVowels: list[str] = ['a', 'e', 'i', 'o', 'u']     # Set containing the different vowels.
-        lines: list[str]                                        # All files of the input of the problem.
+        lines: list[str]                                        # All lines of the input of the problem.
         line: str                                               # String representing the input and the strings that might be nine.
 
         # Retrieve the input of the problem.
@@ -339,7 +339,7 @@ class Year2015_Solution(Solution):
             Integer representing the number of nice strings.
         """
         numberOfNiceString: int = 0                             # Number of nice strings found.
-        lines: list[str]                                        # All files of the input of the problem.
+        lines: list[str]                                        # All lines of the input of the problem.
         line: str                                               # String representing the input and the strings that might be nine.
 
         # Retrieve all lines of the input file
@@ -385,7 +385,7 @@ class Year2015_Solution(Solution):
             Integer representing the number of lights are lit.
         """
         lightsGrid: list[int] = [[0 for _ in range(1000)] for _ in range(1000)]     # Grid that contains the lights information
-        lines: list[str]                                                            # All files of the input of the problem.
+        lines: list[str]                                                            # All lines of the input of the problem.
         line: str                                                                   # String representing the input and the strings that might be nine.
 
         # Retrieve all lines of the input file
@@ -426,7 +426,7 @@ class Year2015_Solution(Solution):
             Integer representing the total brightness.
         """
         lightsGrid: list[int] = [[0 for _ in range(1000)] for _ in range(1000)]     # Grid that contains the lights information
-        lines: list[str]                                                            # All files of the input of the problem.
+        lines: list[str]                                                            # All lines of the input of the problem.
         line: str                                                                   # String representing the input and the strings that might be nine.
 
         # Retrieve all lines of the input file
@@ -474,7 +474,7 @@ class Year2015_Solution(Solution):
         dictOfValues: dict[str, int] = {}                   # First part of the output.
         operations: list[tuple[str, str, str, str]] = []    # Second part of the output
         patternString: str = r"\b[a-zA-Z0-9]+\b"            # Patterns for finding the elements of the operation in each line
-        lines: list[str]                                    # All files of the input of the problem.
+        lines: list[str]                                    # All lines of the input of the problem.
         line: str                                           # String representing the input and the strings that might be nine.
         tabOfVal: list[str]                                 # Table that will contains the elements of the REGEX.
         
@@ -616,4 +616,85 @@ class Year2015_Solution(Solution):
 
         # Return the value of the wire A
         return outputOfA
+    
+    @staticmethod
+    def day_08_Part_1() -> int:
+        """
+        Get solution for day 8, Part 1
+        https://adventofcode.com/2015/day/8
+
+        Returns:
+            Integer representing the number of character that are done for coding but not present in litteral.
+        """
+        numberCharacterOfCode: int = 0      # Number of character that are written in the code
+        numberCharacterLitteral: int = 0    # Number of character that it represents.
+        currentNumberCharacter: int         # Number of character by line.
+        lines: list[str]                    # All lines of the input of the problem.
+        line: str                           # String representing the input and the strings that might be nine.
+
+        # Retrieve all lines of the input file
+        lines = getLines(Year2015_Solution.year, 8)
+        lines = [line.strip() for line in lines]
+
+        # Iterating among all strings
+        for line in lines:
+
+            # Retrieve the number of character on the line, add it to the code
+            # And delete 2 for Litteral for the first and last "
+            currentNumberCharacter = len(line)
+            numberCharacterOfCode += currentNumberCharacter
+            numberCharacterLitteral += currentNumberCharacter - 2
+
+            # Iterating among all letters
+            charIndex: int = 0
+            while charIndex < len(line):
+                # If we find a \ character, it means that there are more characters for code than litteral
+                if "\\" == line[charIndex]:
+                    # If the next one is a \ or a ", there are 2 characters of code for 1 litteral
+                    if line[charIndex + 1] in ("\"", "\\"):
+                        numberCharacterLitteral -= 1
+                        charIndex += 1
+                    # If the next one is a #, there are 4 characters of code for 1 litteral
+                    elif "x" == line[charIndex + 1]:
+                        numberCharacterLitteral -= 3
+                        charIndex += 3
+                charIndex += 1
+
+        # Return the number of characters that are done for code only.
+        return numberCharacterOfCode - numberCharacterLitteral
+
+    @staticmethod
+    def day_08_Part_2() -> int:
+        """
+        Get solution for day 8, Part 2
+        https://adventofcode.com/2015/day/8
+
+        Returns:
+            Integer representing the number of character should be added if we want to have the code in an encoded.
+        """
+        numberCharacterOfCode: int = 0      # Number of character that are written in the code
+        numberCharacterEncoded: int = 0     # Number of character that it would be once encoded.
+        currentNumberCharacter: int         # Number of character by line.
+        lines: list[str]                    # All lines of the input of the problem.
+        line: str                           # String representing the input and the strings that might be nine.
+
+        # Retrieve all lines of the input file
+        lines = getLines(Year2015_Solution.year, 8)
+        lines = [line.strip() for line in lines]
+
+        # Iterating among all strings
+        for line in lines:
+            # Retrieve the number of character on the line, add it to the code
+            # And add 4 for encoded for the first and last "
+            currentNumberCharacter = len(line)
+            numberCharacterOfCode += currentNumberCharacter
+            numberCharacterEncoded += currentNumberCharacter + 4
+
+            # Each time a \\ or a \" is found, add 1 character for encoding.
+            for charIndex in range(1, len(line) - 1):
+                if line[charIndex] in ("\\", "\""):
+                    numberCharacterEncoded += 1
+
+        # Return the number of character added for the encoding.
+        return numberCharacterEncoded - numberCharacterOfCode
     
