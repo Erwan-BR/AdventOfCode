@@ -33,4 +33,4 @@ class Solution:
         
         # Except errors from a day / part that is not implemented yet.
         except AttributeError as e:
-            print(f"Solution for year {year}, day {day}, part {"one" if isFirstPart else "two"} has not yet been developed.")
+            return f"Solution for year {year}, day {day}, part {"one" if isFirstPart else "two"} has not yet been developed."
