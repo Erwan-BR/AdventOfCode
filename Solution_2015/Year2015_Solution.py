@@ -3,6 +3,8 @@ from Solution.Solution import Solution
 from re import split, findall
 from hashlib import md5
 import numpy as np
+from typing import Callable
+from sys import maxsize
 
 class Year2015_Solution(Solution):
     """
@@ -531,7 +533,7 @@ class Year2015_Solution(Solution):
 
         Args:
             - dictOfValues (dict[str, int]): Dictionnary containing all wire and their values
-            - operations: list[tuple[str, str, str, str]]: List of tuple containing all operations that needs to be done.
+            - operations (list[tuple[str, str, str, str]]): List of tuple containing all operations that needs to be done.
         Returns:
             Value of the Wire A as soon as we got it.
         """
@@ -698,3 +700,133 @@ class Year2015_Solution(Solution):
         # Return the number of character added for the encoding.
         return numberCharacterEncoded - numberCharacterOfCode
     
+    day_09_distanceSolution: int = maxsize
+
+    @staticmethod
+    def day_09_helper_dfs(listOfVisitedCities: list[int], matrixOfDistances: list[list[int]], currentDistance: int, isMin: bool) -> None:
+        """
+        Helper for the solution for day 9. Use DFS to find the smallest distance.
+        https://adventofcode.com/2015/day/9
+
+        Args:
+            - listOfVisitedCities (list[int]): List of all cities that has been visited in the current path.
+            - matrixOfDistances (list[list[int]]): Distance between every cities.
+            - currentDistance (int): Distance travelled for the current path.
+            - isMin (bool): True if the MIN function is applied, FALSE if the MAX function is applied.
+        """
+        indexOfCity: int            # Index of the cities that we are looking for minimizing distances.
+        
+        # Iterating among all cities to find the next one that Santa is going to visit.
+        for indexOfCity in range(len(matrixOfDistances)):
+            # If the city is visited, we don't want to go in this one anymore.
+            if indexOfCity in listOfVisitedCities:
+                continue
+
+            # Add the city to the list of visited cities. Add the distance to the current distance.
+            listOfVisitedCities.append(indexOfCity)
+            currentDistance += matrixOfDistances[listOfVisitedCities[-2]][listOfVisitedCities[-1]]
+            
+            # If all cities are visited, we can try saving the new distance.
+            if len(matrixOfDistances) == len(listOfVisitedCities):
+                if isMin:
+                    Year2015_Solution.day_09_distanceSolution = min(Year2015_Solution.day_09_distanceSolution, currentDistance)
+                else:
+                    Year2015_Solution.day_09_distanceSolution = max(Year2015_Solution.day_09_distanceSolution, currentDistance)
+            
+            # If we want the min distance, we want to continue only if the distance is smaller than the one we already have.
+            elif isMin:
+                if Year2015_Solution.day_09_distanceSolution > currentDistance:
+                    Year2015_Solution.day_09_helper_dfs(listOfVisitedCities, matrixOfDistances, currentDistance, isMin)
+            # Else, we want the max so we always keep doing dfs
+            else:
+                Year2015_Solution.day_09_helper_dfs(listOfVisitedCities, matrixOfDistances, currentDistance, isMin)
+            
+            # Delete the last path and substract the useless distance.
+            currentDistance -= matrixOfDistances[listOfVisitedCities[-2]][listOfVisitedCities[-1]]
+            listOfVisitedCities.pop()
+            
+    @staticmethod
+    def day_09_helper_buildDictOfCitiesAndMatrixOfDistances() -> list[list[int]]:
+        """
+        Helper for the solution for day 9. Construct the distance matrix between each places. 
+        https://adventofcode.com/2015/day/9
+
+        Returns:
+            - listOfVisitedCities (list[int]): list of the cities visited, in the right order
+            - matrixOfDistances (list[list[int]]): Distance between every cities.
+            - currentDistance (int): Distance done for visiting all vities from listOfVisitedCities.
+            - fctToCall (Callable[int]): Function that should be applied for visiting the cities. Should be min / max.
+        """
+        dictOfCitiesAndIndex: dict[str, int] = {}       # Dictionary to find where the distances should be written in matrix.
+        lastIndex: int = 0                              # Integer to map name of cities to index.
+        matrixOfDistances: list[list[int]]              # Output: Matrix of the distances between each cities.
+        lines: list[str]                                # All lines of the input of the problem.
+        line: str                                       # String representing the input line by line.
+
+        # Retrieve all lines of the input file
+        lines = getLines(Year2015_Solution.year, 9)
+        
+        # Construct the dict to know which city correspond to which path
+        for line in lines:
+            strings = findall(r"\b[a-zA-Z]+\b", line)
+            if strings[0] not in dictOfCitiesAndIndex:
+                dictOfCitiesAndIndex[strings[0]] = lastIndex
+                lastIndex += 1
+            if strings[2] not in dictOfCitiesAndIndex:
+                dictOfCitiesAndIndex[strings[2]] = lastIndex
+                lastIndex += 1
+        
+        # Fill a matrix with INFINITE distances
+        matrixOfDistances = [[maxsize for _ in range(lastIndex)] for _ in range(lastIndex)]
+
+        # Distance for going from a place to the same place is 0.
+        for lineOfMatrix in range(len(matrixOfDistances)):
+            matrixOfDistances[lineOfMatrix][lineOfMatrix] = 0
+
+        # Retrieve the given distances.
+        for line in lines:
+            strings = findall(r"\b[a-zA-Z]+\b", line)
+            distance = int(findall(r"\b[0-9]+\b", line)[0])
+
+            matrixOfDistances[dictOfCitiesAndIndex[strings[0]]][dictOfCitiesAndIndex[strings[2]]] = distance
+            matrixOfDistances[dictOfCitiesAndIndex[strings[2]]][dictOfCitiesAndIndex[strings[0]]] = distance
+        
+        # Return the matrix with all distances
+        return matrixOfDistances
+
+    @staticmethod
+    def day_09_Part_1() -> int:
+        """
+        Get solution for day 9, Part 1
+        https://adventofcode.com/2015/day/9
+
+        Returns:
+            Distance of the shortest route Santa can take to go through all locations.
+        """
+        matrixOfDistances: list[list[int]]  # Matrix containing all the distances between every locations
+        
+        # Set the solution to max value to make the comparaison logical with min function
+        Year2015_Solution.day_09_distanceSolution = maxsize
+
+        # Retrieve the matrix thanks to the helper function
+        matrixOfDistances = Year2015_Solution.day_09_helper_buildDictOfCitiesAndMatrixOfDistances()
+        
+        # Find the smallest route by starting from each cities.
+        for indexCity in range(len(matrixOfDistances)):
+            Year2015_Solution.day_09_helper_dfs([indexCity], matrixOfDistances, 0, True)
+
+        # Return the smallest path found
+        return Year2015_Solution.day_09_distanceSolution
+    
+    @staticmethod
+    def day_09_Part_2() -> int:
+        matrixOfDistances: list[list[int]]
+
+        Year2015_Solution.day_09_distanceSolution = 0
+
+        matrixOfDistances = Year2015_Solution.day_09_helper_buildDictOfCitiesAndMatrixOfDistances()
+        
+        for indexStart in range(len(matrixOfDistances)):
+            Year2015_Solution.day_09_helper_dfs([indexStart], matrixOfDistances, 0, False)
+
+        return Year2015_Solution.day_09_distanceSolution
