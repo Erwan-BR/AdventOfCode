@@ -1,4 +1,4 @@
-from Global.globals import getNameOfFile
+from Global.globals import getLines, getLine
 from Solution.Solution import Solution
 
 class Year2018_Solution(Solution):
