@@ -16,13 +16,13 @@ class Year2015_Solution(Solution):
     Constant value that represents the year number. Used to find textfiles.
     """
 
+    @staticmethod
     def getSolution(day: str, isFirstPart: bool):
         """
         Method to get solution of every day for which the solution is developped.
         Call the parent function with the corresponding arguments.
         """
         return Solution.getSolution(Year2015_Solution, Year2015_Solution.year, day, isFirstPart)
-
 
     @staticmethod
     def day_01_Part_1() -> int:
