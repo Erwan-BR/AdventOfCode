@@ -349,7 +349,7 @@ class Year2015_Solution(Solution):
 
         # Iterating among all string and check if they respect the condition.
         for line in lines:
-            pairOfConsecutiveLetters: map[str, int] = dict()
+            pairOfConsecutiveLetters: dict[str, int] = dict()
             isPaternTwiceNotOverlapping: bool = False
             isRepeatedWithOneSpace: bool = False
             
@@ -1417,7 +1417,7 @@ class Year2015_Solution(Solution):
         https://adventofcode.com/2015/day/14
 
         Returns:
-            Distance the winning reindeer traveled for Reinder Olympics!
+            Distance the winning reindeer traveled for Reindeer Olympics!
         """
         numberOfSeconds: int = 2503                              # Number of seconds the race last.
         distancesByTimeForEachReindeer: list[list[int]] = []     # List of all distances that reindeer can make in the associated time
@@ -1450,7 +1450,7 @@ class Year2015_Solution(Solution):
         https://adventofcode.com/2015/day/14#part2
 
         Returns:
-            Distance the winning reindeer traveled for Reinder Olympics with new rules!
+            Distance the winning reindeer traveled for Reindeer Olympics with new rules!
         """
         numberOfSeconds: int = 2503                              # Number of seconds the race last.
         distancesByTimeForEachReindeer: list[list[int]] = []     # List of all distances that reindeer can make in the associated time
@@ -1493,3 +1493,156 @@ class Year2015_Solution(Solution):
         # Return the most distance that has been travelled.
         return max(distanceAndScoreByReindeer[indexReindeer][1] for indexReindeer in range(nbOfReindeer))
     
+    day_15_cookieWithMaxScore = 0
+
+    @staticmethod
+    def day_15_helper_getMaxScore(listOfIngredients: list[dict[str, int]], quantityOfIngredients: list[int], isCalorieCounted: bool):
+        """
+        Helper for the solution for day 15. Create all possibles cookies combinaison.
+        https://adventofcode.com/2015/day/15
+
+        Args:
+            - listOfIngredients (list[dict[str, int]]): List of all ingredients with their caracteristics stored in a map.
+            - quantityOfIngredients (list[int]): Number of teaspoon of each ingredient, in the same order.
+            - isCalorieCounted (bool): A boolean that states is the calorie is checked. When checked, they have to be 500.
+        """
+        numberOfTeaspoon: int = 100         # Number of teaspoon of ingredients that should be used.
+        
+        # If all ingredients are used, we can try to update the best cookie if the calorie are not counted or equal to 500.
+        if len(quantityOfIngredients) == len(listOfIngredients):
+            if not isCalorieCounted or 500 == sum(quantityOfIngredients[i] * listOfIngredients[i]["calories"] for i in range(len(listOfIngredients))):
+                Year2015_Solution.day_15_cookieWithMaxScore = max(Year2015_Solution.day_15_cookieWithMaxScore, Year2015_Solution.day_15_helper_computeCookieValue(listOfIngredients, quantityOfIngredients))
+        
+        # If one ingredient is missing only, the quantity has to be the number of missing teaspoon. Add it and and the next call it will check which
+        # Cookie is the best.
+        elif len(quantityOfIngredients) == (len(listOfIngredients) - 1):
+            quantityOfIngredients.append(numberOfTeaspoon - sum(quantityOfIngredients))
+            Year2015_Solution.day_15_helper_getMaxScore(listOfIngredients, quantityOfIngredients, isCalorieCounted)
+            quantityOfIngredients.pop()
+        
+        # If multiple ingredient are missing, multiple choice can be done. We could add from 0 to nbMissingIngredients the next ingredient.
+        else:
+            for i in range(0, numberOfTeaspoon - sum(quantityOfIngredients)):
+                quantityOfIngredients.append(i)
+                Year2015_Solution.day_15_helper_getMaxScore(listOfIngredients, quantityOfIngredients, isCalorieCounted)
+                quantityOfIngredients.pop()
+    
+    @staticmethod
+    def day_15_helper_computeCookieValue(listOfIngredients: list[dict[str, int]], quantityOfIngredients: list[int]) -> int:
+        """
+        Helper for the solution for day 15. Compute the score of a given cookie.
+        https://adventofcode.com/2015/day/15
+
+        Args:
+            - listOfIngredients (list[dict[str, int]]): List of all ingredients with their caracteristics stored in a map.
+            - quantityOfIngredients (list[int]): Number of teaspoon of each ingredient, in the same order.
+        Returns:
+            Score of the current cookie.
+        """
+        numberOfElements = len(listOfIngredients)                           # Number of caracteristic an ingredient has.
+        scores = [0 for _ in range(len(listOfIngredients[0]) - 1)]          # Score for each caracteristic of a cookie.
+        ingredientIndex: int                                                # Index of a caracteristic in the map of cookies.
+        scoresIndex: int                                                    # Index of the score we are looking at when looking an ingredient.
+        
+        # Iterating among all characteristics
+        for ingredientIndex in range(numberOfElements):
+            
+            # Re-Initialize the index of the score of the map
+            scoresIndex = 0
+            
+            # Iterating among all caracteristics
+            for key, val in listOfIngredients[ingredientIndex].items():
+                
+                # If the caracteristic is calories, it does not count for score
+                if "calories" == key:
+                    continue
+                
+                # Compute the score of the caracteristic
+                scores[scoresIndex] += quantityOfIngredients[ingredientIndex] * val
+                # Go to the next caracteristic to count
+                scoresIndex += 1
+
+        # If we have at least one negative score, the global score of the cookie is 0.
+        if any(element <= 0 for element in scores):
+            return 0
+        
+        # Return the score of a cookie: the product of all caracteristics.
+        return np.prod(scores)
+
+    @staticmethod
+    def day_15_helper_constructTableOfIngredients() -> list[dict[str, int]]:
+        """
+        Helper for the solution for day 15. Create a table that contains all mapping of information for each ingredients.
+        https://adventofcode.com/2015/day/15
+
+        Returns:
+            A list which contains the map of each ingredient.
+        """
+        listOfAllIngredients: list[dict[str, int]] = []              # Output table that contains all needed information.
+        mappingOfOneIngredient: dict[str, int]                       # One map for a given ingredient.
+        lines: list[str]                                            # All lines of the input of the problem.
+        line: str                                                   # String representing the input line by line.
+        regexForIngredients: str = r'\b[A-Za-z]+\s[-]?\d+\b'        # Regex for finding informations of the ingredients.
+        matches: list[list[str]]                                    # Table that contain the output of the search via the regex.
+
+        # Retrieve the input of the problem.
+        lines = getLines(Year2015_Solution.year, 15)
+
+        # Iterating among all ingredients
+        for line in lines:
+            # Find all caracteristics of the ingredient
+            matches = findall(regexForIngredients, line)
+
+            # Construct the information of the current ingredient 
+            mappingOfOneIngredient = {m.split()[0]: int(m.split()[1]) for m in matches}
+
+            # Add the ingredient to the list of known ingredients
+            listOfAllIngredients.append(mappingOfOneIngredient)
+        
+        # Return all ingredients formatted
+        return listOfAllIngredients
+
+
+    def day_15_Part_1() -> int:
+        """
+        Get solution for day 15, Part 1
+        https://adventofcode.com/2015/day/15
+
+        Returns:
+            The best score a cookie can have!
+        """
+        tableOfIngredients: list[dict[str, int]]        # Table of used ingredients
+        
+        # Retrieve ingredients and their caracteristics
+        tableOfIngredients = Year2015_Solution.day_15_helper_constructTableOfIngredients()
+
+        # Re-initialize the max score ever found.
+        Year2015_Solution.day_15_cookieWithMaxScore = 0
+
+        # Find the cookie with the best score, without looking at calories.
+        Year2015_Solution.day_15_helper_getMaxScore(tableOfIngredients, [], False)
+
+        # Return the best score obtained.
+        return Year2015_Solution.day_15_cookieWithMaxScore
+
+    def day_15_Part_2() -> int:
+        """
+        Get solution for day 15, Part 2
+        https://adventofcode.com/2015/day/15#part2
+
+        Returns:
+            The best score a cookie can have when calories should be 500!
+        """
+        tableOfIngredients: list[dict[str, int]]        # Table of used ingredients
+        
+        # Retrieve ingredients and their caracteristics
+        tableOfIngredients = Year2015_Solution.day_15_helper_constructTableOfIngredients()
+
+        # Re-initialize the max score ever found.
+        Year2015_Solution.day_15_cookieWithMaxScore = 0
+
+        # Find the cookie with the best score, and taking care of the number of calories.
+        Year2015_Solution.day_15_helper_getMaxScore(tableOfIngredients, [], True)
+
+        # Return the best score obtained.
+        return Year2015_Solution.day_15_cookieWithMaxScore
