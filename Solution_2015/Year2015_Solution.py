@@ -849,7 +849,7 @@ class Year2015_Solution(Solution):
         https://adventofcode.com/2015/day/10
 
         Returns:
-            Length of the string after numberOfOccurences play of look-and-say
+            Length of the string after numberOfOccurences play of look-and-say.
         
         Args:
             numberOfOccurences (int): Number of game the Elves will play.
@@ -911,3 +911,206 @@ class Year2015_Solution(Solution):
         solutionAfterFiftyGames: int = Year2015_Solution.day_10_helper_getLookAndSayLengthAfterOccurences(50)  # Length of the string after 40 games of look-and-say
 
         return solutionAfterFiftyGames
+    
+    @staticmethod
+    def day_11_helper_doesStringContainsIncreasingSubsequence(stringToCheck: str) -> bool:
+        """
+        Helper for the solution for day 11. Check if a string contains at least one increasing subsequence between 3 consecutive chars.
+        https://adventofcode.com/2015/day/11
+
+        Returns:
+            Booleans that states if the string contains an increasing subsequence of 3 consecutives characters.
+        
+        Args:
+            stringToCheck (str): String where we check if it contains an increasing subsequence of 3 consecutives characters.
+        """
+        # Boolean to check the presence of any subsequence
+        isIncreasingSubsequence: bool = any(ord(stringToCheck[charIndex - 2]) == (ord(stringToCheck[charIndex - 1]) - 1) \
+            and ord(stringToCheck[charIndex - 1]) == (ord(stringToCheck[charIndex]) - 1) for charIndex in range(2, len(stringToCheck)))
+
+        return isIncreasingSubsequence
+    
+    @staticmethod
+    def day_11_helper_doesStringContainsTwoPairs(stringToCheck: str) -> bool:
+        """
+        Helper for the solution for day 11. Check if the string contains 2 non-overlapping pair of letters.
+        https://adventofcode.com/2015/day/11
+
+        Returns:
+            Booleans that states if the string contains 2 non-overlapping pair of letters.
+        
+        Args:
+            stringToCheck (str): String where we check if it contains 2 non-overlapping pair of letters.
+        """
+        charIndex:int = 1                   # Index of the char that we are looking at on the input string.
+        numberOfPairOfLetters: int = 0      # Number of non-overlapping pair of characters.
+
+        # Iterate among all indexes
+        while charIndex < len(stringToCheck):
+            # If the char are the same, we increment the number of pairs of letters
+            if stringToCheck[charIndex] == stringToCheck[charIndex - 1]:
+                numberOfPairOfLetters += 1
+                
+                # If we already have 2 non-overlapping pair, we can return True
+                if 2 == numberOfPairOfLetters:
+                    return True
+                
+                # Increase by one the index to avoid considering 'aaa' as 2 pairs.
+                charIndex += 1
+            
+            # Go to next index to check another pair.
+            charIndex += 1
+        
+        # 2 non-overlapping pairs are not found in the string.
+        return False
+
+    @staticmethod
+    def day_11_helper_IncrementByOneFromIndex(currentPassword: str, charIndex: int) -> str:
+        """
+        Helper for the solution for day 11. Increment by one a given index to have another Password.
+        https://adventofcode.com/2015/day/11
+
+        Handles:
+            If we have a 'z' to increment, it will be replaced by 'a' and the previous is incremented.
+            If all letters to increment where 'z', they are replaced by 'a' and an 'a' is added at the beginning.
+            If we have a forbidden letter, we update it.
+        
+        Returns:
+            The password with an update at the charIndex.
+        
+        Args:
+            currentPassword (str): Password that has to be incremented.
+            charIndex (int): Index of the letter to increment.
+        """
+
+        # While we found 'z' in the Password', we have to place it to 'a' and go to the previous letter to increment
+        while "z" == currentPassword[charIndex]:
+            currentPassword = currentPassword[:charIndex] + "a" + currentPassword[charIndex + 1:]
+            charIndex -= 1
+
+            # If all letters from 0 to charIndex were z, like 'zzzbb' and charIndex = 1, the next one should be 'aaaazbb'
+            if -1 == charIndex:
+                currentPassword = "a" + currentPassword
+                return currentPassword
+        
+        # Replace the current index to the next one in the alphabetical order
+        currentPassword = currentPassword[:charIndex] + chr(ord(currentPassword[charIndex]) + 1) + currentPassword[charIndex + 1:]
+        
+        # Replace forbidden letters
+        currentPassword = Year2015_Solution.day_11_helper_replaceForbiddenLetter(currentPassword)
+
+        # Return the next passowrd in the alphabetical order, while replacing the forbidden characters.
+        return currentPassword
+    
+    @staticmethod
+    def day_11_helper_replaceForbiddenLetter(currentPassword: str) ->str:
+        """
+        Helper for the solution for day 11. Replace the forbidden letters to the one after in the alphabtical order.
+        https://adventofcode.com/2015/day/11
+
+        Returns:
+            Password with forbidden letters replaced. 
+        
+        Args:
+            currentPassword (str): Password with letters that may be illegal.
+        """
+        # Because the password can't contain 'i', 'l', or 'o', we can place those values to the next in the alphabetical order. 
+        currentPassword = currentPassword.replace('i', 'j')
+        currentPassword = currentPassword.replace('l', 'm')
+        currentPassword = currentPassword.replace('o', 'p')
+
+        # Return the password without forbidden letters
+        return currentPassword
+
+    @staticmethod
+    def day_11_helper_findFollowingPassword(currentPassword: str) -> str:
+        """
+        Helper for the solution for day 11. Find the next password when we already know the current one.
+        https://adventofcode.com/2015/day/11
+
+        Returns:
+            New Santa's password.
+        
+        Args:
+            currentPassword (str): Password that Santa forgot.
+        """
+        charIndex: int      # Index of the letter in the password that will help to increment the password to another one.
+
+        # Replace forbidden letters
+        currentPassword = Year2015_Solution.day_11_helper_replaceForbiddenLetter(currentPassword)
+        
+        # While a valid password is not found, we have to search for a new one.
+        while (True):
+            
+            # If the password is valid, we can stop searching for another one.
+            if Year2015_Solution.day_11_helper_doesStringContainsIncreasingSubsequence(currentPassword) \
+            and Year2015_Solution.day_11_helper_doesStringContainsTwoPairs(currentPassword):
+                break
+            
+            # Start from the last index.
+            charIndex = len(currentPassword) - 1
+
+            # If the last letter is the same as the next one, we just increment. The idea is to try to make a increasing subsequence.
+            if currentPassword[charIndex] == currentPassword[charIndex - 1]:
+                currentPassword = Year2015_Solution.day_11_helper_IncrementByOneFromIndex(currentPassword, charIndex)
+            
+            # Else, if the last letter is before, we change the last letter to it equal to the previous one to have a new pair.
+            elif ord(currentPassword[charIndex]) < ord(currentPassword[charIndex - 1]):
+                currentPassword = currentPassword[:charIndex] + currentPassword[charIndex - 1] + currentPassword[charIndex + 1:]
+            
+            # Else, the last letter is greater than the previous (for example 'bc')
+            # At this moment, we increment the one before to have 'cc' and then create a new pair.
+            else:
+                charIndex -= 1
+                currentPassword = Year2015_Solution.day_11_helper_IncrementByOneFromIndex(currentPassword, charIndex)
+                currentPassword = currentPassword[:-1] + currentPassword[-2]
+        
+        # Return the next password of Santa.
+        return currentPassword   
+
+    @staticmethod
+    def day_11_Part_1() -> int:
+        """
+        Get solution for day 11, Part 1
+        https://adventofcode.com/2015/day/11
+
+        Returns:
+            The next password that Santa should have following the rules of the Security-Elf
+        """
+        line: str               # Input of the problem, which is the previous password of Santa.
+
+        # Retrieve the input of the problem.
+        line = getLine(Year2015_Solution.year, 11)
+        
+        # Retrieve the next password
+        line = Year2015_Solution.day_11_helper_findFollowingPassword(line)
+
+        # Return the new password of Santa
+        return line
+
+    @staticmethod
+    def day_11_Part_2() -> str:
+        """
+        Get solution for day 11, Part 2
+        https://adventofcode.com/2015/day/11
+
+        Returns:
+            The password of Santa updated 2 times, according to the new Security-Elf rules.
+        """
+        line: str               # Input of the problem, which is the previous password of Santa.
+
+        # Retrieve the input of the problem.
+        line = getLine(Year2015_Solution.year, 11)
+
+        # Find the next password of Santa
+        line = Year2015_Solution.day_11_helper_findFollowingPassword(line)
+
+        # Increment by one the password before finding a new password
+        line = Year2015_Solution.day_11_helper_IncrementByOneFromIndex(line, len(line) - 1)
+
+        # Find the next password of Santa
+        line = Year2015_Solution.day_11_helper_findFollowingPassword(line)
+
+        # Return the updated password of Santa
+        return line
+    
