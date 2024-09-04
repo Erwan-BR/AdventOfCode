@@ -746,16 +746,13 @@ class Year2015_Solution(Solution):
             listOfVisitedCities.pop()
             
     @staticmethod
-    def day_09_helper_buildDictOfCitiesAndMatrixOfDistances() -> list[list[int]]:
+    def day_09_helper_buildMatrixOfDistances() -> list[list[int]]:
         """
         Helper for the solution for day 9. Construct the distance matrix between each places. 
         https://adventofcode.com/2015/day/9
 
         Returns:
-            - listOfVisitedCities (list[int]): list of the cities visited, in the right order
             - matrixOfDistances (list[list[int]]): Distance between every cities.
-            - currentDistance (int): Distance done for visiting all vities from listOfVisitedCities.
-            - fctToCall (Callable[int]): Function that should be applied for visiting the cities. Should be min / max.
         """
         dictOfCitiesAndIndex: dict[str, int] = {}       # Dictionary to find where the distances should be written in matrix.
         lastIndex: int = 0                              # Integer to map name of cities to index.
@@ -809,7 +806,7 @@ class Year2015_Solution(Solution):
         Year2015_Solution.day_09_distanceSolution = maxsize
 
         # Retrieve the matrix thanks to the helper function
-        matrixOfDistances = Year2015_Solution.day_09_helper_buildDictOfCitiesAndMatrixOfDistances()
+        matrixOfDistances = Year2015_Solution.day_09_helper_buildMatrixOfDistances()
         
         # Find the smallest route by starting from each cities.
         for indexCity in range(len(matrixOfDistances)):
@@ -833,7 +830,7 @@ class Year2015_Solution(Solution):
         Year2015_Solution.day_09_distanceSolution = 0
 
         # Retrieve the matrix thanks to the helper function
-        matrixOfDistances = Year2015_Solution.day_09_helper_buildDictOfCitiesAndMatrixOfDistances()
+        matrixOfDistances = Year2015_Solution.day_09_helper_buildMatrixOfDistances()
         
         # Find the longest route by starting from each cities.
         for indexStart in range(len(matrixOfDistances)):
