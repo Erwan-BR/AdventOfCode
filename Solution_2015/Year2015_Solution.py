@@ -1,10 +1,10 @@
-from Global.globals import getLines, getLine
+from Global.globals import getLines, getLine, getNameOfFile
 from Solution.Solution import Solution
 from re import split, findall
 from hashlib import md5
 import numpy as np
-from typing import Callable
 from sys import maxsize
+from json import load
 
 class Year2015_Solution(Solution):
     """
@@ -1113,4 +1113,119 @@ class Year2015_Solution(Solution):
 
         # Return the updated password of Santa
         return line
+    
+    @staticmethod
+    def day_12_helper_computeSumInsideDict(dictToComputeSum: dict) -> int:
+        """
+        Helper for the solution for day 12. Compute the sum inside a dict, without counting elements if "red" is a value.
+        https://adventofcode.com/2015/day/12
+
+        Returns:
+            Sum of all elements inside the dict that should be counted. If "red" is a value, the output is 0.
+        
+        Args:
+            dictToComputeSum (dict): Dictionarry that represents a JSON element.
+        """
+        totalSum: int = 0       # Sum of all elements inside the dict.
+
+        for _, value in dictToComputeSum.items():
+            # If the value is an integer, we can add it to the sum.
+            if type(value) is int:
+                totalSum += value
+            # If the value is a string, we have to return 0 if the value is "red".
+            if type(value) is str:
+                if "red" == value:
+                    return 0
+            # If the value is a dict, we add the inner dict sum.
+            if type(value) is dict:
+                totalSum += Year2015_Solution.day_12_helper_computeSumInsideDict(value)
+            # If the value is a list, we add the inner list sum.
+            if type(value) is list:
+                totalSum += Year2015_Solution.day_12_helper_computeSumInsideList(value)
+        
+        # Return the computed sum when "red" is not a value of the dictionnary.
+        return totalSum
+    
+    @staticmethod
+    def day_12_helper_computeSumInsideList(listToComputeSum: list) -> int:
+        """
+        Helper for the solution for day 12. Compute the sum inside a list.
+        https://adventofcode.com/2015/day/12
+
+        Returns:
+            Sum of all elements inside the list that should be counted. 
+
+        Args:
+            listToComputeSum (list): List that represents a JSON element.
+        """
+        totalSum: int = 0       # Sum of all elements inside the list.
+
+        # Iterate among all elements of the list.        
+        for element in listToComputeSum:
+            # If the value is an integer, we can add it to the sum.
+            if type(element) is int:
+                totalSum += element
+            
+            # If the value is a dict, we add the inner dict sum.
+            elif type(element) is dict:
+                totalSum += Year2015_Solution.day_12_helper_computeSumInsideDict(element)
+            
+            # If the value is a list, we add the inner list sum.
+            elif type(element) is list:
+                totalSum += Year2015_Solution.day_12_helper_computeSumInsideList(element)
+            
+        # Return the total sum of all the list.
+        return totalSum
+
+    @staticmethod
+    def day_12_Part_1() -> int:
+        """
+        Get solution for day 11, Part 1
+        https://adventofcode.com/2015/day/12
+
+        Returns:
+            The Sum of all integers on the JSON file of the Elves document.
+        """
+        line: str                           # Input of the problem, stored on a string.
+        totalSum: int                       # Sum of all numbers in the document.
+        regexForIntegers: str = r"-?\d+"    # Regex used to find all integers, that may be negative and composed of mulitples digits.
+        integers: list[type]                # List of all the integers found in the input.
+
+        # Retrieve the input of the problem.
+        line = getLine(Year2015_Solution.year, 12)
+
+        # Find all the integers of the document.
+        integers = findall(regexForIntegers, line)
+
+        # Convert the integers that were in str to int.
+        integers = [int(integer) for integer in integers]
+
+        # Compute the sum of all integers
+        totalSum = sum(integers)
+
+        # Return the sum of everything in the Elves document.
+        return totalSum
+
+    @staticmethod
+    def day_12_Part_2() -> int:
+        """
+        Get solution for day 12, Part 2
+        https://adventofcode.com/2015/day/12#part2
+
+        Returns:
+            The Sum of all integers on the JSON file without counting twice "red" elements.
+        """
+        
+        totalSum: int                       # Sum of all numbers in the document.
+        dictOfCurrentElements: dict         # Dictionnary of the elements found in the JSON input.
+
+        # Retrieve the input of the problem.
+        with open(getNameOfFile(Year2015_Solution.year, 12), mode="r", encoding="utf-8") as file:
+            dictOfCurrentElements = load(file)
+
+        # Find the sum of all elements without counting twice the "red" elements.
+        totalSum = Year2015_Solution.day_12_helper_computeSumInsideDict(dictOfCurrentElements)
+
+        # Return the sum of according to the new rule in the Elves document.
+        return totalSum
     
