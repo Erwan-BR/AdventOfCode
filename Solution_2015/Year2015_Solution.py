@@ -1382,3 +1382,114 @@ class Year2015_Solution(Solution):
 
         # Return the max happiness found
         return Year2015_Solution.day_13_happinessSolution
+
+    @staticmethod
+    def day_14_helper_getSpeedAndTimesForReindeers() -> list[list[int]]:
+        """
+        Helper for the solution for day 14. Create a matrix with all informations for all reindeers. 
+        https://adventofcode.com/2015/day/14
+
+        Returns:
+            A list where in each element we have:
+                - 0. The speed when mooving
+                - 1. The time the reindeer can move
+                - 2. The time the reindeer will rest
+        """
+        lines: list[str]                                         # All lines of the input of the problem.
+        line: str                                                # String representing the input line by line.
+        regexForFidingIntegers: str = "[0-9]+"                   # Regex used to find all numerics value in the input.
+        distancesByTimeForEachReindeer: list[list[int]] = []     # List of all distances that reindeer can make in the associated time
+
+        # Retrieve the input of the problem.
+        lines = getLines(Year2015_Solution.year, 14)
+
+        # Iterating among all lines to retrieve informations of speed and rest time
+        for line in lines:
+            distancesByTimeForEachReindeer.append(findall(regexForFidingIntegers, line))
+            distancesByTimeForEachReindeer[-1] = [int(val) for val in distancesByTimeForEachReindeer[-1]]
+
+        return distancesByTimeForEachReindeer
+
+    @staticmethod
+    def day_14_Part_1():
+        """
+        Get solution for day 14, Part 1
+        https://adventofcode.com/2015/day/14
+
+        Returns:
+            Distance the winning reindeer traveled for Reinder Olympics!
+        """
+        numberOfSeconds: int = 2503                              # Number of seconds the race last.
+        distancesByTimeForEachReindeer: list[list[int]] = []     # List of all distances that reindeer can make in the associated time
+        mostDistanceTravelled: int = 0                           # Value of the most distance done.
+
+        # Retrieve Reindeers informations
+        distancesByTimeForEachReindeer = Year2015_Solution.day_14_helper_getSpeedAndTimesForReindeers()
+        
+        # Iterating among all reindeer to find the distance he made, and store the distance if it's the max ever made.
+        for reindeer in distancesByTimeForEachReindeer:
+            
+            # Compute the number of 'full traject' (Fly + rest)
+            nbOfTrajectWithBreak: int = int(numberOfSeconds / (reindeer[1] + reindeer[2]))
+            # Compute the number of seconds the reindeer will fly after his last break
+            nbSecondsLeft: int = min(reindeer[1], numberOfSeconds - nbOfTrajectWithBreak * (reindeer[1] + reindeer[2]))
+
+            # Compute the distance of the current reindeer. 
+            currentDistance: int = reindeer[0] * (nbOfTrajectWithBreak * reindeer[1] + nbSecondsLeft)
+
+            # Compute the most distance travelled.
+            mostDistanceTravelled = max(mostDistanceTravelled, currentDistance)
+        
+        # Return the most distance that has been travelled.
+        return mostDistanceTravelled
+    
+    @staticmethod
+    def day_14_Part_2():
+        """
+        Get solution for day 14, Part 2
+        https://adventofcode.com/2015/day/14#part2
+
+        Returns:
+            Distance the winning reindeer traveled for Reinder Olympics with new rules!
+        """
+        numberOfSeconds: int = 2503                              # Number of seconds the race last.
+        distancesByTimeForEachReindeer: list[list[int]] = []     # List of all distances that reindeer can make in the associated time
+        distanceAndScoreByReindeer: list[int] = []               # Store the distance and the score of a reinder after n second.
+        nbOfReindeer: int                                        # Number of reindeer making the race
+
+        # Retrieve Reindeers informations
+        distancesByTimeForEachReindeer = Year2015_Solution.day_14_helper_getSpeedAndTimesForReindeers()
+        
+        # Compute the number of reindeer
+        nbOfReindeer = len(distancesByTimeForEachReindeer)
+
+        # All reindeer are at distance 0 and score 0.
+        distanceAndScoreByReindeer = [[0, 0] for _ in range(nbOfReindeer)]
+            
+        # Iterating among all seconds to see where reindeers are and check who has the biggest score.
+        for currentTime in range(numberOfSeconds):
+            
+            # Store the list of all reindeers position
+            listIndexMostTravelled:list[int] = [0]
+    
+            for indexReindeer in range(nbOfReindeer):
+                # If the deer is in a mooving phase, make him move
+                if distancesByTimeForEachReindeer[indexReindeer][1] > currentTime % (distancesByTimeForEachReindeer[indexReindeer][1] + distancesByTimeForEachReindeer[indexReindeer][2]):
+                    distanceAndScoreByReindeer[indexReindeer][0] += distancesByTimeForEachReindeer[indexReindeer][0]
+                
+                # For all reindeers of index 1 or more, check if the have the max distance
+                if 0 != indexReindeer:
+                    # If he is not the only one in front, he will win also 1 point as the other one
+                    if distanceAndScoreByReindeer[listIndexMostTravelled[0]][0] == distanceAndScoreByReindeer[indexReindeer][0]:
+                        listIndexMostTravelled.append(indexReindeer)
+                    # If he is the only one at the front of the course, he is the only one to get one point
+                    elif distanceAndScoreByReindeer[listIndexMostTravelled[0]][0] < distanceAndScoreByReindeer[indexReindeer][0]:
+                        listIndexMostTravelled = [indexReindeer]
+            
+            # Give one point to all of them who are at the front of the race
+            for reindeer in listIndexMostTravelled:
+                distanceAndScoreByReindeer[reindeer][1] += 1
+        
+        # Return the most distance that has been travelled.
+        return max(distanceAndScoreByReindeer[indexReindeer][1] for indexReindeer in range(nbOfReindeer))
+    
