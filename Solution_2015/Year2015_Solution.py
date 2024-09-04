@@ -54,7 +54,7 @@ class Year2015_Solution(Solution):
     def day_01_Part_2() -> int:
         """
         Get solution for day 1, Part 2
-        https://adventofcode.com/2015/day/1
+        https://adventofcode.com/2015/day/1#part2
 
         Returns:
             Integer representing the position of the first character that causes Santa to enter in basement.
@@ -111,7 +111,7 @@ class Year2015_Solution(Solution):
     def day_02_Part_2() -> int:
         """
         Get solution for day 2, Part 2
-        https://adventofcode.com/2015/day/2
+        https://adventofcode.com/2015/day/2#part2
 
         Returns:
             Integer representing the length of the ribbon needed.
@@ -170,7 +170,7 @@ class Year2015_Solution(Solution):
     def day_03_Part_2() -> int:
         """
         Get solution for day 3, Part 2
-        https://adventofcode.com/2015/day/3
+        https://adventofcode.com/2015/day/3#part2
 
         Returns:
             Integer representing the number of house that receives at least one present.
@@ -261,7 +261,7 @@ class Year2015_Solution(Solution):
     def day_04_Part_2() -> int:
         """
         Get solution for day 4, Part 2
-        https://adventofcode.com/2015/day/4
+        https://adventofcode.com/2015/day/4#part2
 
         Returns:
             Integer representing the number of iterations to make before having 6 Zeros at the beginning of the encoded string.
@@ -335,7 +335,7 @@ class Year2015_Solution(Solution):
     def day_05_Part_2() -> int:
         """
         Get solution for day 5, Part 2
-        https://adventofcode.com/2015/day/5
+        https://adventofcode.com/2015/day/5#part2
 
         Returns:
             Integer representing the number of nice strings.
@@ -421,8 +421,8 @@ class Year2015_Solution(Solution):
     @staticmethod
     def day_06_Part_2() -> int:
         """
-        Get solution for day 6, Part 1
-        https://adventofcode.com/2015/day/6
+        Get solution for day 6, Part 2
+        https://adventofcode.com/2015/day/6#part2
 
         Returns:
             Integer representing the total brightness.
@@ -595,7 +595,7 @@ class Year2015_Solution(Solution):
     def day_07_Part_2() -> int:
         """
         Get solution for day 7, Part 2
-        https://adventofcode.com/2015/day/7
+        https://adventofcode.com/2015/day/7#part2
 
         Returns:
             Integer representing the value of the signal in the wire A after 2 iteration (value of A overwrite the value of B).
@@ -669,7 +669,7 @@ class Year2015_Solution(Solution):
     def day_08_Part_2() -> int:
         """
         Get solution for day 8, Part 2
-        https://adventofcode.com/2015/day/8
+        https://adventofcode.com/2015/day/8#part2
 
         Returns:
             Integer representing the number of character should be added if we want to have the code in an encoded.
@@ -822,7 +822,7 @@ class Year2015_Solution(Solution):
     def day_09_Part_2() -> int:
         """
         Get solution for day 9, Part 2
-        https://adventofcode.com/2015/day/9
+        https://adventofcode.com/2015/day/9#part2
 
         Returns:
             Distance of the longest route Santa can take to go through all locations.
@@ -903,7 +903,7 @@ class Year2015_Solution(Solution):
     def day_10_Part_2() -> int:
         """
         Get solution for day 10, Part 2
-        https://adventofcode.com/2015/day/10
+        https://adventofcode.com/2015/day/10#part2
 
         Returns:
             Numbers of elements in the string after the Elves made 50 games of look-and-say.
@@ -1092,7 +1092,7 @@ class Year2015_Solution(Solution):
     def day_11_Part_2() -> str:
         """
         Get solution for day 11, Part 2
-        https://adventofcode.com/2015/day/11
+        https://adventofcode.com/2015/day/11#part2
 
         Returns:
             The password of Santa updated 2 times, according to the new Security-Elf rules.
