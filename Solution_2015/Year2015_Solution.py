@@ -1226,3 +1226,159 @@ class Year2015_Solution(Solution):
         # Return the sum of according to the new rule in the Elves document.
         return totalSum
     
+    day_13_happinessSolution: int = - maxsize
+
+    @staticmethod
+    def day_13_helper_dfs(listOfPersonAtDinningTable: list[int], matrixOfHappiness: list[list[int]], currentHappiness: int) -> None:
+        """
+        Helper for the solution for day 13. Use DFS to find the maximum happiness.
+        https://adventofcode.com/2015/day/13
+
+        Args:
+            - listOfPersonAtDinningTable (list[int]): List of all persons at the table, in the order they are.
+            - matrixOfHappiness (list[list[int]]): Matrix that contains the happiness of people when they are next to the other.
+            - currentHappiness (int): Happiness of the current configuration.
+        """
+        indexOfPerson: int            # Index of the person that we are looking for maximizing happiness.
+
+        # Iterating among all persons to find the next one should be at the table
+        for indexOfPerson in range(len(matrixOfHappiness)):
+            # If the person is at the table, we don't want to add him a second time.
+            if indexOfPerson in listOfPersonAtDinningTable:
+                continue
+
+            # Add the person to the list of person at the table. Add the happiness gain / lost to the current happiness
+            listOfPersonAtDinningTable.append(indexOfPerson)
+            currentHappiness += matrixOfHappiness[listOfPersonAtDinningTable[-2]][listOfPersonAtDinningTable[-1]]
+            currentHappiness += matrixOfHappiness[listOfPersonAtDinningTable[-1]][listOfPersonAtDinningTable[-2]]
+            
+            # If all persons are on the table, we store the max happiness.
+            if len(matrixOfHappiness) == len(listOfPersonAtDinningTable):
+                Year2015_Solution.day_13_happinessSolution = max(Year2015_Solution.day_13_happinessSolution, \
+                                                                 currentHappiness + matrixOfHappiness[listOfPersonAtDinningTable[-1]][listOfPersonAtDinningTable[0]] \
+                                                                 + matrixOfHappiness[listOfPersonAtDinningTable[0]][listOfPersonAtDinningTable[-1]])
+            
+            # if not everyone is here, we should try adding more
+            else:
+                Year2015_Solution.day_13_helper_dfs(listOfPersonAtDinningTable, matrixOfHappiness, currentHappiness)
+
+            # Delete the last person and substract the useless happiness.
+            currentHappiness -= matrixOfHappiness[listOfPersonAtDinningTable[-2]][listOfPersonAtDinningTable[-1]]
+            currentHappiness -= matrixOfHappiness[listOfPersonAtDinningTable[-1]][listOfPersonAtDinningTable[-2]]
+            listOfPersonAtDinningTable.pop()
+            
+    @staticmethod
+    def day_13_helper_buildMatrixOfHappiness() -> list[list[int]]:
+        """
+        Helper for the solution for day 13. Construct the distance happiness between each persons. 
+        https://adventofcode.com/2015/day/13
+
+        Returns:
+            - matrixOfHappiness (list[list[int]]): Happiness between every persons.
+        """
+        dictOfHappinessAndIndex: dict[str, int] = {}    # Dictionary to find where the happiness should be written in matrix.
+        lastIndex: int = 0                              # Integer to map name of persons to index.
+        matrixOfHappiness: list[list[int]]              # Output: Matrix of the happiness between each person.
+        lines: list[str]                                # All lines of the input of the problem.
+        line: str                                       # String representing the input line by line.
+
+        # Retrieve all lines of the input file
+        lines = getLines(Year2015_Solution.year, 13)
+        
+        # Construct the dict to know which name correspond to which happiness
+        for line in lines:
+            strings = findall(r"\b[a-zA-Z]+\b", line)
+            if strings[0] not in dictOfHappinessAndIndex:
+                dictOfHappinessAndIndex[strings[0]] = lastIndex
+                lastIndex += 1
+            if strings[-1] not in dictOfHappinessAndIndex:
+                dictOfHappinessAndIndex[strings[-1]] = lastIndex
+                lastIndex += 1
+        
+        # Fill a matrix with - INFINITE happiness
+        matrixOfHappiness = [[- maxsize for _ in range(lastIndex)] for _ in range(lastIndex)]
+
+        # Happiness for a person next to himself is 0.
+        for lineOfMatrix in range(len(matrixOfHappiness)):
+            matrixOfHappiness[lineOfMatrix][lineOfMatrix] = 0
+
+        # Retrieve the given happiness.
+        for line in lines:
+            strings = findall(r"\b[a-zA-Z]+\b", line)
+            happiness = int(findall(r"\b[0-9]+\b", line)[0])
+
+            matrixOfHappiness[dictOfHappinessAndIndex[strings[0]]][dictOfHappinessAndIndex[strings[-1]]] = happiness
+
+            # If the happiness is lost, it's negative happiness.
+            if "would lose" in line:
+                matrixOfHappiness[dictOfHappinessAndIndex[strings[0]]][dictOfHappinessAndIndex[strings[-1]]] *= -1
+        
+        # Return the matrix with all happiness.
+        return matrixOfHappiness
+
+    @staticmethod
+    def day_13_helper_AddMyselfToTable(matrixOfHappiness: list[list[int]]) -> None:
+        """
+        Helper for the solution for day 13. Add myself to the matrix of happiness. 
+        https://adventofcode.com/2015/day/13
+
+        Returns:
+            - None because the list is modified in place.
+        """
+        lineOfHappiness: list[int]      # Line of happiness of everyone
+
+        # Add a 0 relationship to me for everyone
+        for lineOfHappiness in matrixOfHappiness:
+            lineOfHappiness.append(0)
+        
+        # Add a 0 relationship for everyone to me
+        matrixOfHappiness.append([0 for _ in range(len(matrixOfHappiness))])
+    
+    @staticmethod
+    def day_13_Part_1() -> int:
+        """
+        Get solution for day 13, Part 1
+        https://adventofcode.com/2015/day/13
+
+        Returns:
+            Maximum happiness we can have when making the table configuration
+        """
+        matrixOfHappiness: list[list[int]]  # Matrix containing all the happiness between everyone
+        
+        # Set the solution to max value to make the comparaison logical with min function
+        Year2015_Solution.day_13_happinessSolution = - maxsize
+
+        # Retrieve the matrix thanks to the helper function
+        matrixOfHappiness = Year2015_Solution.day_13_helper_buildMatrixOfHappiness()
+        
+        # Find the max happiness possible. The person who sits first does not change anyhting as the table is round.
+        Year2015_Solution.day_13_helper_dfs([0], matrixOfHappiness, 0)
+
+        # Return the max happiness found
+        return Year2015_Solution.day_13_happinessSolution
+    
+    @staticmethod
+    def day_13_Part_2() -> int:
+        """
+        Get solution for day 13, Part 2
+        https://adventofcode.com/2015/day/13#part2
+
+        Returns:
+            Maximum happiness we can have when making the table configuration with me at the table !
+        """
+        matrixOfHappiness: list[list[int]]  # Matrix containing all the happiness between everyone
+        
+        # Set the solution to max value to make the comparaison logical with min function
+        Year2015_Solution.day_13_happinessSolution = - maxsize
+
+        # Retrieve the matrix thanks to the helper function
+        matrixOfHappiness = Year2015_Solution.day_13_helper_buildMatrixOfHappiness()
+
+        # Add myself to the table
+        Year2015_Solution.day_13_helper_AddMyselfToTable(matrixOfHappiness)
+        
+        # Find the max happiness possible. The person who sits first does not change anyhting as the table is round.
+        Year2015_Solution.day_13_helper_dfs([0], matrixOfHappiness, 0)
+
+        # Return the max happiness found
+        return Year2015_Solution.day_13_happinessSolution
