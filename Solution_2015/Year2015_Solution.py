@@ -1646,3 +1646,136 @@ class Year2015_Solution(Solution):
 
         # Return the best score obtained.
         return Year2015_Solution.day_15_cookieWithMaxScore
+
+    @staticmethod
+    def day_16_helper_getInformationFromMFCSAM() -> dict[str: int]:
+        """
+        Helper for the solution for day 16. Create a dict with all information from the MFCSAM.
+        https://adventofcode.com/2015/day/16
+
+        Returns:
+            A dict with all information from the MFCSAM.
+        """
+        informationFromMFCSAM: dict[str: int] = {}                 # Dictionnary that contains information of the letter received.
+        
+        # Fill the information
+        informationFromMFCSAM["children"]    = 3
+        informationFromMFCSAM["cats"]        = 7
+        informationFromMFCSAM["samoyeds"]    = 2
+        informationFromMFCSAM["pomeranians"] = 3
+        informationFromMFCSAM["akitas"]      = 0
+        informationFromMFCSAM["vizslas"]     = 0
+        informationFromMFCSAM["goldfish"]    = 5
+        informationFromMFCSAM["trees"]       = 3
+        informationFromMFCSAM["cars"]        = 2
+        informationFromMFCSAM["perfumes"]    = 1
+
+        # Return all information we have.
+        return informationFromMFCSAM
+    
+    @staticmethod
+    def day_16_Part_1() -> int:
+        """
+        Get solution for day 16, Part 1
+        https://adventofcode.com/2015/day/16
+
+        Returns:
+            Which one of the 500 aunt Sue send a gift.
+        """
+        lines: list[str]                                            # All lines of the input of the problem.
+        line: str                                                   # String representing the input line by line.
+        matches: list[str]                                          # Matches of the information we have about the current Aunt Sue.
+        regexForItemAndValue: str = r'\b[A-Za-z]+:\s\d+\b'          # Regex for finding information about the current Sue
+        informationFromMFCSAM: dict[str: int]                       # Dictionnary that contains information of the letter received.
+        areAllInformationCorrect: bool                              # States if all information are passing for the current Sue.
+
+        # Retrieve the input of the problem.
+        lines = getLines(Year2015_Solution.year, 16)
+
+        # Retrieve the information from the letter
+        informationFromMFCSAM = Year2015_Solution.day_16_helper_getInformationFromMFCSAM()
+
+        # Iterate among all aunts
+        for index, line in enumerate(lines):
+            
+            # Find all characteristic of the current Sue and store it in a map
+            matches = findall(regexForItemAndValue, line)
+            mappingOfInformations = {match.split()[0][:-1]: int(match.split()[1]) for match in matches}
+            
+            # Re-init the information correctness
+            areAllInformationCorrect = True
+            
+            # Iterating among all elements of the current Sue. If she does not have the spicificy or have a different value
+            # Then it's not the correct Aunt.
+            for key, value in mappingOfInformations.items():
+                if key not in informationFromMFCSAM or value != informationFromMFCSAM[key]:
+                    areAllInformationCorrect = False
+                    break
+            
+            # If every elements were correct, we return the Aunt index.
+            if areAllInformationCorrect:
+                return index + 1
+        
+        # Should not be there, it would mean that no Sue is valid.
+        return -1
+    
+    @staticmethod
+    def day_16_Part_2() -> int:
+        """
+        Get solution for day 16, Part 2
+        https://adventofcode.com/2015/day/16#part2
+
+        Returns:
+            Which one of the 500 aunt Sue send a gift.
+        """
+        lines: list[str]                                            # All lines of the input of the problem.
+        line: str                                                   # String representing the input line by line.
+        matches: list[str]                                          # Matches of the information we have about the current Aunt Sue.
+        regexForItemAndValue: str = r'\b[A-Za-z]+:\s\d+\b'          # Regex for finding information about the current Sue
+        informationFromMFCSAM: dict[str: int]                       # Dictionnary that contains information of the letter received.
+        areAllInformationCorrect: bool                              # States if all information are passing for the current Sue.
+
+        # Retrieve the input of the problem.
+        lines = getLines(Year2015_Solution.year, 16)
+
+        # Retrieve the information from the letter
+        informationFromMFCSAM = Year2015_Solution.day_16_helper_getInformationFromMFCSAM()
+
+        # Iterate among all aunts
+        for index, line in enumerate(lines):
+            
+            # Find all characteristic of the current Sue and store it in a map
+            matches = findall(regexForItemAndValue, line)
+            mappingOfInformations = {match.split()[0][:-1]: int(match.split()[1]) for match in matches}
+            
+            # Re-init the information correctness
+            areAllInformationCorrect = True
+            
+            # Iterating among all elements of the current Sue.
+            for key, value in mappingOfInformations.items():
+                # If the key is not present on tha machine response, it's not the correct Sue.
+                if key not in informationFromMFCSAM:
+                    areAllInformationCorrect = False
+                    break
+                
+                # The correct Sue should have more cats and tree than what the machine says.
+                if key in ("cats", "tree"):
+                    if value <= informationFromMFCSAM[key]:
+                        areAllInformationCorrect = False
+                        break
+                # The correct Sue should have less cats and tree than what the machine says.
+                elif key in ("pomeranians", "goldfish"):
+                    if value >= informationFromMFCSAM[key]:
+                        areAllInformationCorrect = False
+                        break
+                # The correct Sue should have more the same value for all other element.
+                elif value != informationFromMFCSAM[key]:
+                        areAllInformationCorrect = False
+                        break
+            
+            # If every elements were correct, we return the Aunt index.
+            if areAllInformationCorrect:
+                return index + 1
+        
+        # Should not be there, it would mean that no Sue is valid.
+        return -1
