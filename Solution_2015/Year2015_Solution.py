@@ -1602,7 +1602,7 @@ class Year2015_Solution(Solution):
         # Return all ingredients formatted
         return listOfAllIngredients
 
-
+    @staticmethod
     def day_15_Part_1() -> int:
         """
         Get solution for day 15, Part 1
@@ -1625,6 +1625,7 @@ class Year2015_Solution(Solution):
         # Return the best score obtained.
         return Year2015_Solution.day_15_cookieWithMaxScore
 
+    @staticmethod
     def day_15_Part_2() -> int:
         """
         Get solution for day 15, Part 2
