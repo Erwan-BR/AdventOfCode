@@ -1780,3 +1780,123 @@ class Year2015_Solution(Solution):
         
         # Should not be there, it would mean that no Sue is valid.
         return -1
+    
+    day_17_dictOfCombination: dict[int, int] = {}
+
+    @staticmethod
+    def day_17_helper_findNumberOfCombination(listOfContainers: list[int], indexOfContainer: int, eggnogMissing: int, currentNumber: int) -> int:
+        """
+        Helper for the solution for day 17. Fill the dictOfCombination variable to find the quantity of possible combinaison
+        for the different number of containers choosen.
+        https://adventofcode.com/2015/day/17
+
+        Args:
+            - listOfContainers (list[int]): List of all availables containers
+            - indexOfContainer (int): Index of the container we are going to fill or not
+            - eggnogMissing: (int): Eggnog that still has to be put on a container.
+            - currentNumber (int): Number of containers that are already filled.
+        """
+        # If all the eggnog is in container, add the information in the dict and stop the function.
+        if 0 == eggnogMissing:
+            if currentNumber not in Year2015_Solution.day_17_dictOfCombination:
+                Year2015_Solution.day_17_dictOfCombination[currentNumber] = 1
+            else:
+                Year2015_Solution.day_17_dictOfCombination[currentNumber] += 1
+            return
+        
+        # If we reached the end of the table, we don't have anymore containers.
+        if indexOfContainer == len(listOfContainers):
+            return
+        
+        # Iterate among 0 and 1: Take the current container or not.
+        for nbOfContainer in range(0, 2):
+            
+            # Increment (or not) the number of container according to if we filled the current container.
+            currentNumber += nbOfContainer
+
+            # Decrease the quantity of eggnog that is missing.
+            eggnogMissing -= nbOfContainer * listOfContainers[indexOfContainer]
+            
+            # If there is still eggnog, call the function with the next container index
+            if 0 <= eggnogMissing:
+                Year2015_Solution.day_17_helper_findNumberOfCombination(listOfContainers, indexOfContainer + 1, eggnogMissing, currentNumber)
+            
+            # Decrement (or not) the number of container according to if we filled the current container.
+            currentNumber += nbOfContainer
+            currentNumber -= nbOfContainer
+            
+            # Refill the eggnog used for the container (if used)
+            eggnogMissing += nbOfContainer * listOfContainers[indexOfContainer]
+
+    @staticmethod
+    def day_17_Part_1() -> int:
+        """
+        Get solution for day 17, Part 1
+        https://adventofcode.com/2015/day/17
+
+        Returns:
+            How much combinations of containers can fit exactly 150 litters of eggnog.
+        """
+
+        lines: list[str]        # All lines of the input of the problem.
+        containers: list[int]   # All possible containers.
+
+        # Retrieve the input of the problem.
+        lines = getLines(Year2015_Solution.year, 17)
+        
+        # Get the list of all possible size.
+        containers = [int(line) for line in lines]
+
+        # Sorting containers and revert them to try filling the biggest possible first.
+        containers.sort()
+        containers.reverse()
+
+        # Re-initialize the possible combination.
+        Year2015_Solution.day_17_dictOfCombination = {}
+
+        # Call the dfs function to find all possibilities of storing eggnogs.
+        Year2015_Solution.day_17_helper_findNumberOfCombination(containers, 0, 150, 0)
+
+        # Return the total number of combination.
+        return sum(val for _, val in Year2015_Solution.day_17_dictOfCombination.items())
+    
+    @staticmethod
+    def day_17_Part_2() -> int:
+        """
+        Get solution for day 17, Part 2
+        https://adventofcode.com/2015/day/17#part2
+
+        Returns:
+            How much combinations of containers can fit exactly 150 litters of eggnog, according to
+            the smallest number of containers we want.
+        """
+
+        lines: list[str]                            # All lines of the input of the problem.
+        containers: list[int]                       # All possible containers.
+        smallestNumberOfContainers: int = maxsize   # Number of containers we took for making the smallest possible combination.
+        numberOfCombinations: int = 0               # Number of valid combinations.
+        
+        # Retrieve the input of the problem.
+        lines = getLines(Year2015_Solution.year, 17)
+        
+        # Get the list of all possible size.
+        containers = [int(line) for line in lines]
+
+        # Sorting containers and revert them to try filling the biggest possible first.
+        containers.sort()
+        containers.reverse()
+
+        # Re-initialize the possible combination.
+        Year2015_Solution.day_17_dictOfCombination = {}
+
+        # Call the dfs function to find all possibilities of storing eggnogs.
+        Year2015_Solution.day_17_helper_findNumberOfCombination(containers, 0, 150, 0)
+
+        # Find the smallest number of containers used and store the number of combination for this amount of container.
+        for key, val in Year2015_Solution.day_17_dictOfCombination.items():
+            if key < smallestNumberOfContainers:
+                smallestNumberOfContainers = key
+                numberOfCombinations = val
+
+        # Return the total number of combination for the smaller number of container
+        return numberOfCombinations
