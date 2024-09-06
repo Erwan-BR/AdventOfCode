@@ -129,7 +129,7 @@ class Year2015_Solution(Solution):
             dimensions = split("x", line)
             dimensions = [(int)(dimension) for dimension in dimensions]
 
-            lengthRibbon += np.prod(dimensions)
+            lengthRibbon += dimensions[0] * dimensions[1] * dimensions[2]
             lengthRibbon += 2 * (sum(dimensions))
             lengthRibbon -= 2 * max(dimensions)
 
@@ -146,7 +146,7 @@ class Year2015_Solution(Solution):
             Integer representing the number of house that receives at least one present.
         """
         currentCoordinates: list[int] = [0, 0]                                  # Coordinates of the Santa at a given iteration.
-        visitedCoordinates: set[tuple[int]] = {(tuple)(currentCoordinates)}     # Coordinates of the houses that receives at least one present
+        visitedCoordinates: set[tuple[int, int]] = {(tuple[int, int])(currentCoordinates)}     # Coordinates of the houses that receives at least one present
         line: str                                                               # String representing the input
         
         # Retrieve the input of the problem.
@@ -162,7 +162,7 @@ class Year2015_Solution(Solution):
                 currentCoordinates[1] += 1
             elif 'v' == letter:
                 currentCoordinates[1] -= 1
-            visitedCoordinates.add((tuple)(currentCoordinates))
+            visitedCoordinates.add((tuple[int, int])(currentCoordinates))
         
         # Return the number of houses visited by Santa
         return len(visitedCoordinates)
@@ -177,7 +177,7 @@ class Year2015_Solution(Solution):
             Integer representing the number of house that receives at least one present.
         """
         currentCoordinates: list[int] = [0, 0]                                # Coordinates of the Santa / Robo-Santa at a given iteration.
-        visitedCoordinates: set[tuple[int]] = {(tuple)(currentCoordinates)}   # Coordinates of the houses visited by Santa or Robo-Santa.
+        visitedCoordinates: set[tuple[int, int]] = {(tuple[int, int])(currentCoordinates)}   # Coordinates of the houses visited by Santa or Robo-Santa.
         line: str                                                             # String representing the input
 
         # Retrieve the input of the problem.
@@ -194,7 +194,7 @@ class Year2015_Solution(Solution):
                 currentCoordinates[1] += 1
             elif 'v' == line[index]:
                 currentCoordinates[1] -= 1
-            visitedCoordinates.add((tuple)(currentCoordinates))
+            visitedCoordinates.add((tuple[int, int])(currentCoordinates))
         
         # Re-init the coordinate to deal with Robo-Santa moovements
         currentCoordinates = [0, 0]
@@ -209,7 +209,7 @@ class Year2015_Solution(Solution):
                 currentCoordinates[1] += 1
             elif 'v' == line[index]:
                 currentCoordinates[1] -= 1
-            visitedCoordinates.add((tuple)(currentCoordinates))
+            visitedCoordinates.add((tuple[int, int])(currentCoordinates))
 
         # Return the number of houses visited
         return len(visitedCoordinates)
@@ -387,9 +387,9 @@ class Year2015_Solution(Solution):
         Returns:
             Integer representing the number of lights are lit.
         """
-        lightsGrid: list[int] = [[0 for _ in range(1000)] for _ in range(1000)]     # Grid that contains the lights information
-        lines: list[str]                                                            # All lines of the input of the problem.
-        line: str                                                                   # String representing the input and the strings that might be nine.
+        lightsGrid: list[list[int]] = [[0 for _ in range(1000)] for _ in range(1000)]     # Grid that contains the lights information
+        lines: list[str]                                                                  # All lines of the input of the problem.
+        line: str                                                                         # String representing the input and the strings that might be nine.
 
         # Retrieve all lines of the input file
         lines = getLines(Year2015_Solution.year, 6)
@@ -428,9 +428,9 @@ class Year2015_Solution(Solution):
         Returns:
             Integer representing the total brightness.
         """
-        lightsGrid: list[int] = [[0 for _ in range(1000)] for _ in range(1000)]     # Grid that contains the lights information
-        lines: list[str]                                                            # All lines of the input of the problem.
-        line: str                                                                   # String representing the input and the strings that might be nine.
+        lightsGrid: list[list[int]] = [[0 for _ in range(1000)] for _ in range(1000)]     # Grid that contains the lights information
+        lines: list[str]                                                                  # All lines of the input of the problem.
+        line: str                                                                         # String representing the input and the strings that might be nine.
 
         # Retrieve all lines of the input file
         lines = getLines(Year2015_Solution.year, 6)
@@ -516,7 +516,7 @@ class Year2015_Solution(Solution):
             # len 4 is for all other operators: AND, OR, LSHIFT, RSHIFT
             # Wires should be saved (if not done) in the dict to make the operator latter.
             else :
-                operations.append(tuple(tabOfVal))
+                operations.append(tuple[str, str, str, str](tabOfVal))
                 if tabOfVal[0] not in dictOfValues:
                     dictOfValues[tabOfVal[0]] = int(tabOfVal[0]) if tabOfVal[0].isnumeric() else -1
                 if tabOfVal[2] not in dictOfValues:
@@ -1067,7 +1067,7 @@ class Year2015_Solution(Solution):
         return currentPassword   
 
     @staticmethod
-    def day_11_Part_1() -> int:
+    def day_11_Part_1() -> str:
         """
         Get solution for day 11, Part 1
         https://adventofcode.com/2015/day/11
@@ -1187,7 +1187,7 @@ class Year2015_Solution(Solution):
         line: str                           # Input of the problem, stored on a string.
         totalSum: int                       # Sum of all numbers in the document.
         regexForIntegers: str = r"-?\d+"    # Regex used to find all integers, that may be negative and composed of mulitples digits.
-        integers: list[type]                # List of all the integers found in the input.
+        integers: list[int]                 # List of all the integers found in the input.
 
         # Retrieve the input of the problem.
         line = getLine(Year2015_Solution.year, 12)
@@ -1455,7 +1455,7 @@ class Year2015_Solution(Solution):
         """
         numberOfSeconds: int = 2503                              # Number of seconds the race last.
         distancesByTimeForEachReindeer: list[list[int]] = []     # List of all distances that reindeer can make in the associated time
-        distanceAndScoreByReindeer: list[int] = []               # Store the distance and the score of a reinder after n second.
+        distanceAndScoreByReindeer: list[list[int]] = []         # Store the distance and the score of a reinder after n second.
         nbOfReindeer: int                                        # Number of reindeer making the race
 
         # Retrieve Reindeers informations
@@ -1568,7 +1568,7 @@ class Year2015_Solution(Solution):
             return 0
         
         # Return the score of a cookie: the product of all caracteristics.
-        return np.prod(scores)
+        return int(np.prod(scores))
 
     @staticmethod
     def day_15_helper_constructTableOfIngredients() -> list[dict[str, int]]:
@@ -1584,7 +1584,7 @@ class Year2015_Solution(Solution):
         lines: list[str]                                            # All lines of the input of the problem.
         line: str                                                   # String representing the input line by line.
         regexForIngredients: str = r'\b[A-Za-z]+\s[-]?\d+\b'        # Regex for finding informations of the ingredients.
-        matches: list[list[str]]                                    # Table that contain the output of the search via the regex.
+        matches: list[str]                                    # Table that contain the output of the search via the regex.
 
         # Retrieve the input of the problem.
         lines = getLines(Year2015_Solution.year, 15)
@@ -1595,7 +1595,7 @@ class Year2015_Solution(Solution):
             matches = findall(regexForIngredients, line)
 
             # Construct the information of the current ingredient 
-            mappingOfOneIngredient = {m.split()[0]: int(m.split()[1]) for m in matches}
+            mappingOfOneIngredient = {match.split()[0]: int(match.split()[1]) for match in matches}
 
             # Add the ingredient to the list of known ingredients
             listOfAllIngredients.append(mappingOfOneIngredient)
@@ -1650,7 +1650,7 @@ class Year2015_Solution(Solution):
         return Year2015_Solution.day_15_cookieWithMaxScore
 
     @staticmethod
-    def day_16_helper_getInformationFromMFCSAM() -> dict[str: int]:
+    def day_16_helper_getInformationFromMFCSAM() -> dict[str, int]:
         """
         Helper for the solution for day 16. Create a dict with all information from the MFCSAM.
         https://adventofcode.com/2015/day/16
@@ -1658,7 +1658,7 @@ class Year2015_Solution(Solution):
         Returns:
             A dict with all information from the MFCSAM.
         """
-        informationFromMFCSAM: dict[str: int] = {}                 # Dictionnary that contains information of the letter received.
+        informationFromMFCSAM: dict[str, int] = {}                 # Dictionnary that contains information of the letter received.
         
         # Fill the information
         informationFromMFCSAM["children"]    = 3
@@ -1688,7 +1688,7 @@ class Year2015_Solution(Solution):
         line: str                                                   # String representing the input line by line.
         matches: list[str]                                          # Matches of the information we have about the current Aunt Sue.
         regexForItemAndValue: str = r'\b[A-Za-z]+:\s\d+\b'          # Regex for finding information about the current Sue
-        informationFromMFCSAM: dict[str: int]                       # Dictionnary that contains information of the letter received.
+        informationFromMFCSAM: dict[str, int]                       # Dictionnary that contains information of the letter received.
         areAllInformationCorrect: bool                              # States if all information are passing for the current Sue.
 
         # Retrieve the input of the problem.
@@ -1734,7 +1734,7 @@ class Year2015_Solution(Solution):
         line: str                                                   # String representing the input line by line.
         matches: list[str]                                          # Matches of the information we have about the current Aunt Sue.
         regexForItemAndValue: str = r'\b[A-Za-z]+:\s\d+\b'          # Regex for finding information about the current Sue
-        informationFromMFCSAM: dict[str: int]                       # Dictionnary that contains information of the letter received.
+        informationFromMFCSAM: dict[str, int]                       # Dictionnary that contains information of the letter received.
         areAllInformationCorrect: bool                              # States if all information are passing for the current Sue.
 
         # Retrieve the input of the problem.
@@ -1785,7 +1785,7 @@ class Year2015_Solution(Solution):
     day_17_dictOfCombination: dict[int, int] = {}
 
     @staticmethod
-    def day_17_helper_findNumberOfCombination(listOfContainers: list[int], indexOfContainer: int, eggnogMissing: int, currentNumber: int) -> int:
+    def day_17_helper_findNumberOfCombination(listOfContainers: list[int], indexOfContainer: int, eggnogMissing: int, currentNumber: int):
         """
         Helper for the solution for day 17. Fill the dictOfCombination variable to find the quantity of possible combinaison
         for the different number of containers choosen.
