@@ -5,6 +5,7 @@ from hashlib import md5
 import numpy as np
 from sys import maxsize
 from json import load
+from itertools import product
 
 class Year2015_Solution(Solution):
     """
@@ -1900,3 +1901,185 @@ class Year2015_Solution(Solution):
 
         # Return the total number of combination for the smaller number of container
         return numberOfCombinations
+
+    @staticmethod
+    def day_18_helper_getNextStateForOneLight(currentLightState: int, sumSurrounding: int) -> int:
+        """
+        Helper for the solution for day 18. Indicate if a given light should be on or off to next step according
+        to the number of lights around it.
+        https://adventofcode.com/2015/day/18
+
+        Args:
+            - currentLightState (int): State of the current light. 1: on, 0: off
+            - sumSurrounding (int): Number of lights on around the current light.
+
+        Returns:
+            1: Light will be on. 2: Light will be off.
+        """
+        nextState: int = 0            # State of the light for the next iteration. Initially off.
+        
+        # If the light is on, it will stay on if 2 or 3 lights are on around it.
+        if 1 == currentLightState and sumSurrounding in (2, 3):
+            nextState = 1
+        # If the light is off, it will switch on if 3 lights are on around it.
+        elif 0 == currentLightState and 3 == sumSurrounding:
+                nextState = 1
+        
+        # Return the next state of the given light.
+        return nextState
+
+    @staticmethod
+    def day_18_helper_getSurroundingSum(lightsState, rowIndex, colIndex) -> int:
+        """
+        Helper for the solution for day 18. Returns the sum of all lights around the light given.
+        https://adventofcode.com/2015/day/18
+
+        Args:
+            - lightsState (list[list[int]]): Whole board of lights.
+            - rowIndex (int): Index of the lights' row we want to find the surrounding sum.
+            - colIndex (int): Index of the lights' col we want to find the surrounding sum.
+
+        Returns:
+            Number of lights that are on around the given light.
+        """
+
+        nbLightsRow: int = len(lightsState)         # Number of lights per row.
+        
+        # First row boundary
+        if 0 == rowIndex:
+            # Top left boundary
+            if 0 == colIndex:
+                return lightsState[0][1] + lightsState[1][0] + lightsState[1][1]
+            
+            # Top right boundary
+            elif nbLightsRow == (colIndex + 1):
+                return lightsState[0][-2] + lightsState[1][-1] + lightsState[1][-2]
+
+            return lightsState[0][colIndex - 1] + lightsState[0][colIndex + 1] + \
+            lightsState[1][colIndex - 1] + lightsState[1][colIndex] + lightsState[1][colIndex + 1]
+        
+        # Last row boundary
+        if nbLightsRow == (rowIndex + 1):
+            # Bottom left boundary
+            if 0 == colIndex:
+                return lightsState[-1][1] + lightsState[-2][0] + lightsState[-2][1]
+            
+            # Bottom right boundary
+            elif nbLightsRow == (colIndex + 1):
+                return lightsState[-1][-2] + lightsState[-2][-1] + lightsState[-2][-2]
+            
+            return lightsState[-1][colIndex - 1] + lightsState[-1][colIndex + 1] + \
+            lightsState[-2][colIndex - 1] + lightsState[-2][colIndex] + lightsState[-2][colIndex + 1]
+
+        # First column boundary
+        if 0 == colIndex:
+            return lightsState[rowIndex - 1][0] + lightsState[rowIndex +1][0] + \
+            lightsState[rowIndex - 1][1] + lightsState[rowIndex][1] + lightsState[rowIndex + 1][1]
+
+        # Last column boundary
+        if nbLightsRow == (colIndex + 1):
+            return lightsState[rowIndex - 1][-1] + lightsState[rowIndex + 1][-1] + \
+            lightsState[rowIndex - 1][-2] + lightsState[rowIndex][-2] + lightsState[rowIndex + 1][-2]
+        
+        # Classic case
+        return lightsState[rowIndex - 1][colIndex - 1] + lightsState[rowIndex - 1][colIndex] + lightsState[rowIndex - 1][colIndex + 1] + \
+               lightsState[rowIndex][colIndex - 1] + lightsState[rowIndex][colIndex + 1] + \
+               lightsState[rowIndex + 1][colIndex - 1] + lightsState[rowIndex + 1][colIndex] + lightsState[rowIndex + 1][colIndex + 1]
+
+    @staticmethod
+    def day_18_helper_getNextSteps(lightsState: list[list[int]], numberOfSteps: int, areCornerStucked: bool) -> list[list[int]]:
+        """
+        Helper for the solution for day 18. Use the Santa's rules of switch on / off to get the state after a given number of steps.
+        https://adventofcode.com/2015/day/18
+
+        Args:
+            - lightsState (list[list[int]]): State of the light in the input. Modified in place so nothing is returned.
+            - numberOfSteps (int): Number of time the steps are repeated.
+            - areCornerStucked (bool): Boolean that states if the lights in corner can changed state or not. False: Part 1, True: Part 2.
+        Returns:
+            - Lights state once the steps are all done.
+        """
+        nbLightsRow: int = len(lightsState)         # Number of lights per row
+
+        # New lights state computed at each step.
+        lightsStateNew: list[list[int]] = [[0 for _ in range(nbLightsRow)]for _ in range(nbLightsRow)]
+        
+        # Iterate all number of steps needed.
+        for _ in range(numberOfSteps):
+            
+            # Iterate for all values. Get the surrounding sum of the light and update in the new board what it will be next time.
+            for lineIndex, colIndex in product(range(nbLightsRow), range(nbLightsRow)):
+                currentSurrounding = Year2015_Solution.day_18_helper_getSurroundingSum(lightsState, lineIndex, colIndex)
+                lightsStateNew[lineIndex][colIndex] = Year2015_Solution.day_18_helper_getNextStateForOneLight(lightsState[lineIndex][colIndex], currentSurrounding)
+            
+            # Store the following state in the current state.
+            lightsState = lightsStateNew.copy()
+            
+            # If corner are stucked in on, they should remain on.
+            if areCornerStucked:
+                lightsState[0][0] = 1
+                lightsState[0][-1] = 1
+                lightsState[-1][0] = 1
+                lightsState[-1][-1] = 1
+            
+            # Re-init the lightsStateNew for next time.
+            lightsStateNew = [[0 for _ in range(nbLightsRow)]for _ in range(nbLightsRow)]
+
+        # Return the final lightsState.
+        return lightsState
+
+    @staticmethod
+    def day_18_Part_1() -> int:
+        """
+        Get solution for day 18, Part 1
+        https://adventofcode.com/2015/day/18
+
+        Returns:
+            How many lights are on after 100 steps.
+        """
+        lines: list[str]                                            # All lines of the input of the problem.
+        line: str                                                   # String representing the input line by line.
+        lightsState: list[list[int]] = []                           # Matrix containg all information about the lights at a given step.
+        numberOfSteps: int = 100                                    # Number of steps the process is repeated.
+        
+        # Retrieve the input of the problem.
+        lines = getLines(Year2015_Solution.year, 18)
+
+        # Iterating among all lines. Create a matrix with 1 for on lights, and 0 for off lights.
+        for line in lines:
+            line = line.strip()
+            lightsState.append([1 if "#" == letter else 0 for letter in line])
+        
+        # Get the state after numberOfSteps iterations.
+        lightsState = Year2015_Solution.day_18_helper_getNextSteps(lightsState, numberOfSteps, False)
+
+        # Return the number of lights that are on.
+        return sum(sum(lightLine) for lightLine in lightsState)
+    
+    @staticmethod
+    def day_18_Part_2() -> int:
+        """
+        Get solution for day 18, Part 2
+        https://adventofcode.com/2015/day/18#part2
+
+        Returns:
+            How many lights are on after 100 steps when corner are blocked.
+        """
+        lines: list[str]                                            # All lines of the input of the problem.
+        line: str                                                   # String representing the input line by line.
+        lightsState: list[list[int]] = []                           # Matrix containg all information about the lights at a given step.
+        numberOfSteps: int = 100                                    # Number of steps the process is repeated.
+        
+        # Retrieve the input of the problem.
+        lines = getLines(Year2015_Solution.year, 18)
+
+        # Iterating among all lines. Create a matrix with 1 for on lights, and 0 for off lights.
+        for line in lines:
+            line = line.strip()
+            lightsState.append([1 if "#" == letter else 0 for letter in line])
+        
+        # Get the state after numberOfSteps iterations. The corner are stucked in this part.
+        lightsState = Year2015_Solution.day_18_helper_getNextSteps(lightsState, numberOfSteps, True)
+
+        # Return the number of lights that are on.
+        return sum(sum(lightLine) for lightLine in lightsState)
