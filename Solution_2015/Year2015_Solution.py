@@ -2083,3 +2083,59 @@ class Year2015_Solution(Solution):
 
         # Return the number of lights that are on.
         return sum(sum(lightLine) for lightLine in lightsState)
+    
+    @staticmethod
+    def day_19_Part_1() -> int:
+        """
+        Get solution for day 19, Part 1
+        https://adventofcode.com/2015/day/19
+
+        Returns:
+            How much different medecines Rudolph can take.
+        """
+        lines: list[str]                                            # All lines of the input of the problem.
+        line: str                                                   # String representing the input line by line.
+        regexForMapping: str = r"[a-zA-Z]+"                         # Regex of molecules names for transformations.
+        mapOfPossibleChanges: dict[str, list[str]] = {}             # Mapping of all changes that can be done.
+        currentMedecine: str                                        # Medecine that we have initially
+        setOfFoundMedecine: set[str] = set()                        # Set of all medecine that we can have after transformation.
+        
+        # Retrieve the input of the problem.
+        lines = getLines(Year2015_Solution.year, 19)
+
+        # Iterate among all lines
+        for line in lines:
+
+            # Find molecule names.
+            matches = findall(regexForMapping, line)
+
+            # If there is no 2 strings it means it is not a transformation.
+            if 2 != len(matches):
+                break
+            
+            # If we already have a transformation for this one, ad the other possibility.
+            if matches[0] in mapOfPossibleChanges:
+                mapOfPossibleChanges[matches[0]].append(matches[1])
+
+            # If we don't have any transformation, create the table.
+            else:
+                mapOfPossibleChanges[matches[0]] = [matches[1]]
+        
+        # Get the current medecines that we have 
+        currentMedecine = lines[-1].strip()
+
+        # Iterate among all transformations that are possible.
+        for key, val in mapOfPossibleChanges.items():
+            
+            # Iterate among all letters where we could try to make a change with the current transformation.
+            for charIndex in range(len(currentMedecine) - len(key) + 1):
+                
+                # If the beginning of the current place starts with the key, we can make all possible transformation
+                # And add them to the set of all possible transformation.
+                if currentMedecine[charIndex:].startswith(key):
+                    for possibleChange in val:
+                        setOfFoundMedecine.add(currentMedecine[:charIndex] + possibleChange + currentMedecine[charIndex + len(key):])
+        
+        # Return the number of possible transformation
+        return len(setOfFoundMedecine)
+    
