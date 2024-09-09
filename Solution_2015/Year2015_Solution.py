@@ -2139,3 +2139,80 @@ class Year2015_Solution(Solution):
         # Return the number of possible transformation
         return len(setOfFoundMedecine)
     
+    @staticmethod
+    def day_20_helper_getFirstHouseThatRespectCondition(numberOfGiftPerElf: int, isMakingABreakAfterFifty: bool) -> int:
+        """
+        Helper for the solution for day 20. Find the first house that receives at least the number of present in the input.
+        https://adventofcode.com/2015/day/20
+
+        Args:
+            - numberOfGiftPerElf (int): Number of gift the Elfs are doing each time they enter in a house.
+            - isMakingABreakAfterFifty (bool): States if the Elfs stop xorking after the 50th house.
+        Returns:
+            - Number of the first house that receive at least the desired amount of gift.
+        """
+        # Retrieve the number of present to deliver.
+        numberOfPresent: int = int(getLine(Year2015_Solution.year, 20))
+        # Write for each house the number of presents it will receive.
+        presentsPerHouse: list[int] = [0 for _ in range(int(numberOfPresent / numberOfGiftPerElf) + 1)]
+        
+        counterOfTimeWorking: int      # Used to track how much deliver the current elf made.
+        
+        # Itrerating among all elfs that are going to work.
+        for elf in range(1, len(presentsPerHouse)):
+            # Re-Initialize the number of house the Elfs worked.
+            counterOfTimeWorking = 0
+            
+            # Iterating among all houses that the elf is going to visit.
+            for houseVisited in range(elf, len(presentsPerHouse), elf):
+                
+                # Adding the number of presents the elf is delivering.
+                presentsPerHouse[houseVisited] += elf * numberOfGiftPerElf
+                
+                # Increment the number of visited house and stop the work for this elf if he finished the work.
+                counterOfTimeWorking += 1
+                if isMakingABreakAfterFifty and 50 == counterOfTimeWorking :
+                    break
+        
+        # Find the first occurence of houses that has at least the desired amount of present
+        for indexOfHouse in range(len(presentsPerHouse)):
+            if presentsPerHouse[indexOfHouse] >= numberOfPresent:
+                return indexOfHouse
+
+        # Return 0 if the house is not found. Never reached because house numberOfPresent/numberOfGiftPerElf is visited by
+        # an Elf that gives numberOfPresent presents.
+        return 0
+
+    @staticmethod
+    def day_20_Part_1() -> int:
+        """
+        Get solution for day 20, Part 1
+        https://adventofcode.com/2015/day/20
+
+        Returns:
+            Smallest number of house to get the number of presents in the input.
+        """
+        numberOfFirstHouse: int         # Number of the first house that receives at least the input number of gift.
+        
+        # Retrieve the number of the house.
+        numberOfFirstHouse = Year2015_Solution.day_20_helper_getFirstHouseThatRespectCondition(10, False)
+
+        # Return the number found.
+        return numberOfFirstHouse
+    
+    @staticmethod
+    def day_20_Part_2() -> int:
+        """
+        Get solution for day 20, Part 2
+        https://adventofcode.com/2015/day/20#part2
+
+        Returns:
+            Smallest number of house to get the number of presents in the input when elfs deliver differently.
+        """
+        numberOfFirstHouse: int         # Number of the first house that receives at least the input number of gift.
+        
+        # Retrieve the number of the house.
+        numberOfFirstHouse = Year2015_Solution.day_20_helper_getFirstHouseThatRespectCondition(11, True)
+        
+        # Return the number found.
+        return numberOfFirstHouse
