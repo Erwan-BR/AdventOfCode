@@ -2495,6 +2495,9 @@ class Year2015_Solution(Solution):
         Helper for the solution for day 23. Retrieve the value inside the register b once asm operations are executed.
         https://adventofcode.com/2015/day/23
 
+        Args:
+            initValueOfRegisterA (int): Value of the register a before executing the instructions.
+            
         Returns:
             Value inside the register b at the end of the different executions.
         """
@@ -2581,6 +2584,144 @@ class Year2015_Solution(Solution):
 
         # Return the final value of b.
         return valueOfRegisterBAfterExecutions
+
+    day_24_minQEForEqualWeights: int = maxsize
+    
+    @staticmethod
+    def day_24_helper_getQE(listOfWeight: list[int], listOfChoosen: list[bool]) -> int:
+        """
+        Helper for the solution for day 24. Find the quantum entanglement of the current configuration.
+        https://adventofcode.com/2015/day/24
+
+        Args:
+            listOfWeight (list[int]): Values of the weights of the different packages.
+            listOfChoosen (list[bool]): Booleans that states if each package is taken or not.
+        
+        Returns:
+            Quantum etranglement of the current configuration.
+        """
+        quantumEtranglement: int = 1        # Quantum etranglement of the current configuration
+
+        # Iterating among all packages
+        for weightIndex in range(len(listOfWeight)):
+            
+            # If the package is choosen, we multiply the QE by the new weight.
+            if listOfChoosen[weightIndex]:
+                quantumEtranglement *= listOfWeight[weightIndex]
+        
+        # Return the QE found.
+        return quantumEtranglement
+    
+    @staticmethod
+    def day_24_helper_dfsFoundSmallestQE(listOfWeight: list[int], indexOfPackage: int, currentWeight: int, targetWeight: int, listOfChoosen: list[bool]):
+        """
+        Helper for the solution for day 24. Find the smallest QE possible by using dfs.
+        https://adventofcode.com/2015/day/24
+
+        Args:
+            listOfWeight (list[int]): Values of the weights of the different packages.
+            indexOfPackage (int): Index of the package that can be choose or not.
+            currentWeight (int): Weight that is currently taken.
+            targetWeight (int): Weight that should be on each zone of the sleigh.
+            listOfChoosen (list[bool]): Booleans that states if each package is taken or not.
+        """
+        
+        # If the current weight is the one wanted, we can compute the QE of the new package and stop the function
+        # (as long as no package has a null weight)
+        if currentWeight == targetWeight:
+            Year2015_Solution.day_24_minQEForEqualWeights = min(Year2015_Solution.day_24_minQEForEqualWeights, Year2015_Solution.day_24_helper_getQE(listOfWeight, listOfChoosen))
+            return
+        
+        # If we reached the end of the list, we can stop the call.
+        if indexOfPackage == len(listOfWeight):
+            return
+        
+        # Choose or not the package in the current group.
+        for isPackageChoosen in (True, False):
+            
+            # Add the weight of the package if it has to be choosed, and write it in the list of choosen packages.
+            currentWeight += listOfWeight[indexOfPackage] * int(isPackageChoosen)
+            listOfChoosen[indexOfPackage] = isPackageChoosen
+            
+            # If we can add more weight on the current group, call the function with the next package.
+            if targetWeight >= currentWeight:
+                Year2015_Solution.day_24_helper_dfsFoundSmallestQE(listOfWeight, indexOfPackage + 1, currentWeight, targetWeight, listOfChoosen)
+
+            # Delete the weight of the package we are not taking anymore.
+            currentWeight -= listOfWeight[indexOfPackage] * int(isPackageChoosen)
+            listOfChoosen[indexOfPackage] = False
+            
+    @staticmethod
+    def day_24_helper_getMinQEForNumberOfGroup(numberOfGroups: int) -> int:
+        """
+        Helper for the solution for day 24. Construct the searching for the smallest QE, according to the number of groups done.
+        https://adventofcode.com/2015/day/24
+
+        Args:
+            numberOfGroups (int): Number of group of packages that should be the same weight.
+        
+        Returns:
+            Smallest Quantum etranglement for the given number of groups.
+        """
+        lines: list[str]                # Input of the problem
+        weightOfPackages: list[int]     # Weight of all packages.
+        
+        # Re-initialize the value of the QE to max because we want the smallest possible.
+        Year2015_Solution.day_24_minQEForEqualWeights = maxsize
+
+        # Retrieve the input of the problem.
+        lines = getLines(Year2015_Solution.year, 24)
+
+        # Convert the weights to integer.
+        weightOfPackages = [int(line) for line in lines]
+
+        # Compute the total weight that should be on each area.
+        totalWeightPerArea: int = int(sum(package for package in weightOfPackages) / numberOfGroups)
+
+        # State that no package is choosen at the beginning.
+        isPackageChoosen = [False for _ in range(len(weightOfPackages))]
+        
+        # Use DFS to find the smallest QE possible.
+        Year2015_Solution.day_24_helper_dfsFoundSmallestQE(weightOfPackages, 0, 0, totalWeightPerArea, isPackageChoosen)
+        
+        # Return the minimum QE that has been found.
+        return Year2015_Solution.day_24_minQEForEqualWeights
+
+    @staticmethod
+    def day_24_Part_1() -> int:
+        """
+        Get solution for day 24, Part 1
+        https://adventofcode.com/2015/day/24
+
+        Returns:
+            Smallest QE possible when the weight is divided in 3 parts.
+        """
+
+        minQEForThreeParts: int        # Value of the QE
+
+        # Retrieve the value of the smallest QE for 3 equal parts
+        minQEForThreeParts = Year2015_Solution.day_24_helper_getMinQEForNumberOfGroup(3)
+
+        # Return the value of the QE.
+        return minQEForThreeParts
+
+    @staticmethod
+    def day_24_Part_2() -> int:
+        """
+        Get solution for day 24, Part 2
+        https://adventofcode.com/2015/day/24#part2
+
+        Returns:
+            Smallest QE possible when the weight is divided in 4 parts.
+        """
+
+        minQEForThreeParts: int        # Value of the QE
+
+        # Retrieve the value of the smallest QE for 4 equal parts
+        minQEForThreeParts = Year2015_Solution.day_24_helper_getMinQEForNumberOfGroup(4)
+
+        # Return the value of the QE.
+        return minQEForThreeParts
 
     @staticmethod
     def day_25_Part_1():
