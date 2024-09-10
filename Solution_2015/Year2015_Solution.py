@@ -2488,3 +2488,36 @@ class Year2015_Solution(Solution):
         
         # Should never be reached. Returns -1 if all combinations allows to defeat the boss.
         return -1
+
+    @staticmethod
+    def day_25_Part_1():
+        """
+        Get solution for day 25, Part 1
+        https://adventofcode.com/2015/day/25
+
+        Returns:
+            Code to boot on the weather machine.
+        """
+        line: str = getLine(Year2015_Solution.year, 25)     # Input of the problem, which contains the needed row / column that are the target.
+        
+        input: list[str] = findall(r"\d+", line)            # List of string representation of the target coordinates. 
+
+        targetCol: int = int(input[1])   # Column where the code should be taken
+        targetRow:int = int(input[0])    # Row where the code should be taken
+
+        inputVal:    int = 20151125      # Last code found
+        multiplier:  int = 252533        # Number that should mulitply the last input
+        divider:     int = 33554393      # Number that is used to have the modulo of the last input.
+
+        # Compute the number of iterations. We could proove with math that for going to row / col, we can go from 1/1 to row/1 by adding
+        # The value of i for i in 1 .. row - 1 (because each step we have to make 1, 2, 3, 4, .. operations).
+        # And then adding the number needed for going from row/1 to row/col. We have to add nbRow, then nbRow + 1, nbRow + 2 ...
+        nbIterations: int = sum(i for i in range(1, targetRow)) + (targetCol - 1) * targetRow + sum(i for i in range(0, targetCol))
+
+        # Iterating the number of time needed.
+        for _ in range(nbIterations):
+            # Compute the next code
+            inputVal = ((inputVal * multiplier) % divider)
+        
+        # Return the code at the correct row / column.
+        return inputVal
