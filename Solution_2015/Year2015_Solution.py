@@ -2488,6 +2488,99 @@ class Year2015_Solution(Solution):
         
         # Should never be reached. Returns -1 if all combinations allows to defeat the boss.
         return -1
+    
+    @staticmethod
+    def day_23_helper_getValueOfBAfterOperations(initValueOfRegisterA: int) -> int:
+        """
+        Helper for the solution for day 23. Retrieve the value inside the register b once asm operations are executed.
+        https://adventofcode.com/2015/day/23
+
+        Returns:
+            Value inside the register b at the end of the different executions.
+        """
+
+        val: dict[str, int] = {'b': 0, 'a': initValueOfRegisterA}   # Register with their different values
+        lines: list[str] = getLines(Year2015_Solution.year, 23)     # All executions that may be executed.
+        lineIndex: int = 0                                          # Index of the current execution
+        elementsOfInstruction: list[str]                            # Elements that are on the instruction we are executing.
+
+        # While the index is pointeing to a valid instruction, execute instruction.
+        while 0 <= lineIndex and len(lines) > lineIndex:
+            
+            # Retrieve the elements of the instruction.
+            elementsOfInstruction = findall(r"[a-z]+", lines[lineIndex])
+            
+            # Divide by 2 the value of the register, and go to the next instruction
+            if "hlf" == elementsOfInstruction[0]:
+                val[elementsOfInstruction[-1]] = int(val[elementsOfInstruction[-1]] / 2)
+                lineIndex += 1
+            
+            # Triple the value of the register, and go to the next instruction
+            elif "tpl" == elementsOfInstruction[0]:
+                val[elementsOfInstruction[-1]] = val[elementsOfInstruction[-1]] * 3
+                lineIndex += 1
+            
+            # Increment by 1 the value of the register, and go to the next instruction
+            elif "inc" == elementsOfInstruction[0]:
+                val[elementsOfInstruction[-1]] += 1
+                lineIndex += 1
+            
+            # Jump a given number of instruction
+            elif "jmp" == elementsOfInstruction[0]:
+                lineIndex += int(findall(r"-?\d+", lines[lineIndex])[0])
+            
+            # Jump a given number of instruction if the value in the register is even. Else, go to the next instruction.
+            elif "jie" == elementsOfInstruction[0]:
+                if 0 == val[elementsOfInstruction[-1]] % 2:
+                    lineIndex += int(findall(r"-?\d+", lines[lineIndex])[0])
+                else:
+                    lineIndex += 1
+            
+            # Jump a given number of instruction if the value in the register is one. Else, go to the next instruction.
+            elif "jio" == elementsOfInstruction[0]:
+                if 1 == val[elementsOfInstruction[-1]]:
+                    lineIndex += int(findall(r"-?\d+", lines[lineIndex])[0])
+                else:
+                    lineIndex += 1
+        
+        # Return the value of the register b once we are out of the defined instruction.
+        return val['b']
+
+    @staticmethod
+    def day_23_Part_1():
+        """
+        Get solution for day 23, Part 21
+        https://adventofcode.com/2015/day/23
+
+        Returns:
+            Value of the register b once the autorized instruction are executed, when the value of the register a is 0 initially.
+        """
+
+        valueOfRegisterBAfterExecutions: int        # Value of b after the execution of the instruction.
+
+        # Retrieve the value of b after the executions
+        valueOfRegisterBAfterExecutions = Year2015_Solution.day_23_helper_getValueOfBAfterOperations(0)
+
+        # Return the final value of b.
+        return valueOfRegisterBAfterExecutions
+
+    @staticmethod
+    def day_23_Part_2():
+        """
+        Get solution for day 23, Part 2
+        https://adventofcode.com/2015/day/23#part2
+
+        Returns:
+            Value of the register b once the autorized instruction are executed, when the value of the register a is 1 initially.
+        """
+
+        valueOfRegisterBAfterExecutions: int        # Value of b after the execution of the instruction.
+
+        # Retrieve the value of b after the executions, when a is initialized to 1
+        valueOfRegisterBAfterExecutions = Year2015_Solution.day_23_helper_getValueOfBAfterOperations(1)
+
+        # Return the final value of b.
+        return valueOfRegisterBAfterExecutions
 
     @staticmethod
     def day_25_Part_1():
