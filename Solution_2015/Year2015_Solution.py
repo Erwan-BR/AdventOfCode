@@ -1,6 +1,6 @@
 from Global.globals import getLines, getLine, getNameOfFile
 from Solution.Solution import Solution
-from re import split, findall
+from re import split, findall, search
 from hashlib import md5
 import numpy as np
 from sys import maxsize
@@ -2216,3 +2216,275 @@ class Year2015_Solution(Solution):
         
         # Return the number found.
         return numberOfFirstHouse
+
+    @staticmethod
+    def day_21_helper_addElement(currentStats: list[int], newElement: list[int]) -> None:
+        """
+        Helper for the solution for day 21. Add the stats of the new element (weapon / armor / ring) to the current stats of the player.
+        https://adventofcode.com/2015/day/21
+
+        Args:
+            - currentStats (list[int]): Stats of the player before ading a new object.
+            - newElement (list[int]): Stats of the new element the player just bought.
+        Returns:
+            Nothing, the combination is modified in place.
+        """
+        # Update price, attack and then armor.
+        currentStats[0] += newElement[0]
+        currentStats[1] += newElement[1]
+        currentStats[2] += newElement[2]
+
+    @staticmethod
+    def day_21_helper_deleteElement(currentStats: list[int], oldElement: list[int]) -> None:
+        """
+        Helper for the solution for day 21. Delete the stats of the element (weapon / armor / ring) to the current stats of the player.
+        https://adventofcode.com/2015/day/21
+
+        Args:
+            - currentStats (list[int]): Stats of the player before ading a new object.
+            - oldElement (list[int]): Stats of the element the player is not buying anymore.
+        Returns:
+            Nothing, the combination is modified in place.
+        """
+        # Update price, attack and then armor.
+        currentStats[0] -= oldElement[0]
+        currentStats[1] -= oldElement[1]
+        currentStats[2] -= oldElement[2]
+
+    @staticmethod
+    def day_21_helper_createAllCombinations() -> list[list[int]]:
+        """
+        Helper for the solution for day 21. Create all combination of stuffs possible.
+        https://adventofcode.com/2015/day/21
+
+        Returns:
+            A list of all combinations, sorted by price. Each element is constructed like this: [price, damage, armor]
+        """
+        # List of all possible weapons.
+        weapons: list[list[int]] = [[8, 4, 0], [10, 5, 0], [25, 6, 0], [40, 7, 0], [74, 8, 0]]
+        
+        # List of all possible armors. One have empty stats because the player can refuse buying an armor.
+        armors: list[list[int]]  = [[0, 0, 0], [13, 0, 1], [31, 0, 2], [53, 0, 3], [75, 0, 4], [102, 0, 5]]
+        
+        # List of all possible rings. Two have empty stats because the player can buy 0 - 2 rings.
+        rings: list[list[int]]   = [[0, 0, 0], [0, 0, 0], [25, 1, 0], [50, 2, 0], [100, 3, 0], [20, 0, 1], [40, 0, 2], [80, 0, 3]]
+
+        # List of all combinations that the player could buy.
+        allCombinations: list[list[int]] = []
+
+        # Stats of the current combination that the player is buying.
+        currentCombination: list[int]
+        
+        # Iterating among all weapons to make the player choose one of them.
+        for weapon in weapons:
+            
+            # Re-init the table values and add the weapon to the items.
+            currentCombination = [0, 0, 0]
+            Year2015_Solution.day_21_helper_addElement(currentCombination, weapon)
+            
+            # Iterating among all armors to make the player choose one of them (or not with the empty armor)
+            for armor in armors:
+                # Add the armor to the items.
+                Year2015_Solution.day_21_helper_addElement(currentCombination, armor)
+                
+                # Iterating among all rings to make the player choose one of them (or not with the empty ring)
+                for firstRing in range(len(rings)):
+                    
+                    # Add the ring to the items.
+                    Year2015_Solution.day_21_helper_addElement(currentCombination, rings[firstRing])
+                    
+                    # Iterating among all other rings to make the player choose another one (or not with the empty ring)
+                    for secondRing in range(firstRing + 1, len(rings)):
+                        
+                        # Add the ring to the items.
+                        Year2015_Solution.day_21_helper_addElement(currentCombination, rings[secondRing])
+                        
+                        # Store a copy of the combination the player just made.
+                        allCombinations.append(currentCombination.copy())
+                        
+                        # Delete the second ring from the stuff bought by the player.
+                        Year2015_Solution.day_21_helper_deleteElement(currentCombination, rings[secondRing])
+                    
+                    # Delete the first ring from the stuff bought by the player.
+                    Year2015_Solution.day_21_helper_deleteElement(currentCombination, rings[firstRing])
+                
+                # Delete the armor from the stuff bought by the player.
+                Year2015_Solution.day_21_helper_deleteElement(currentCombination, armor)
+            
+            # Delete the last ring from the stuff bought by the player.
+            Year2015_Solution.day_21_helper_deleteElement(currentCombination, weapon)
+
+        # Sort the combination by price. If the combination are same price, it's then sorted by damage then armor, but what is 
+        # Important is the price.
+        allCombinations.sort()
+        
+        # Return all combinations found.
+        return allCombinations
+
+    @staticmethod
+    def day_21_helper_getNumberOfTurnToKillSomeone(hitPointOtVictim: int, armorOfVictim: int, attackOfAttacker: int) -> int:
+        """
+        Helper for the solution for day 21. Compute the number of turn needed for an attacker to kill his victim.
+        https://adventofcode.com/2015/day/21
+
+        Args:
+            - hitPointOtVictim (int): Number of hit point to retrieve to the victim.
+            - armorOfVictim (int): Total armor of the victim.
+            - attackOfAttacker (int): Total attack of the attacker. If the attack is less or equal than the armor, one damage is done each turn.
+
+        Returns:
+            Number of turns that ir would take for the Attacker to kill his opponent.
+        """
+
+        numberOfTurnNeeded: int         # Number of turn needed for the attacker to kill the victim.
+        
+        # If the armor is greater or equal than the attack, 1 damage is done and then it takes the number of hit point to kill the victim.
+        if armorOfVictim >= attackOfAttacker:
+            numberOfTurnNeeded = hitPointOtVictim
+        else:
+            # Compute the number of turn to retrieve life points
+            # Number of turn to retrieve the difference each time
+            numberOfTurnNeeded = int(hitPointOtVictim / (attackOfAttacker - armorOfVictim))
+
+            # If the rest is non-null, there will be one turn left for deleting a smaller amounf of hit points.
+            if (0 != hitPointOtVictim % (attackOfAttacker - armorOfVictim)):
+                numberOfTurnNeeded += 1
+
+        # Return the number of turn needed to kill the victim.
+        return numberOfTurnNeeded 
+    
+    @staticmethod
+    def day_21_helper_getBossStats() -> tuple[int, int, int]:
+        """
+        Helper for the solution for day 21. Retrieve from the input the stats of the boss
+        https://adventofcode.com/2015/day/21
+
+        Returns:
+            A tuple containing the following information:
+            - lifePoint (int): Number of hit point of the boss.
+            - damage (int): Number of damage the boss causes each turns.
+            - armor (int): Value of the armor of the boss.
+        """
+        bossHitPoints: int                  # Number of hit point the boss has (found in the input).
+        bossAttack: int                     # Number of attack the boss has (found in the input).
+        bossArmor: int                      # Number of armor the boss has (found in the input).
+        lines: list[str]                    # All lines of the input of the problem.
+        line: str                           # String representing the stats of the boss.
+        
+        # Retrieve the information from the input text.
+        lines = getLines(Year2015_Solution.year, 21)
+
+        # Iterating among all information we got.
+        # For each kind of information, fing the integer and store it in the corresponding argument.
+        for line in lines:
+            if line.startswith("Hit Points"):
+                match = search(r'\d+', line)
+                if match:
+                    bossHitPoints = int(match.group())
+            elif line.startswith("Damage"):
+                match = search(r'\d+', line)
+                if match:
+                    bossAttack = int(match.group())
+            elif line.startswith("Armor"):
+                match = search(r'\d+', line)
+                if match:
+                    bossArmor = int(match.group())
+
+        return (bossHitPoints, bossAttack, bossArmor)
+
+    @staticmethod
+    def day_21_Part_1():
+        """
+        Get solution for day 21, Part 1
+        https://adventofcode.com/2015/day/21
+
+        Returns:
+            Smallest amount of gold that Little Henry Case should spend to beat the boss.
+        """
+        playerHitPoints: int = 100          # Initially, the player has 100 hit points.
+        playerAttack: int = 0               # Player attack computed for each combination of elements he bought.
+        playerArmor: int = 0                # Player armor computed for each combination of elements he bought.
+
+        bossHitPoints: int                  # Number of hit point the boss has (found in the input).
+        bossAttack: int                     # Number of attack the boss has (found in the input).
+        bossArmor: int                      # Number of armor the boss has (found in the input).
+
+        combination: list[int]              # Current combination of stuff of the player. Cost, Damage, Armor
+        nbTurnToKillBoss: int               # Number of turn it would take with the current combination to kill the boss.
+        nbTurnToKillMe: int                 # Number of turn it would take with the current combination to kill the player.
+
+        # Retrieve information of the boss from the input text.
+        bossHitPoints, bossAttack, bossArmor = Year2015_Solution.day_21_helper_getBossStats()
+
+        # Retrieve all possible combinations of stuff the boss has.
+        allCombinationsOfStuff: list[list[int]] = Year2015_Solution.day_21_helper_createAllCombinations()
+
+        # Iterate among all possible combination that could be bought.
+        for combination in allCombinationsOfStuff:
+            
+            # Retrieve information concerning the attack and the defense with the current stuff.
+            playerAttack = combination[1]
+            playerArmor = combination[2]
+            
+            # Compute the number of turns it would take for the player to kill the boss and for the player to kill the boss.
+            nbTurnToKillBoss = Year2015_Solution.day_21_helper_getNumberOfTurnToKillSomeone(bossHitPoints, bossArmor, playerAttack)
+            nbTurnToKillMe = Year2015_Solution.day_21_helper_getNumberOfTurnToKillSomeone(playerHitPoints, playerArmor, bossAttack)
+
+            # If the boss is killed in less or equal number of turn, the player wins (because he plays first).
+            if nbTurnToKillBoss <= nbTurnToKillMe:
+                
+                # Return the money spent for this combination of stuff.
+                return combination[0]
+        
+        # Should never be reached. Returns -1 if no combination allows to defeat the boss.
+        return -1
+
+    @staticmethod
+    def day_21_Part_2():
+        """
+        Get solution for day 21, Part 2
+        https://adventofcode.com/2015/day/21#part2
+
+        Returns:
+            Greatest amount of gold that Little Henry Case could spend without beating the boss.
+        """
+        playerHitPoints: int = 100          # Initially, the player has 100 hit points.
+        playerAttack: int = 0               # Player attack computed for each combination of elements he bought.
+        playerArmor: int = 0                # Player armor computed for each combination of elements he bought.
+
+        bossHitPoints: int                  # Number of hit point the boss has (found in the input).
+        bossAttack: int                     # Number of attack the boss has (found in the input).
+        bossArmor: int                      # Number of armor the boss has (found in the input).
+
+        combination: list[int]              # Current combination of stuff of the player. Cost, Damage, Armor
+        nbTurnToKillBoss: int               # Number of turn it would take with the current combination to kill the boss.
+        nbTurnToKillMe: int                 # Number of turn it would take with the current combination to kill the player.
+
+        # Retrieve information of the boss from the input text.
+        bossHitPoints, bossAttack, bossArmor = Year2015_Solution.day_21_helper_getBossStats()
+
+        # Retrieve all possible combinations of stuff the boss has.
+        allCombinationsOfStuff: list[list[int]] = Year2015_Solution.day_21_helper_createAllCombinations()
+
+        # Reverse the combinations of stuff to have the most expensive first.
+        allCombinationsOfStuff.reverse()
+
+        # Iterate among all possible combination that could be bought.
+        for combination in allCombinationsOfStuff:
+            
+            # Retrieve information concerning the attack and the defense with the current stuff.
+            playerAttack = combination[1]
+            playerArmor = combination[2]
+            
+            # Compute the number of turns it would take for the player to kill the boss and for the player to kill the boss.
+            nbTurnToKillBoss = Year2015_Solution.day_21_helper_getNumberOfTurnToKillSomeone(bossHitPoints, bossArmor, playerAttack)
+            nbTurnToKillMe = Year2015_Solution.day_21_helper_getNumberOfTurnToKillSomeone(playerHitPoints, playerArmor, bossAttack)
+
+            # If the boss is killed in more turn, the player loose.
+            if nbTurnToKillBoss > nbTurnToKillMe:
+                
+                # Return the money spent for this combination of stuff.
+                return combination[0]
+        
+        # Should never be reached. Returns -1 if all combinations allows to defeat the boss.
+        return -1
