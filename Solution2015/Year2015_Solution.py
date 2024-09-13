@@ -1,5 +1,4 @@
-from Global.globals import getLines, getLine, getNameOfFile
-from Solution.Solution import Solution
+from globals import getLines, getLine, getNameOfFile
 from re import split, findall, search
 from hashlib import md5
 import numpy as np
@@ -7,48 +6,62 @@ from sys import maxsize
 from json import load
 from itertools import product
 
-class Year2015_Solution(Solution):
+class Year2015_Solution():
     """
-    Class containing the method for having solution of problems of year 2015.
-    """
-
-    year: int = 2015
-    """
-    Constant value that represents the year number. Used to find textfiles.
+    Class containing solutions to problems for 2015.
     """
 
     @staticmethod
-    def getSolution(day: str, isFirstPart: bool):
+    def getSolution(day: int, isFirstPart: bool):
         """
-        Method to get solution of every day for which the solution is developped.
-        Call the parent function with the corresponding arguments.
+        Function called outside the class to obtain the solution for any day, for the first or second part.
+        
+        Args :
+            day (int): Day for which we want to retrieve the solution.
+            isFirstPart (bool): Boolean indicating whether we want to retrieve the solution for day 1 or day 2.
+                - True:  Returns the solution for the first part of the problem.
+                - False: Returns the solution for the second part of the problem.
+            
+        Handle:
+            If the solution has not yet been developed, a message is displayed.
         """
-        return Solution.getSolution(Year2015_Solution, Year2015_Solution.year, day, isFirstPart)
+
+        # Try to obtain the solution for the given day, for the given part.
+        try:
+            nameOfFunction: str = f"day_{day:02d}_Part_{"1" if isFirstPart else "2"}"
+
+            methodToCall: function = getattr(Year2015_Solution, nameOfFunction)
+
+            return methodToCall()
+        
+        # Intercepts errors from a day/part that has not yet been developed.
+        except AttributeError as e:
+            return f"Solution for year 2015, day {day}, part {"one" if isFirstPart else "two"} has not yet been developed."
 
     @staticmethod
     def day_01_Part_1() -> int:
         """
-        Get solution for day 1, Part 1:
+        Get solution for day 1, Part 1.
         https://adventofcode.com/2015/day/1
 
         Returns:
-            Integer representing the number of the floor where Santa ends.
+            Integer representing the floor number where Santa ends up.
         """
-        floorNumber: int = 0    # Number of the floor where Santas is actually.
-        line: str               # Input of the problem, stored on a string.
-        instruction: str        # Instruction the Santa has to follow
+        floorNumber: int = 0    # Number of the floor where Santas is located.
+        line: str               # Input of the problem, stored as a string.
+        instruction: str        # Instruction for Santa to follow.
 
-        # Retrieve the input of the problem.
-        line = getLine(Year2015_Solution.year, 1)
+        # Get the puzzle input.
+        line = getLine(1)
         
-        # For each instruction of the input, increase or decrease the floor number.
+        # For each instruction, increase or decrease the floor number.
         for instruction in line:
             if '(' == instruction:
                 floorNumber += 1
             elif ')' == instruction:
                 floorNumber -= 1
         
-        # Return the computed floor where Santa is at the end.
+        # Return Santa's floor at the end.
         return floorNumber
 
     @staticmethod
@@ -65,7 +78,7 @@ class Year2015_Solution(Solution):
         line: str                   # Input of the problem, stored on a string.
 
         # Retrieve the input of the problem.
-        line = getLine(Year2015_Solution.year, 1)
+        line = getLine(1)
         
         # For each instruction of the input, increase or decrease the floor number.
         for letter in line:
@@ -95,7 +108,7 @@ class Year2015_Solution(Solution):
         line: str                       # String representing the input and the dimension of each gift
         
         # Retrieve the input of the problem.
-        lines = getLines(Year2015_Solution.year, 2)
+        lines = getLines(2)
 
         # For each set of dimensions, compute the needed wrapping paper and add it to the sum.
         for line in lines:
@@ -122,7 +135,7 @@ class Year2015_Solution(Solution):
         line: str                 # String representing the input and the dimension of each gift
         
         # Retrieve the input of the problem.
-        lines = getLines(Year2015_Solution.year, 2)
+        lines = getLines(2)
 
         # For each set of dimensions, compute the needed ribbon and add it to the sum.
         for line in lines:
@@ -150,7 +163,7 @@ class Year2015_Solution(Solution):
         line: str                                                               # String representing the input
         
         # Retrieve the input of the problem.
-        line = getLine(Year2015_Solution.year, 3)
+        line = getLine(3)
         
         # For each instruction, compute the new coordinate and add it to the set of visited coordinates
         for letter in line:
@@ -181,7 +194,7 @@ class Year2015_Solution(Solution):
         line: str                                                             # String representing the input
 
         # Retrieve the input of the problem.
-        line = getLine(Year2015_Solution.year, 3)
+        line = getLine(3)
         
         
         # For each instruction for Santa, compute the new coordinate and add it to the set of visited coordinates
@@ -250,7 +263,7 @@ class Year2015_Solution(Solution):
         line: str                           # String representing the input
         
         # Retrieve the input of the problem.
-        line = getLine(Year2015_Solution.year, 4)
+        line = getLine(4)
         
         # Retrieve the number that should be concatenated at the end thanks to the helper function.
         numberToConcatenate = Year2015_Solution.day_04_helper_findFirstWithNZerosWhenEncoded(line, 5)
@@ -271,7 +284,7 @@ class Year2015_Solution(Solution):
         line: str                           # String representing the input
         
         # Retrieve the input of the problem.
-        line = getLine(Year2015_Solution.year, 4)
+        line = getLine(4)
 
         
         # Retrieve the number that should be concatenated at the end thanks to the helper function.
@@ -296,7 +309,7 @@ class Year2015_Solution(Solution):
         line: str                                               # String representing the input and the strings that might be nine.
 
         # Retrieve the input of the problem.
-        lines = getLines(Year2015_Solution.year, 5)
+        lines = getLines(5)
 
         
         # Iterating among all string and check if they respect the condition.
@@ -346,7 +359,7 @@ class Year2015_Solution(Solution):
         line: str                                               # String representing the input and the strings that might be nine.
 
         # Retrieve all lines of the input file
-        lines = getLines(Year2015_Solution.year, 5)
+        lines = getLines(5)
 
         # Iterating among all string and check if they respect the condition.
         for line in lines:
@@ -392,7 +405,7 @@ class Year2015_Solution(Solution):
         line: str                                                                         # String representing the input and the strings that might be nine.
 
         # Retrieve all lines of the input file
-        lines = getLines(Year2015_Solution.year, 6)
+        lines = getLines(6)
 
         # Iterating among all instructions
         for line in lines:
@@ -433,7 +446,7 @@ class Year2015_Solution(Solution):
         line: str                                                                         # String representing the input and the strings that might be nine.
 
         # Retrieve all lines of the input file
-        lines = getLines(Year2015_Solution.year, 6)
+        lines = getLines(6)
 
         # Iterating among all instructions
         for line in lines:
@@ -482,7 +495,7 @@ class Year2015_Solution(Solution):
         tabOfVal: list[str]                                 # Table that will contains the elements of the REGEX.
         
         # Retrieve all lines of the input file
-        lines = getLines(Year2015_Solution.year, 7)
+        lines = getLines(7)
             
         # Retrieve every operations that needs to be done.
         for line in lines:
@@ -636,7 +649,7 @@ class Year2015_Solution(Solution):
         line: str                           # String representing the input and the strings that might be nine.
 
         # Retrieve all lines of the input file
-        lines = getLines(Year2015_Solution.year, 8)
+        lines = getLines(8)
         lines = [line.strip() for line in lines]
 
         # Iterating among all strings
@@ -682,7 +695,7 @@ class Year2015_Solution(Solution):
         line: str                           # String representing the input and the strings that might be nine.
 
         # Retrieve all lines of the input file
-        lines = getLines(Year2015_Solution.year, 8)
+        lines = getLines(8)
         lines = [line.strip() for line in lines]
 
         # Iterating among all strings
@@ -762,7 +775,7 @@ class Year2015_Solution(Solution):
         line: str                                       # String representing the input line by line.
 
         # Retrieve all lines of the input file
-        lines = getLines(Year2015_Solution.year, 9)
+        lines = getLines(9)
         
         # Construct the dict to know which city correspond to which path
         for line in lines:
@@ -858,7 +871,7 @@ class Year2015_Solution(Solution):
         numberOfOccurenceLastDigit: int     # Number of time the last integer is written
         
         # Retrieve the input of the problem.
-        line = getLine(Year2015_Solution.year, 10)
+        line = getLine(10)
 
         # Play the game numberOfOccurences times
         for _ in range(numberOfOccurences):
@@ -1078,7 +1091,7 @@ class Year2015_Solution(Solution):
         line: str               # Input of the problem, which is the previous password of Santa.
 
         # Retrieve the input of the problem.
-        line = getLine(Year2015_Solution.year, 11)
+        line = getLine(11)
         
         # Retrieve the next password
         line = Year2015_Solution.day_11_helper_findFollowingPassword(line)
@@ -1098,7 +1111,7 @@ class Year2015_Solution(Solution):
         line: str               # Input of the problem, which is the previous password of Santa.
 
         # Retrieve the input of the problem.
-        line = getLine(Year2015_Solution.year, 11)
+        line = getLine(11)
 
         # Find the next password of Santa
         line = Year2015_Solution.day_11_helper_findFollowingPassword(line)
@@ -1190,7 +1203,7 @@ class Year2015_Solution(Solution):
         integers: list[int]                 # List of all the integers found in the input.
 
         # Retrieve the input of the problem.
-        line = getLine(Year2015_Solution.year, 12)
+        line = getLine(12)
 
         # Find all the integers of the document.
         integers = findall(regexForIntegers, line)
@@ -1218,7 +1231,7 @@ class Year2015_Solution(Solution):
         dictOfCurrentElements: dict         # Dictionnary of the elements found in the JSON input.
 
         # Retrieve the input of the problem.
-        with open(getNameOfFile(Year2015_Solution.year, 12), mode="r", encoding="utf-8") as file:
+        with open(getNameOfFile(12), mode="r", encoding="utf-8") as file:
             dictOfCurrentElements = load(file)
 
         # Find the sum of all elements without counting twice the "red" elements.
@@ -1284,7 +1297,7 @@ class Year2015_Solution(Solution):
         line: str                                       # String representing the input line by line.
 
         # Retrieve all lines of the input file
-        lines = getLines(Year2015_Solution.year, 13)
+        lines = getLines(13)
         
         # Construct the dict to know which name correspond to which happiness
         for line in lines:
@@ -1402,7 +1415,7 @@ class Year2015_Solution(Solution):
         distancesByTimeForEachReindeer: list[list[int]] = []     # List of all distances that reindeer can make in the associated time
 
         # Retrieve the input of the problem.
-        lines = getLines(Year2015_Solution.year, 14)
+        lines = getLines(14)
 
         # Iterating among all lines to retrieve informations of speed and rest time
         for line in lines:
@@ -1587,7 +1600,7 @@ class Year2015_Solution(Solution):
         matches: list[str]                                    # Table that contain the output of the search via the regex.
 
         # Retrieve the input of the problem.
-        lines = getLines(Year2015_Solution.year, 15)
+        lines = getLines(15)
 
         # Iterating among all ingredients
         for line in lines:
@@ -1692,7 +1705,7 @@ class Year2015_Solution(Solution):
         areAllInformationCorrect: bool                              # States if all information are passing for the current Sue.
 
         # Retrieve the input of the problem.
-        lines = getLines(Year2015_Solution.year, 16)
+        lines = getLines(16)
 
         # Retrieve the information from the letter
         informationFromMFCSAM = Year2015_Solution.day_16_helper_getInformationFromMFCSAM()
@@ -1738,7 +1751,7 @@ class Year2015_Solution(Solution):
         areAllInformationCorrect: bool                              # States if all information are passing for the current Sue.
 
         # Retrieve the input of the problem.
-        lines = getLines(Year2015_Solution.year, 16)
+        lines = getLines(16)
 
         # Retrieve the information from the letter
         informationFromMFCSAM = Year2015_Solution.day_16_helper_getInformationFromMFCSAM()
@@ -1843,7 +1856,7 @@ class Year2015_Solution(Solution):
         containers: list[int]   # All possible containers.
 
         # Retrieve the input of the problem.
-        lines = getLines(Year2015_Solution.year, 17)
+        lines = getLines(17)
         
         # Get the list of all possible size.
         containers = [int(line) for line in lines]
@@ -1878,7 +1891,7 @@ class Year2015_Solution(Solution):
         numberOfCombinations: int = 0               # Number of valid combinations.
         
         # Retrieve the input of the problem.
-        lines = getLines(Year2015_Solution.year, 17)
+        lines = getLines(17)
         
         # Get the list of all possible size.
         containers = [int(line) for line in lines]
@@ -2043,7 +2056,7 @@ class Year2015_Solution(Solution):
         numberOfSteps: int = 100                                    # Number of steps the process is repeated.
         
         # Retrieve the input of the problem.
-        lines = getLines(Year2015_Solution.year, 18)
+        lines = getLines(18)
 
         # Iterating among all lines. Create a matrix with 1 for on lights, and 0 for off lights.
         for line in lines:
@@ -2071,7 +2084,7 @@ class Year2015_Solution(Solution):
         numberOfSteps: int = 100                                    # Number of steps the process is repeated.
         
         # Retrieve the input of the problem.
-        lines = getLines(Year2015_Solution.year, 18)
+        lines = getLines(18)
 
         # Iterating among all lines. Create a matrix with 1 for on lights, and 0 for off lights.
         for line in lines:
@@ -2101,7 +2114,7 @@ class Year2015_Solution(Solution):
         setOfFoundMedecine: set[str] = set()                        # Set of all medecine that we can have after transformation.
         
         # Retrieve the input of the problem.
-        lines = getLines(Year2015_Solution.year, 19)
+        lines = getLines(19)
 
         # Iterate among all lines
         for line in lines:
@@ -2152,7 +2165,7 @@ class Year2015_Solution(Solution):
             - Number of the first house that receive at least the desired amount of gift.
         """
         # Retrieve the number of present to deliver.
-        numberOfPresent: int = int(getLine(Year2015_Solution.year, 20))
+        numberOfPresent: int = int(getLine(20))
         # Write for each house the number of presents it will receive.
         presentsPerHouse: list[int] = [0 for _ in range(int(numberOfPresent / numberOfGiftPerElf) + 1)]
         
@@ -2372,7 +2385,7 @@ class Year2015_Solution(Solution):
         line: str                           # String representing the stats of the boss.
         
         # Retrieve the information from the input text.
-        lines = getLines(Year2015_Solution.year, 21)
+        lines = getLines(21)
 
         # Iterating among all information we got.
         # For each kind of information, fing the integer and store it in the corresponding argument.
@@ -2503,7 +2516,7 @@ class Year2015_Solution(Solution):
         """
 
         val: dict[str, int] = {'b': 0, 'a': initValueOfRegisterA}   # Register with their different values
-        lines: list[str] = getLines(Year2015_Solution.year, 23)     # All executions that may be executed.
+        lines: list[str] = getLines(23)     # All executions that may be executed.
         lineIndex: int = 0                                          # Index of the current execution
         elementsOfInstruction: list[str]                            # Elements that are on the instruction we are executing.
 
@@ -2670,7 +2683,7 @@ class Year2015_Solution(Solution):
         Year2015_Solution.day_24_minQEForEqualWeights = maxsize
 
         # Retrieve the input of the problem.
-        lines = getLines(Year2015_Solution.year, 24)
+        lines = getLines(24)
 
         # Convert the weights to integer.
         weightOfPackages = [int(line) for line in lines]
@@ -2732,7 +2745,7 @@ class Year2015_Solution(Solution):
         Returns:
             Code to boot on the weather machine.
         """
-        line: str = getLine(Year2015_Solution.year, 25)     # Input of the problem, which contains the needed row / column that are the target.
+        line: str = getLine(25)     # Input of the problem, which contains the needed row / column that are the target.
         
         input: list[str] = findall(r"\d+", line)            # List of string representation of the target coordinates. 
 
