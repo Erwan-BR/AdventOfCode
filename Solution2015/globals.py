@@ -13,7 +13,7 @@ def getNameOfFile(day: int) -> str:
     Returns:
         String representing the path of the textfile.
     """
-    return f"{CURRENT_PATH}\\Solution2015\\textFiles\\{day:02d}.txt"
+    return fr"{CURRENT_PATH}\textFiles\{day:02d}.txt"
 
 def getLines(day: int) -> list[str]:
     """
@@ -43,7 +43,7 @@ def getLine(day: int) -> str:
     Returns:
         A string that contains the input of the problem.
     """
-    line: list[str]        # String that contains the input of the problem.
+    line: str        # String that contains the input of the problem.
 
     # Open the input file to retrieve the line.
     with open(getNameOfFile(day), 'r') as file:
