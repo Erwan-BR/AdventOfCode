@@ -1,302 +1,331 @@
-from Global.globals import getLines, getLine, getNameOfFile
-from Solution.Solution import Solution
+from globals import getLines, getLine, getNameOfFile
 from re import split, findall, search
 from hashlib import md5
 import numpy as np
 from sys import maxsize
 from json import load
 from itertools import product
+from typing import Callable
 
-class Year2015_Solution(Solution):
+class Year2015_Solution():
     """
-    Class containing the method for having solution of problems of year 2015.
-    """
-
-    year: int = 2015
-    """
-    Constant value that represents the year number. Used to find textfiles.
+    Class containing solutions to problems for 2015.
     """
 
     @staticmethod
-    def getSolution(day: str, isFirstPart: bool):
+    def getSolution(day: int, isFirstPart: bool) -> int | str:
         """
-        Method to get solution of every day for which the solution is developped.
-        Call the parent function with the corresponding arguments.
+        Function called outside the class to obtain the solution for any day, for the first or second part.
+        
+        Args :
+            day (int): Day for which we want to retrieve the solution.
+            isFirstPart (bool): Boolean indicating whether we want to retrieve the solution for day 1 or day 2.
+                - True:  Returns the solution for the first part of the problem.
+                - False: Returns the solution for the second part of the problem.
+            
+        Handle:
+            If the solution has not yet been developed, a message is displayed.
         """
-        return Solution.getSolution(Year2015_Solution, Year2015_Solution.year, day, isFirstPart)
+
+        # Try to obtain the solution for the given day, for the given part.
+        try:
+            nameOfFunction: str = f"_day_{day:02d}_Part_{"1" if isFirstPart else "2"}"
+
+            methodToCall: Callable[[], int | str] = getattr(Year2015_Solution, nameOfFunction)
+
+            return methodToCall()
+        
+        # Intercepts errors from a day/part that has not yet been developed.
+        except AttributeError as e:
+            return f"Solution for year 2015, day {day}, part {"one" if isFirstPart else "two"} has not yet been developed."
 
     @staticmethod
-    def day_01_Part_1() -> int:
+    def _day_01_Part_1() -> int:
         """
-        Get solution for day 1, Part 1:
+        Get solution for day 1, Part 1.
         https://adventofcode.com/2015/day/1
 
         Returns:
-            Integer representing the number of the floor where Santa ends.
+            Floor number where Santa ends up.
         """
-        floorNumber: int = 0    # Number of the floor where Santas is actually.
-        line: str               # Input of the problem, stored on a string.
-        instruction: str        # Instruction the Santa has to follow
+        line: str               # Input of the problem, stored as a string.
+        floorNumber: int = 0    # Number of the floor where Santas is located.
+        instruction: str        # Instruction for Santa to follow.
 
-        # Retrieve the input of the problem.
-        line = getLine(Year2015_Solution.year, 1)
+        # Get the puzzle input.
+        line = getLine(1)
         
-        # For each instruction of the input, increase or decrease the floor number.
+        # For each instruction, increase or decrease the floor number.
         for instruction in line:
             if '(' == instruction:
                 floorNumber += 1
             elif ')' == instruction:
                 floorNumber -= 1
         
-        # Return the computed floor where Santa is at the end.
+        # Return Santa's floor at the end.
         return floorNumber
 
     @staticmethod
-    def day_01_Part_2() -> int:
+    def _day_01_Part_2() -> int:
         """
-        Get solution for day 1, Part 2
+        Get solution for day 1, Part 2.
         https://adventofcode.com/2015/day/1#part2
 
         Returns:
-            Integer representing the position of the first character that causes Santa to enter in basement.
+            Position of the first character that brings Santa into the basement.
         """
+        line: str                   # Input of the problem, stored as a string.
+        instruction: str            # Instruction for Santa to follow.
         indexOfCharacter: int = 0   # Index of the current character.
-        floorNumber: int = 0        # Floor number where Santa is currently.
-        line: str                   # Input of the problem, stored on a string.
+        floorNumber: int = 0        # Number of the floor where Santas is located.
 
-        # Retrieve the input of the problem.
-        line = getLine(Year2015_Solution.year, 1)
+        # Get the puzzle input.
+        line = getLine(1)
         
-        # For each instruction of the input, increase or decrease the floor number.
-        for letter in line:
+        # For each instruction, increase or decrease the floor number.
+        for instruction in line:
+
+            # Increment the number of the character giving the instruction to Santa.
             indexOfCharacter += 1
-            if '(' == letter:
+            if '(' == instruction:
                 floorNumber += 1
-            elif ')' == letter:
+            elif ')' == instruction:
                 floorNumber -= 1
-                # If Santa reached the basement, returns the index of the current character.
+                # If Santa has reached the basement, return the index of the current character.
                 if -1 == floorNumber:
-                        return indexOfCharacter
+                    return indexOfCharacter
         
-        # Return -1 if no character leads him to enter the basement. Should not occur on well-constructed inputs.
+        # Return -1 if no character leads Santa to enter the basement. Should not occur on well constructed inputs.
         return -1
 
     @staticmethod
-    def day_02_Part_1() -> int:
+    def _day_02_Part_1() -> int:
         """
-        Get solution for day 2, Part 1
+        Get solution for day 2, Part 1.
         https://adventofcode.com/2015/day/2
 
         Returns:
-            Integer representing the number of square feet needed to wrap the gifts.
+            Number of square feet of wrapping paper needed to wrap gifts.
         """
-        squareFootWrapping: int = 0     # Number of square foot of wrapping paper needed.
-        lines: list[str]                # All lines of the input of the problem.
-        line: str                       # String representing the input and the dimension of each gift
-        
-        # Retrieve the input of the problem.
-        lines = getLines(Year2015_Solution.year, 2)
+        lines: list[str]                # Input of the problem, stored as a list of strings.
+        line: str                       # Input of the problem, representing the dimensions of each gift.
+        squareFootWrapping: int = 0     # Number of square feet of wrapping paper required.
+        dimensionsAsStr: list[str]      # Strings representing the dimensions of a gift.
+        dimensionsAsInt: list[int]      # Integer list containing the dimensions of a gift.
 
-        # For each set of dimensions, compute the needed wrapping paper and add it to the sum.
+        # Get the puzzle input.
+        lines = getLines(2)
+
+        # For each set of dimensions, calculate the wrapping paper required and add it to the total.
         for line in lines:
-            dimensions = split("x", line)
-            dimensions = [(int)(dimension) for dimension in dimensions]
 
-            squareFootWrapping += 2 * (dimensions[0]*dimensions[1] + dimensions[1]*dimensions[2] + dimensions[0]*dimensions[2])
-            squareFootWrapping += min(dimensions[0]*dimensions[1], dimensions[1]*dimensions[2], dimensions[0]*dimensions[2])
+            # Convert gift dimensions into integers.
+            dimensionsAsStr = split("x", line)
+            dimensionsAsInt = [(int)(dimension) for dimension in dimensionsAsStr]
 
-        # Return the number of square feet of wrapping paper needed.
+            # Compute the size of wrapping paper needed for this package, and add the value to the total.
+            squareFootWrapping += 2 * (dimensionsAsInt[0]*dimensionsAsInt[1] + dimensionsAsInt[1]*dimensionsAsInt[2] + dimensionsAsInt[0]*dimensionsAsInt[2])
+            squareFootWrapping += min(dimensionsAsInt[0]*dimensionsAsInt[1], dimensionsAsInt[1]*dimensionsAsInt[2], dimensionsAsInt[0]*dimensionsAsInt[2])
+
+        # Return the number of square feet of wrapping paper required.
         return squareFootWrapping
 
     @staticmethod
-    def day_02_Part_2() -> int:
+    def _day_02_Part_2() -> int:
         """
-        Get solution for day 2, Part 2
+        Get solution for day 2, Part 2.
         https://adventofcode.com/2015/day/2#part2
 
         Returns:
-            Integer representing the length of the ribbon needed.
+            Length of ribbon required for gifts.
         """
-        lengthRibbon: int = 0     # Length of ribbon needed.
-        lines: list[str]          # All lines of the input of the problem.
-        line: str                 # String representing the input and the dimension of each gift
+        lines: list[str]                # Input of the problem, stored as a list of strings.
+        line: str                       # Input of the problem, representing the dimensions of each gift.
+        lengthRibbon: int = 0           # Length of ribbon required.
+        dimensionsAsStr: list[str]      # Strings representing the dimensions of a gift.
+        dimensionsAsInt: list[int]      # Integer list containing the dimensions of a gift.
         
-        # Retrieve the input of the problem.
-        lines = getLines(Year2015_Solution.year, 2)
+        # Get the puzzle input.
+        lines = getLines(2)
 
-        # For each set of dimensions, compute the needed ribbon and add it to the sum.
+        # For each set of dimensions, calculate the length of ribbon required and add it to the total.
         for line in lines:
-            dimensions = split("x", line)
-            dimensions = [(int)(dimension) for dimension in dimensions]
 
-            lengthRibbon += dimensions[0] * dimensions[1] * dimensions[2]
-            lengthRibbon += 2 * (sum(dimensions))
-            lengthRibbon -= 2 * max(dimensions)
+            # Convert gift dimensions into integers.
+            dimensionsAsStr = split("x", line)
+            dimensionsAsInt = [(int)(dimension) for dimension in dimensionsAsStr]
 
-        # Return the length of ribbon needed.
+            # Compute the length of ribbon needed for this package, and add the value to the total.
+            lengthRibbon += dimensionsAsInt[0] * dimensionsAsInt[1] * dimensionsAsInt[2]
+            lengthRibbon += 2 * (sum(dimensionsAsInt))
+            lengthRibbon -= 2 * max(dimensionsAsInt)
+
+        # Return the length of ribbon required.
         return lengthRibbon
     
     @staticmethod
-    def day_03_Part_1() -> int:
+    def _day_03_Part_1() -> int:
         """
-        Get solution for day 3, Part 1
+        Get solution for day 3, Part 1.
         https://adventofcode.com/2015/day/3
 
         Returns:
-            Integer representing the number of house that receives at least one present.
+            Number of houses that receive at least one gift.
         """
-        currentCoordinates: list[int] = [0, 0]                                  # Coordinates of the Santa at a given iteration.
-        visitedCoordinates: set[tuple[int, int]] = {(tuple[int, int])(currentCoordinates)}     # Coordinates of the houses that receives at least one present
-        line: str                                                               # String representing the input
+        line: str                                   # Input of the problem, stored as a string.
+        currentCoordinates: list[int]               # Santa's coordinates at a given iteration.
+        visitedCoordinates: set[tuple[int, int]]    # Coordinates of homes receiving at least one gift.
+        mapOfDirections: dict[str, list[int]]       # Displacement dictionary based on the character of the input puzzle.
+
+        # Get the puzzle input.
+        line = getLine(3)
+
+        # Initialize the variables for Santa's positions and the houses visited.
+        currentCoordinates = [0, 0]
+        visitedCoordinates = {(tuple[int, int])(currentCoordinates)}
+
+        # Initialize the directions dictionary.
+        mapOfDirections = {'<': [-1, 0], '>': [1, 0], '^': [0, 1], 'v': [0, -1]}
         
-        # Retrieve the input of the problem.
-        line = getLine(Year2015_Solution.year, 3)
-        
-        # For each instruction, compute the new coordinate and add it to the set of visited coordinates
+        # For each instruction, calculate the new coordinate and add it to the set of visited coordinates.
         for letter in line:
-            if '<' == letter:
-                currentCoordinates[0] -= 1
-            elif '>' == letter:
-                currentCoordinates[0] += 1
-            elif '^' == letter:
-                currentCoordinates[1] += 1
-            elif 'v' == letter:
-                currentCoordinates[1] -= 1
+            currentCoordinates[0] += mapOfDirections[letter][0]
+            currentCoordinates[1] += mapOfDirections[letter][1]
+
             visitedCoordinates.add((tuple[int, int])(currentCoordinates))
         
-        # Return the number of houses visited by Santa
+        # Return the number of houses visited by Santa.
         return len(visitedCoordinates)
     
     @staticmethod
-    def day_03_Part_2() -> int:
+    def _day_03_Part_2() -> int:
         """
-        Get solution for day 3, Part 2
+        Get solution for day 3, Part 2.
         https://adventofcode.com/2015/day/3#part2
 
         Returns:
-            Integer representing the number of house that receives at least one present.
+            Number of house that receives at least one present.
         """
-        currentCoordinates: list[int] = [0, 0]                                # Coordinates of the Santa / Robo-Santa at a given iteration.
-        visitedCoordinates: set[tuple[int, int]] = {(tuple[int, int])(currentCoordinates)}   # Coordinates of the houses visited by Santa or Robo-Santa.
-        line: str                                                             # String representing the input
+        line: str                                   # Input of the problem, stored as a string.
+        currentCoordinates: list[int]               # Santa's coordinates at a given iteration.
+        visitedCoordinates: set[tuple[int, int]]    # Coordinates of homes receiving at least one gift.
+        mapOfDirections: dict[str, list[int]]       # Displacement dictionary based on the character of the input puzzle.
+        direction: int                              # Index to the direction on the instructions.
+        
+        # Get the puzzle input.
+        line = getLine(3)
 
-        # Retrieve the input of the problem.
-        line = getLine(Year2015_Solution.year, 3)
+        # Initialize the variables for Santa's positions and the houses visited.
+        currentCoordinates = [0, 0]
+        visitedCoordinates = {(tuple[int, int])(currentCoordinates)}
+
+        # Initialize the directions dictionary.
+        mapOfDirections = {'<': [-1, 0], '>': [1, 0], '^': [0, 1], 'v': [0, -1]}
         
-        
-        # For each instruction for Santa, compute the new coordinate and add it to the set of visited coordinates
-        for index in range(0, len(line), 2):
-            if '<' == line[index]:
-                currentCoordinates[0] -= 1
-            elif '>' == line[index]:
-                currentCoordinates[0] += 1
-            elif '^' == line[index]:
-                currentCoordinates[1] += 1
-            elif 'v' == line[index]:
-                currentCoordinates[1] -= 1
+        # For each instruction, calculate the new coordinate and add it to the set of visited coordinates.
+        for direction in range(0, len(line), 2):
+            currentCoordinates[0] += mapOfDirections[line[direction]][0]
+            currentCoordinates[1] += mapOfDirections[line[direction]][1]
+
             visitedCoordinates.add((tuple[int, int])(currentCoordinates))
         
-        # Re-init the coordinate to deal with Robo-Santa moovements
+        # Re-initialize coordinates to Robo-Santa's position.
         currentCoordinates = [0, 0]
 
-        # For each instruction for Robo-Santa, compute the new coordinate and add it to the set of visited coordinates
-        for index in range(1, len(line), 2):
-            if '<' == line[index]:
-                currentCoordinates[0] -= 1
-            elif '>' == line[index]:
-                currentCoordinates[0] += 1
-            elif '^' == line[index]:
-                currentCoordinates[1] += 1
-            elif 'v' == line[index]:
-                currentCoordinates[1] -= 1
-            visitedCoordinates.add((tuple[int, int])(currentCoordinates))
+        # For each instruction, calculate the new coordinate and add it to the set of visited coordinates.
+        for direction in range(1, len(line), 2):
+            currentCoordinates[0] += mapOfDirections[line[direction]][0]
+            currentCoordinates[1] += mapOfDirections[line[direction]][1]
 
-        # Return the number of houses visited
+            visitedCoordinates.add((tuple[int, int])(currentCoordinates))
+        
+        # Return the number of houses visited.
         return len(visitedCoordinates)
     
     @staticmethod
-    def day_04_helper_findFirstWithNZerosWhenEncoded(input: str, numberOfZeros: int) -> int:
+    def _day_04_helper_findFirstWithNZerosWhenEncoded(input: str, numberOfZeros: int) -> int:
         """
-        Helper for the solution for day 4. Find the first number to concatenate at the end of the input to have numberOfZeros when encoded.
+        Helper for the solution to day 4.
+        Find the first number to concatenate at the end of the input in order to have numberOfZeros 0 at
+            the beginning of a character string when encoding.
         https://adventofcode.com/2015/day/4
 
         Returns:
-            Integer representing the number of iterations to make before having numberOfZeros 0 at the beginning of the encoded string.
+            Number of iterations to perform before numberOfZeros 0 appears at the start of the encoded string.
         
         Args:
-            input (str): String that has to be followed by the output number, that we need to encode. 
-            numberOfZeros (int): Number of Zeros at the beginning of the econded string we are looking for.
+            input (str): String to be followed by the output number to be encoded. 
+            numberOfZeros (int): Number of zeros at the beginning of the coded string being searched for.
         """
 
-        numberToConcatenate: int = 0        # Number at the end of the string
+        numberToConcatenate: int = 0        # Integer written at the beginning of the character string.
         
-        # While we don't have numberOfZeros 0 at the beginning of the encoded string, continue with the next integer.
+        # While we don't have numberOfZeros 0 at the start of the encoded string, we continue with the next integer.
         while not md5(f"{input}{numberToConcatenate}".encode()).hexdigest().startswith("0" * numberOfZeros):
             numberToConcatenate += 1
         
-        # Return the first integer that comply to the rules.
+        # Return the first integer that conforms to the rules.
         return numberToConcatenate
 
     @staticmethod
-    def day_04_Part_1() -> int:
+    def _day_04_Part_1() -> int:
         """
-        Get solution for day 4, Part 1
+        Get solution for day 4, Part 1.
         https://adventofcode.com/2015/day/4
 
         Returns:
-            Integer representing the number of iterations to make before having 5 0 at the beginning of the encoded string.
+            Number of iterations to perform before there are five 0s at the start of the encoded string.
         """
-        numberToConcatenate: int            # Number at the end of the string
-        line: str                           # String representing the input
+        line: str                           # Input of the problem, stored as a string.
+        numberToConcatenate: int            # Integer to be written at the end of the string.
         
-        # Retrieve the input of the problem.
-        line = getLine(Year2015_Solution.year, 4)
+        # Get the puzzle input.
+        line = getLine(4)
         
-        # Retrieve the number that should be concatenated at the end thanks to the helper function.
-        numberToConcatenate = Year2015_Solution.day_04_helper_findFirstWithNZerosWhenEncoded(line, 5)
+        # Retrieves the number to be concatenated at the end using the helper function.
+        numberToConcatenate = Year2015_Solution._day_04_helper_findFirstWithNZerosWhenEncoded(line, 5)
 
-        # Return the smallest integer allows to start by 5 zeros when md5-encoded.
+        # Return the smallest integer to start with 5 zeros in the md5 encoding.
         return numberToConcatenate
     
     @staticmethod
-    def day_04_Part_2() -> int:
+    def _day_04_Part_2() -> int:
         """
-        Get solution for day 4, Part 2
+        Get solution for day 4, Part 2.
         https://adventofcode.com/2015/day/4#part2
 
         Returns:
-            Integer representing the number of iterations to make before having 6 Zeros at the beginning of the encoded string.
+            Number of iterations to perform before there are six 0s at the start of the encoded string.
         """
-        numberToConcatenate: int            # Number at the end of the string
-        line: str                           # String representing the input
+        line: str                           # Input of the problem, stored as a string.
+        numberToConcatenate: int            # Integer to be written at the end of the string.
         
-        # Retrieve the input of the problem.
-        line = getLine(Year2015_Solution.year, 4)
-
+        # Get the puzzle input.
+        line = getLine(4)
         
-        # Retrieve the number that should be concatenated at the end thanks to the helper function.
-        numberToConcatenate = Year2015_Solution.day_04_helper_findFirstWithNZerosWhenEncoded(line, 6)
+        # Retrieves the number to be concatenated at the end using the helper function.
+        numberToConcatenate = Year2015_Solution._day_04_helper_findFirstWithNZerosWhenEncoded(line, 6)
 
-        # Return the smallest integer allows to start by 6 zeros when md5-encoded.
+        # Return the smallest integer to start with 6 zeros in the md5 encoding.
         return numberToConcatenate
     
     @staticmethod
-    def day_05_Part_1() -> int:
+    def _day_05_Part_1() -> int:
         """
-        Get solution for day 5, Part 1
+        Get solution for day 5, Part 1.
         https://adventofcode.com/2015/day/5
 
         Returns:
-            Integer representing the number of nice strings.
+            Number of nice strings.
         """
+        lines: list[str]                                        # All lines of the input of the problem.
+        line: str                                               # String representing the input and the strings that might be nine.
         numberOfNiceString: int = 0                             # Number of nice strings found.
         listOfNaughty: list[str] = ["ab", "cd", "pq", "xy"]     # Set containing the naughty characters that should not be in the string.
         listOfVowels: list[str] = ['a', 'e', 'i', 'o', 'u']     # Set containing the different vowels.
-        lines: list[str]                                        # All lines of the input of the problem.
-        line: str                                               # String representing the input and the strings that might be nine.
 
         # Retrieve the input of the problem.
-        lines = getLines(Year2015_Solution.year, 5)
+        lines = getLines(5)
 
         
         # Iterating among all string and check if they respect the condition.
@@ -333,7 +362,7 @@ class Year2015_Solution(Solution):
         return numberOfNiceString
     
     @staticmethod
-    def day_05_Part_2() -> int:
+    def _day_05_Part_2() -> int:
         """
         Get solution for day 5, Part 2
         https://adventofcode.com/2015/day/5#part2
@@ -346,7 +375,7 @@ class Year2015_Solution(Solution):
         line: str                                               # String representing the input and the strings that might be nine.
 
         # Retrieve all lines of the input file
-        lines = getLines(Year2015_Solution.year, 5)
+        lines = getLines(5)
 
         # Iterating among all string and check if they respect the condition.
         for line in lines:
@@ -379,7 +408,7 @@ class Year2015_Solution(Solution):
         return numberOfNiceString
     
     @staticmethod
-    def day_06_Part_1() -> int:
+    def _day_06_Part_1() -> int:
         """
         Get solution for day 6, Part 1
         https://adventofcode.com/2015/day/6
@@ -392,7 +421,7 @@ class Year2015_Solution(Solution):
         line: str                                                                         # String representing the input and the strings that might be nine.
 
         # Retrieve all lines of the input file
-        lines = getLines(Year2015_Solution.year, 6)
+        lines = getLines(6)
 
         # Iterating among all instructions
         for line in lines:
@@ -420,7 +449,7 @@ class Year2015_Solution(Solution):
         return sum(sum(lightsGrid[i]) for i in range(1000))
     
     @staticmethod
-    def day_06_Part_2() -> int:
+    def _day_06_Part_2() -> int:
         """
         Get solution for day 6, Part 2
         https://adventofcode.com/2015/day/6#part2
@@ -433,7 +462,7 @@ class Year2015_Solution(Solution):
         line: str                                                                         # String representing the input and the strings that might be nine.
 
         # Retrieve all lines of the input file
-        lines = getLines(Year2015_Solution.year, 6)
+        lines = getLines(6)
 
         # Iterating among all instructions
         for line in lines:
@@ -461,7 +490,7 @@ class Year2015_Solution(Solution):
         return sum(sum(lightsGrid[i]) for i in range(1000))
     
     @staticmethod
-    def day_07_helper_getDictAndOperations() -> tuple[dict[str, int], list[tuple[str, str, str, str]]]:
+    def _day_07_helper_getDictAndOperations() -> tuple[dict[str, int], list[tuple[str, str, str, str]]]:
         """
         Helper for the solution for day 7. Construct dictionnaries of wires and the list of all the operations.
         https://adventofcode.com/2015/day/7
@@ -482,7 +511,7 @@ class Year2015_Solution(Solution):
         tabOfVal: list[str]                                 # Table that will contains the elements of the REGEX.
         
         # Retrieve all lines of the input file
-        lines = getLines(Year2015_Solution.year, 7)
+        lines = getLines(7)
             
         # Retrieve every operations that needs to be done.
         for line in lines:
@@ -527,7 +556,7 @@ class Year2015_Solution(Solution):
         return (dictOfValues, operations)
 
     @staticmethod
-    def day_07_helper_findValueOfWireA(dictOfValues: dict[str, int], operations: list[tuple[str, str, str, str]]) -> int:
+    def _day_07_helper_findValueOfWireA(dictOfValues: dict[str, int], operations: list[tuple[str, str, str, str]]) -> int:
         """
         Helper for the solution for day 7. Compute the different operations while the value of wire A is not found.
         https://adventofcode.com/2015/day/7
@@ -571,7 +600,7 @@ class Year2015_Solution(Solution):
         return dictOfValuesLocal["a"]
     
     @staticmethod
-    def day_07_Part_1() -> int:
+    def _day_07_Part_1() -> int:
         """
         Get solution for day 7, Part 1
         https://adventofcode.com/2015/day/7
@@ -584,16 +613,16 @@ class Year2015_Solution(Solution):
         outputOfA: int                                                                      # Value returned by the helper function.
 
         # Retrieve dict and list from the helper function
-        dictOfValues, operations = Year2015_Solution.day_07_helper_getDictAndOperations()
+        dictOfValues, operations = Year2015_Solution._day_07_helper_getDictAndOperations()
 
         # Compute the value of the wires until the value of A is found
-        outputOfA = Year2015_Solution.day_07_helper_findValueOfWireA(dictOfValues, operations)
+        outputOfA = Year2015_Solution._day_07_helper_findValueOfWireA(dictOfValues, operations)
 
         # Return the value of the wire A
         return outputOfA
     
     @staticmethod
-    def day_07_Part_2() -> int:
+    def _day_07_Part_2() -> int:
         """
         Get solution for day 7, Part 2
         https://adventofcode.com/2015/day/7#part2
@@ -606,22 +635,22 @@ class Year2015_Solution(Solution):
         outputOfA: int                                                                      # Value returned by the helper function.
 
         # Retrieve dict and list from the helper function
-        dictOfValues, operations = Year2015_Solution.day_07_helper_getDictAndOperations()
+        dictOfValues, operations = Year2015_Solution._day_07_helper_getDictAndOperations()
 
         # Compute the value of the wires until the value of A is found
-        outputOfA = Year2015_Solution.day_07_helper_findValueOfWireA(dictOfValues, operations)
+        outputOfA = Year2015_Solution._day_07_helper_findValueOfWireA(dictOfValues, operations)
 
         # Overwrite the value of wire B and reset the value of A
         dictOfValues["b"] = outputOfA
         
         # Compute the value of the wires until the value of A is found
-        outputOfA = Year2015_Solution.day_07_helper_findValueOfWireA(dictOfValues, operations)
+        outputOfA = Year2015_Solution._day_07_helper_findValueOfWireA(dictOfValues, operations)
 
         # Return the value of the wire A
         return outputOfA
     
     @staticmethod
-    def day_08_Part_1() -> int:
+    def _day_08_Part_1() -> int:
         """
         Get solution for day 8, Part 1
         https://adventofcode.com/2015/day/8
@@ -636,7 +665,7 @@ class Year2015_Solution(Solution):
         line: str                           # String representing the input and the strings that might be nine.
 
         # Retrieve all lines of the input file
-        lines = getLines(Year2015_Solution.year, 8)
+        lines = getLines(8)
         lines = [line.strip() for line in lines]
 
         # Iterating among all strings
@@ -667,7 +696,7 @@ class Year2015_Solution(Solution):
         return numberCharacterOfCode - numberCharacterLitteral
 
     @staticmethod
-    def day_08_Part_2() -> int:
+    def _day_08_Part_2() -> int:
         """
         Get solution for day 8, Part 2
         https://adventofcode.com/2015/day/8#part2
@@ -682,7 +711,7 @@ class Year2015_Solution(Solution):
         line: str                           # String representing the input and the strings that might be nine.
 
         # Retrieve all lines of the input file
-        lines = getLines(Year2015_Solution.year, 8)
+        lines = getLines(8)
         lines = [line.strip() for line in lines]
 
         # Iterating among all strings
@@ -701,10 +730,10 @@ class Year2015_Solution(Solution):
         # Return the number of character added for the encoding.
         return numberCharacterEncoded - numberCharacterOfCode
     
-    day_09_distanceSolution: int = maxsize
+    _day_09_distanceSolution: int = maxsize
 
     @staticmethod
-    def day_09_helper_dfs(listOfVisitedCities: list[int], matrixOfDistances: list[list[int]], currentDistance: int, isMin: bool) -> None:
+    def _day_09_helper_dfs(listOfVisitedCities: list[int], matrixOfDistances: list[list[int]], currentDistance: int, isMin: bool) -> None:
         """
         Helper for the solution for day 9. Use DFS to find the smallest distance.
         https://adventofcode.com/2015/day/9
@@ -730,24 +759,24 @@ class Year2015_Solution(Solution):
             # If all cities are visited, we can try saving the new distance.
             if len(matrixOfDistances) == len(listOfVisitedCities):
                 if isMin:
-                    Year2015_Solution.day_09_distanceSolution = min(Year2015_Solution.day_09_distanceSolution, currentDistance)
+                    Year2015_Solution._day_09_distanceSolution = min(Year2015_Solution._day_09_distanceSolution, currentDistance)
                 else:
-                    Year2015_Solution.day_09_distanceSolution = max(Year2015_Solution.day_09_distanceSolution, currentDistance)
+                    Year2015_Solution._day_09_distanceSolution = max(Year2015_Solution._day_09_distanceSolution, currentDistance)
             
             # If we want the min distance, we want to continue only if the distance is smaller than the one we already have.
             elif isMin:
-                if Year2015_Solution.day_09_distanceSolution > currentDistance:
-                    Year2015_Solution.day_09_helper_dfs(listOfVisitedCities, matrixOfDistances, currentDistance, isMin)
+                if Year2015_Solution._day_09_distanceSolution > currentDistance:
+                    Year2015_Solution._day_09_helper_dfs(listOfVisitedCities, matrixOfDistances, currentDistance, isMin)
             # Else, we want the max so we always keep doing dfs
             else:
-                Year2015_Solution.day_09_helper_dfs(listOfVisitedCities, matrixOfDistances, currentDistance, isMin)
+                Year2015_Solution._day_09_helper_dfs(listOfVisitedCities, matrixOfDistances, currentDistance, isMin)
             
             # Delete the last path and substract the useless distance.
             currentDistance -= matrixOfDistances[listOfVisitedCities[-2]][listOfVisitedCities[-1]]
             listOfVisitedCities.pop()
             
     @staticmethod
-    def day_09_helper_buildMatrixOfDistances() -> list[list[int]]:
+    def _day_09_helper_buildMatrixOfDistances() -> list[list[int]]:
         """
         Helper for the solution for day 9. Construct the distance matrix between each places. 
         https://adventofcode.com/2015/day/9
@@ -762,7 +791,7 @@ class Year2015_Solution(Solution):
         line: str                                       # String representing the input line by line.
 
         # Retrieve all lines of the input file
-        lines = getLines(Year2015_Solution.year, 9)
+        lines = getLines(9)
         
         # Construct the dict to know which city correspond to which path
         for line in lines:
@@ -793,7 +822,7 @@ class Year2015_Solution(Solution):
         return matrixOfDistances
 
     @staticmethod
-    def day_09_Part_1() -> int:
+    def _day_09_Part_1() -> int:
         """
         Get solution for day 9, Part 1
         https://adventofcode.com/2015/day/9
@@ -804,20 +833,20 @@ class Year2015_Solution(Solution):
         matrixOfDistances: list[list[int]]  # Matrix containing all the distances between every locations
         
         # Set the solution to max value to make the comparaison logical with min function
-        Year2015_Solution.day_09_distanceSolution = maxsize
+        Year2015_Solution._day_09_distanceSolution = maxsize
 
         # Retrieve the matrix thanks to the helper function
-        matrixOfDistances = Year2015_Solution.day_09_helper_buildMatrixOfDistances()
+        matrixOfDistances = Year2015_Solution._day_09_helper_buildMatrixOfDistances()
         
         # Find the smallest route by starting from each cities.
         for indexCity in range(len(matrixOfDistances)):
-            Year2015_Solution.day_09_helper_dfs([indexCity], matrixOfDistances, 0, True)
+            Year2015_Solution._day_09_helper_dfs([indexCity], matrixOfDistances, 0, True)
 
         # Return the smallest path found
-        return Year2015_Solution.day_09_distanceSolution
+        return Year2015_Solution._day_09_distanceSolution
     
     @staticmethod
-    def day_09_Part_2() -> int:
+    def _day_09_Part_2() -> int:
         """
         Get solution for day 9, Part 2
         https://adventofcode.com/2015/day/9#part2
@@ -828,20 +857,20 @@ class Year2015_Solution(Solution):
         matrixOfDistances: list[list[int]]  # Matrix containing all the distances between every locations
 
         # Set the solution to min value to make the comparaison logical with max function
-        Year2015_Solution.day_09_distanceSolution = 0
+        Year2015_Solution._day_09_distanceSolution = 0
 
         # Retrieve the matrix thanks to the helper function
-        matrixOfDistances = Year2015_Solution.day_09_helper_buildMatrixOfDistances()
+        matrixOfDistances = Year2015_Solution._day_09_helper_buildMatrixOfDistances()
         
         # Find the longest route by starting from each cities.
         for indexStart in range(len(matrixOfDistances)):
-            Year2015_Solution.day_09_helper_dfs([indexStart], matrixOfDistances, 0, False)
+            Year2015_Solution._day_09_helper_dfs([indexStart], matrixOfDistances, 0, False)
         
         # Return the longest path found
-        return Year2015_Solution.day_09_distanceSolution
+        return Year2015_Solution._day_09_distanceSolution
     
     @staticmethod
-    def day_10_helper_getLookAndSayLengthAfterOccurences(numberOfOccurences: int) -> int:
+    def _day_10_helper_getLookAndSayLengthAfterOccurences(numberOfOccurences: int) -> int:
         """
         Helper for the solution for day 10. Find the length of the message of look-and-say after a given number of iterations.
         https://adventofcode.com/2015/day/10
@@ -858,7 +887,7 @@ class Year2015_Solution(Solution):
         numberOfOccurenceLastDigit: int     # Number of time the last integer is written
         
         # Retrieve the input of the problem.
-        line = getLine(Year2015_Solution.year, 10)
+        line = getLine(10)
 
         # Play the game numberOfOccurences times
         for _ in range(numberOfOccurences):
@@ -885,7 +914,7 @@ class Year2015_Solution(Solution):
         return len(line)
     
     @staticmethod
-    def day_10_Part_1() -> int:
+    def _day_10_Part_1() -> int:
         """
         Get solution for day 10, Part 1
         https://adventofcode.com/2015/day/10
@@ -893,12 +922,12 @@ class Year2015_Solution(Solution):
         Returns:
             Numbers of elements in the string after the Elves made 40 games of look-and-say.
         """
-        solutionAfterFortyGames: int = Year2015_Solution.day_10_helper_getLookAndSayLengthAfterOccurences(40)  # Length of the string after 40 games of look-and-say
+        solutionAfterFortyGames: int = Year2015_Solution._day_10_helper_getLookAndSayLengthAfterOccurences(40)  # Length of the string after 40 games of look-and-say
         
         return solutionAfterFortyGames
     
     @staticmethod
-    def day_10_Part_2() -> int:
+    def _day_10_Part_2() -> int:
         """
         Get solution for day 10, Part 2
         https://adventofcode.com/2015/day/10#part2
@@ -906,12 +935,12 @@ class Year2015_Solution(Solution):
         Returns:
             Numbers of elements in the string after the Elves made 50 games of look-and-say.
         """
-        solutionAfterFiftyGames: int = Year2015_Solution.day_10_helper_getLookAndSayLengthAfterOccurences(50)  # Length of the string after 40 games of look-and-say
+        solutionAfterFiftyGames: int = Year2015_Solution._day_10_helper_getLookAndSayLengthAfterOccurences(50)  # Length of the string after 40 games of look-and-say
 
         return solutionAfterFiftyGames
     
     @staticmethod
-    def day_11_helper_doesStringContainsIncreasingSubsequence(stringToCheck: str) -> bool:
+    def _day_11_helper_doesStringContainsIncreasingSubsequence(stringToCheck: str) -> bool:
         """
         Helper for the solution for day 11. Check if a string contains at least one increasing subsequence between 3 consecutive chars.
         https://adventofcode.com/2015/day/11
@@ -929,7 +958,7 @@ class Year2015_Solution(Solution):
         return isIncreasingSubsequence
     
     @staticmethod
-    def day_11_helper_doesStringContainsTwoPairs(stringToCheck: str) -> bool:
+    def _day_11_helper_doesStringContainsTwoPairs(stringToCheck: str) -> bool:
         """
         Helper for the solution for day 11. Check if the string contains 2 non-overlapping pair of letters.
         https://adventofcode.com/2015/day/11
@@ -963,7 +992,7 @@ class Year2015_Solution(Solution):
         return False
 
     @staticmethod
-    def day_11_helper_IncrementByOneFromIndex(currentPassword: str, charIndex: int) -> str:
+    def _day_11_helper_IncrementByOneFromIndex(currentPassword: str, charIndex: int) -> str:
         """
         Helper for the solution for day 11. Increment by one a given index to have another Password.
         https://adventofcode.com/2015/day/11
@@ -995,13 +1024,13 @@ class Year2015_Solution(Solution):
         currentPassword = currentPassword[:charIndex] + chr(ord(currentPassword[charIndex]) + 1) + currentPassword[charIndex + 1:]
         
         # Replace forbidden letters
-        currentPassword = Year2015_Solution.day_11_helper_replaceForbiddenLetter(currentPassword)
+        currentPassword = Year2015_Solution._day_11_helper_replaceForbiddenLetter(currentPassword)
 
         # Return the next passowrd in the alphabetical order, while replacing the forbidden characters.
         return currentPassword
     
     @staticmethod
-    def day_11_helper_replaceForbiddenLetter(currentPassword: str) ->str:
+    def _day_11_helper_replaceForbiddenLetter(currentPassword: str) ->str:
         """
         Helper for the solution for day 11. Replace the forbidden letters to the one after in the alphabtical order.
         https://adventofcode.com/2015/day/11
@@ -1021,7 +1050,7 @@ class Year2015_Solution(Solution):
         return currentPassword
 
     @staticmethod
-    def day_11_helper_findFollowingPassword(currentPassword: str) -> str:
+    def _day_11_helper_findFollowingPassword(currentPassword: str) -> str:
         """
         Helper for the solution for day 11. Find the next password when we already know the current one.
         https://adventofcode.com/2015/day/11
@@ -1035,14 +1064,14 @@ class Year2015_Solution(Solution):
         charIndex: int      # Index of the letter in the password that will help to increment the password to another one.
 
         # Replace forbidden letters
-        currentPassword = Year2015_Solution.day_11_helper_replaceForbiddenLetter(currentPassword)
+        currentPassword = Year2015_Solution._day_11_helper_replaceForbiddenLetter(currentPassword)
         
         # While a valid password is not found, we have to search for a new one.
         while (True):
             
             # If the password is valid, we can stop searching for another one.
-            if Year2015_Solution.day_11_helper_doesStringContainsIncreasingSubsequence(currentPassword) \
-            and Year2015_Solution.day_11_helper_doesStringContainsTwoPairs(currentPassword):
+            if Year2015_Solution._day_11_helper_doesStringContainsIncreasingSubsequence(currentPassword) \
+            and Year2015_Solution._day_11_helper_doesStringContainsTwoPairs(currentPassword):
                 break
             
             # Start from the last index.
@@ -1050,7 +1079,7 @@ class Year2015_Solution(Solution):
 
             # If the last letter is the same as the next one, we just increment. The idea is to try to make a increasing subsequence.
             if currentPassword[charIndex] == currentPassword[charIndex - 1]:
-                currentPassword = Year2015_Solution.day_11_helper_IncrementByOneFromIndex(currentPassword, charIndex)
+                currentPassword = Year2015_Solution._day_11_helper_IncrementByOneFromIndex(currentPassword, charIndex)
             
             # Else, if the last letter is before, we change the last letter to it equal to the previous one to have a new pair.
             elif ord(currentPassword[charIndex]) < ord(currentPassword[charIndex - 1]):
@@ -1060,14 +1089,14 @@ class Year2015_Solution(Solution):
             # At this moment, we increment the one before to have 'cc' and then create a new pair.
             else:
                 charIndex -= 1
-                currentPassword = Year2015_Solution.day_11_helper_IncrementByOneFromIndex(currentPassword, charIndex)
+                currentPassword = Year2015_Solution._day_11_helper_IncrementByOneFromIndex(currentPassword, charIndex)
                 currentPassword = currentPassword[:-1] + currentPassword[-2]
         
         # Return the next password of Santa.
         return currentPassword   
 
     @staticmethod
-    def day_11_Part_1() -> str:
+    def _day_11_Part_1() -> str:
         """
         Get solution for day 11, Part 1
         https://adventofcode.com/2015/day/11
@@ -1078,16 +1107,16 @@ class Year2015_Solution(Solution):
         line: str               # Input of the problem, which is the previous password of Santa.
 
         # Retrieve the input of the problem.
-        line = getLine(Year2015_Solution.year, 11)
+        line = getLine(11)
         
         # Retrieve the next password
-        line = Year2015_Solution.day_11_helper_findFollowingPassword(line)
+        line = Year2015_Solution._day_11_helper_findFollowingPassword(line)
 
         # Return the new password of Santa
         return line
 
     @staticmethod
-    def day_11_Part_2() -> str:
+    def _day_11_Part_2() -> str:
         """
         Get solution for day 11, Part 2
         https://adventofcode.com/2015/day/11#part2
@@ -1098,22 +1127,22 @@ class Year2015_Solution(Solution):
         line: str               # Input of the problem, which is the previous password of Santa.
 
         # Retrieve the input of the problem.
-        line = getLine(Year2015_Solution.year, 11)
+        line = getLine(11)
 
         # Find the next password of Santa
-        line = Year2015_Solution.day_11_helper_findFollowingPassword(line)
+        line = Year2015_Solution._day_11_helper_findFollowingPassword(line)
 
         # Increment by one the password before finding a new password
-        line = Year2015_Solution.day_11_helper_IncrementByOneFromIndex(line, len(line) - 1)
+        line = Year2015_Solution._day_11_helper_IncrementByOneFromIndex(line, len(line) - 1)
 
         # Find the next password of Santa
-        line = Year2015_Solution.day_11_helper_findFollowingPassword(line)
+        line = Year2015_Solution._day_11_helper_findFollowingPassword(line)
 
         # Return the updated password of Santa
         return line
     
     @staticmethod
-    def day_12_helper_computeSumInsideDict(dictToComputeSum: dict) -> int:
+    def _day_12_helper_computeSumInsideDict(dictToComputeSum: dict) -> int:
         """
         Helper for the solution for day 12. Compute the sum inside a dict, without counting elements if "red" is a value.
         https://adventofcode.com/2015/day/12
@@ -1136,16 +1165,16 @@ class Year2015_Solution(Solution):
                     return 0
             # If the value is a dict, we add the inner dict sum.
             if type(value) is dict:
-                totalSum += Year2015_Solution.day_12_helper_computeSumInsideDict(value)
+                totalSum += Year2015_Solution._day_12_helper_computeSumInsideDict(value)
             # If the value is a list, we add the inner list sum.
             if type(value) is list:
-                totalSum += Year2015_Solution.day_12_helper_computeSumInsideList(value)
+                totalSum += Year2015_Solution._day_12_helper_computeSumInsideList(value)
         
         # Return the computed sum when "red" is not a value of the dictionnary.
         return totalSum
     
     @staticmethod
-    def day_12_helper_computeSumInsideList(listToComputeSum: list) -> int:
+    def _day_12_helper_computeSumInsideList(listToComputeSum: list) -> int:
         """
         Helper for the solution for day 12. Compute the sum inside a list.
         https://adventofcode.com/2015/day/12
@@ -1166,17 +1195,17 @@ class Year2015_Solution(Solution):
             
             # If the value is a dict, we add the inner dict sum.
             elif type(element) is dict:
-                totalSum += Year2015_Solution.day_12_helper_computeSumInsideDict(element)
+                totalSum += Year2015_Solution._day_12_helper_computeSumInsideDict(element)
             
             # If the value is a list, we add the inner list sum.
             elif type(element) is list:
-                totalSum += Year2015_Solution.day_12_helper_computeSumInsideList(element)
+                totalSum += Year2015_Solution._day_12_helper_computeSumInsideList(element)
             
         # Return the total sum of all the list.
         return totalSum
 
     @staticmethod
-    def day_12_Part_1() -> int:
+    def _day_12_Part_1() -> int:
         """
         Get solution for day 11, Part 1
         https://adventofcode.com/2015/day/12
@@ -1190,7 +1219,7 @@ class Year2015_Solution(Solution):
         integers: list[int]                 # List of all the integers found in the input.
 
         # Retrieve the input of the problem.
-        line = getLine(Year2015_Solution.year, 12)
+        line = getLine(12)
 
         # Find all the integers of the document.
         integers = findall(regexForIntegers, line)
@@ -1205,7 +1234,7 @@ class Year2015_Solution(Solution):
         return totalSum
 
     @staticmethod
-    def day_12_Part_2() -> int:
+    def _day_12_Part_2() -> int:
         """
         Get solution for day 12, Part 2
         https://adventofcode.com/2015/day/12#part2
@@ -1218,19 +1247,19 @@ class Year2015_Solution(Solution):
         dictOfCurrentElements: dict         # Dictionnary of the elements found in the JSON input.
 
         # Retrieve the input of the problem.
-        with open(getNameOfFile(Year2015_Solution.year, 12), mode="r", encoding="utf-8") as file:
+        with open(getNameOfFile(12), mode="r", encoding="utf-8") as file:
             dictOfCurrentElements = load(file)
 
         # Find the sum of all elements without counting twice the "red" elements.
-        totalSum = Year2015_Solution.day_12_helper_computeSumInsideDict(dictOfCurrentElements)
+        totalSum = Year2015_Solution._day_12_helper_computeSumInsideDict(dictOfCurrentElements)
 
         # Return the sum of according to the new rule in the Elves document.
         return totalSum
     
-    day_13_happinessSolution: int = - maxsize
+    _day_13_happinessSolution: int = - maxsize
 
     @staticmethod
-    def day_13_helper_dfs(listOfPersonAtDinningTable: list[int], matrixOfHappiness: list[list[int]], currentHappiness: int) -> None:
+    def _day_13_helper_dfs(listOfPersonAtDinningTable: list[int], matrixOfHappiness: list[list[int]], currentHappiness: int) -> None:
         """
         Helper for the solution for day 13. Use DFS to find the maximum happiness.
         https://adventofcode.com/2015/day/13
@@ -1255,13 +1284,13 @@ class Year2015_Solution(Solution):
             
             # If all persons are on the table, we store the max happiness.
             if len(matrixOfHappiness) == len(listOfPersonAtDinningTable):
-                Year2015_Solution.day_13_happinessSolution = max(Year2015_Solution.day_13_happinessSolution, \
+                Year2015_Solution._day_13_happinessSolution = max(Year2015_Solution._day_13_happinessSolution, \
                                                                  currentHappiness + matrixOfHappiness[listOfPersonAtDinningTable[-1]][listOfPersonAtDinningTable[0]] \
                                                                  + matrixOfHappiness[listOfPersonAtDinningTable[0]][listOfPersonAtDinningTable[-1]])
             
             # if not everyone is here, we should try adding more
             else:
-                Year2015_Solution.day_13_helper_dfs(listOfPersonAtDinningTable, matrixOfHappiness, currentHappiness)
+                Year2015_Solution._day_13_helper_dfs(listOfPersonAtDinningTable, matrixOfHappiness, currentHappiness)
 
             # Delete the last person and substract the useless happiness.
             currentHappiness -= matrixOfHappiness[listOfPersonAtDinningTable[-2]][listOfPersonAtDinningTable[-1]]
@@ -1269,7 +1298,7 @@ class Year2015_Solution(Solution):
             listOfPersonAtDinningTable.pop()
             
     @staticmethod
-    def day_13_helper_buildMatrixOfHappiness() -> list[list[int]]:
+    def _day_13_helper_buildMatrixOfHappiness() -> list[list[int]]:
         """
         Helper for the solution for day 13. Construct the distance happiness between each persons. 
         https://adventofcode.com/2015/day/13
@@ -1284,7 +1313,7 @@ class Year2015_Solution(Solution):
         line: str                                       # String representing the input line by line.
 
         # Retrieve all lines of the input file
-        lines = getLines(Year2015_Solution.year, 13)
+        lines = getLines(13)
         
         # Construct the dict to know which name correspond to which happiness
         for line in lines:
@@ -1318,7 +1347,7 @@ class Year2015_Solution(Solution):
         return matrixOfHappiness
 
     @staticmethod
-    def day_13_helper_AddMyselfToTable(matrixOfHappiness: list[list[int]]) -> None:
+    def _day_13_helper_AddMyselfToTable(matrixOfHappiness: list[list[int]]) -> None:
         """
         Helper for the solution for day 13. Add myself to the matrix of happiness. 
         https://adventofcode.com/2015/day/13
@@ -1336,7 +1365,7 @@ class Year2015_Solution(Solution):
         matrixOfHappiness.append([0 for _ in range(len(matrixOfHappiness))])
     
     @staticmethod
-    def day_13_Part_1() -> int:
+    def _day_13_Part_1() -> int:
         """
         Get solution for day 13, Part 1
         https://adventofcode.com/2015/day/13
@@ -1347,19 +1376,19 @@ class Year2015_Solution(Solution):
         matrixOfHappiness: list[list[int]]  # Matrix containing all the happiness between everyone
         
         # Set the solution to max value to make the comparaison logical with min function
-        Year2015_Solution.day_13_happinessSolution = - maxsize
+        Year2015_Solution._day_13_happinessSolution = - maxsize
 
         # Retrieve the matrix thanks to the helper function
-        matrixOfHappiness = Year2015_Solution.day_13_helper_buildMatrixOfHappiness()
+        matrixOfHappiness = Year2015_Solution._day_13_helper_buildMatrixOfHappiness()
         
         # Find the max happiness possible. The person who sits first does not change anyhting as the table is round.
-        Year2015_Solution.day_13_helper_dfs([0], matrixOfHappiness, 0)
+        Year2015_Solution._day_13_helper_dfs([0], matrixOfHappiness, 0)
 
         # Return the max happiness found
-        return Year2015_Solution.day_13_happinessSolution
+        return Year2015_Solution._day_13_happinessSolution
     
     @staticmethod
-    def day_13_Part_2() -> int:
+    def _day_13_Part_2() -> int:
         """
         Get solution for day 13, Part 2
         https://adventofcode.com/2015/day/13#part2
@@ -1370,22 +1399,22 @@ class Year2015_Solution(Solution):
         matrixOfHappiness: list[list[int]]  # Matrix containing all the happiness between everyone
         
         # Set the solution to max value to make the comparaison logical with min function
-        Year2015_Solution.day_13_happinessSolution = - maxsize
+        Year2015_Solution._day_13_happinessSolution = - maxsize
 
         # Retrieve the matrix thanks to the helper function
-        matrixOfHappiness = Year2015_Solution.day_13_helper_buildMatrixOfHappiness()
+        matrixOfHappiness = Year2015_Solution._day_13_helper_buildMatrixOfHappiness()
 
         # Add myself to the table
-        Year2015_Solution.day_13_helper_AddMyselfToTable(matrixOfHappiness)
+        Year2015_Solution._day_13_helper_AddMyselfToTable(matrixOfHappiness)
         
         # Find the max happiness possible. The person who sits first does not change anyhting as the table is round.
-        Year2015_Solution.day_13_helper_dfs([0], matrixOfHappiness, 0)
+        Year2015_Solution._day_13_helper_dfs([0], matrixOfHappiness, 0)
 
         # Return the max happiness found
-        return Year2015_Solution.day_13_happinessSolution
+        return Year2015_Solution._day_13_happinessSolution
 
     @staticmethod
-    def day_14_helper_getSpeedAndTimesForReindeers() -> list[list[int]]:
+    def _day_14_helper_getSpeedAndTimesForReindeers() -> list[list[int]]:
         """
         Helper for the solution for day 14. Create a matrix with all informations for all reindeers. 
         https://adventofcode.com/2015/day/14
@@ -1402,7 +1431,7 @@ class Year2015_Solution(Solution):
         distancesByTimeForEachReindeer: list[list[int]] = []     # List of all distances that reindeer can make in the associated time
 
         # Retrieve the input of the problem.
-        lines = getLines(Year2015_Solution.year, 14)
+        lines = getLines(14)
 
         # Iterating among all lines to retrieve informations of speed and rest time
         for line in lines:
@@ -1412,7 +1441,7 @@ class Year2015_Solution(Solution):
         return distancesByTimeForEachReindeer
 
     @staticmethod
-    def day_14_Part_1():
+    def _day_14_Part_1():
         """
         Get solution for day 14, Part 1
         https://adventofcode.com/2015/day/14
@@ -1425,7 +1454,7 @@ class Year2015_Solution(Solution):
         mostDistanceTravelled: int = 0                           # Value of the most distance done.
 
         # Retrieve Reindeers informations
-        distancesByTimeForEachReindeer = Year2015_Solution.day_14_helper_getSpeedAndTimesForReindeers()
+        distancesByTimeForEachReindeer = Year2015_Solution._day_14_helper_getSpeedAndTimesForReindeers()
         
         # Iterating among all reindeer to find the distance he made, and store the distance if it's the max ever made.
         for reindeer in distancesByTimeForEachReindeer:
@@ -1445,7 +1474,7 @@ class Year2015_Solution(Solution):
         return mostDistanceTravelled
     
     @staticmethod
-    def day_14_Part_2():
+    def _day_14_Part_2():
         """
         Get solution for day 14, Part 2
         https://adventofcode.com/2015/day/14#part2
@@ -1459,7 +1488,7 @@ class Year2015_Solution(Solution):
         nbOfReindeer: int                                        # Number of reindeer making the race
 
         # Retrieve Reindeers informations
-        distancesByTimeForEachReindeer = Year2015_Solution.day_14_helper_getSpeedAndTimesForReindeers()
+        distancesByTimeForEachReindeer = Year2015_Solution._day_14_helper_getSpeedAndTimesForReindeers()
         
         # Compute the number of reindeer
         nbOfReindeer = len(distancesByTimeForEachReindeer)
@@ -1494,10 +1523,10 @@ class Year2015_Solution(Solution):
         # Return the most distance that has been travelled.
         return max(distanceAndScoreByReindeer[indexReindeer][1] for indexReindeer in range(nbOfReindeer))
     
-    day_15_cookieWithMaxScore = 0
+    _day_15_cookieWithMaxScore = 0
 
     @staticmethod
-    def day_15_helper_getMaxScore(listOfIngredients: list[dict[str, int]], quantityOfIngredients: list[int], isCalorieCounted: bool):
+    def _day_15_helper_getMaxScore(listOfIngredients: list[dict[str, int]], quantityOfIngredients: list[int], isCalorieCounted: bool):
         """
         Helper for the solution for day 15. Create all possibles cookies combinaison.
         https://adventofcode.com/2015/day/15
@@ -1512,24 +1541,24 @@ class Year2015_Solution(Solution):
         # If all ingredients are used, we can try to update the best cookie if the calorie are not counted or equal to 500.
         if len(quantityOfIngredients) == len(listOfIngredients):
             if not isCalorieCounted or 500 == sum(quantityOfIngredients[i] * listOfIngredients[i]["calories"] for i in range(len(listOfIngredients))):
-                Year2015_Solution.day_15_cookieWithMaxScore = max(Year2015_Solution.day_15_cookieWithMaxScore, Year2015_Solution.day_15_helper_computeCookieValue(listOfIngredients, quantityOfIngredients))
+                Year2015_Solution._day_15_cookieWithMaxScore = max(Year2015_Solution._day_15_cookieWithMaxScore, Year2015_Solution._day_15_helper_computeCookieValue(listOfIngredients, quantityOfIngredients))
         
         # If one ingredient is missing only, the quantity has to be the number of missing teaspoon. Add it and and the next call it will check which
         # Cookie is the best.
         elif len(quantityOfIngredients) == (len(listOfIngredients) - 1):
             quantityOfIngredients.append(numberOfTeaspoon - sum(quantityOfIngredients))
-            Year2015_Solution.day_15_helper_getMaxScore(listOfIngredients, quantityOfIngredients, isCalorieCounted)
+            Year2015_Solution._day_15_helper_getMaxScore(listOfIngredients, quantityOfIngredients, isCalorieCounted)
             quantityOfIngredients.pop()
         
         # If multiple ingredient are missing, multiple choice can be done. We could add from 0 to nbMissingIngredients the next ingredient.
         else:
             for i in range(0, numberOfTeaspoon - sum(quantityOfIngredients)):
                 quantityOfIngredients.append(i)
-                Year2015_Solution.day_15_helper_getMaxScore(listOfIngredients, quantityOfIngredients, isCalorieCounted)
+                Year2015_Solution._day_15_helper_getMaxScore(listOfIngredients, quantityOfIngredients, isCalorieCounted)
                 quantityOfIngredients.pop()
     
     @staticmethod
-    def day_15_helper_computeCookieValue(listOfIngredients: list[dict[str, int]], quantityOfIngredients: list[int]) -> int:
+    def _day_15_helper_computeCookieValue(listOfIngredients: list[dict[str, int]], quantityOfIngredients: list[int]) -> int:
         """
         Helper for the solution for day 15. Compute the score of a given cookie.
         https://adventofcode.com/2015/day/15
@@ -1571,7 +1600,7 @@ class Year2015_Solution(Solution):
         return int(np.prod(scores))
 
     @staticmethod
-    def day_15_helper_constructTableOfIngredients() -> list[dict[str, int]]:
+    def _day_15_helper_constructTableOfIngredients() -> list[dict[str, int]]:
         """
         Helper for the solution for day 15. Create a table that contains all mapping of information for each ingredients.
         https://adventofcode.com/2015/day/15
@@ -1587,7 +1616,7 @@ class Year2015_Solution(Solution):
         matches: list[str]                                    # Table that contain the output of the search via the regex.
 
         # Retrieve the input of the problem.
-        lines = getLines(Year2015_Solution.year, 15)
+        lines = getLines(15)
 
         # Iterating among all ingredients
         for line in lines:
@@ -1604,7 +1633,7 @@ class Year2015_Solution(Solution):
         return listOfAllIngredients
 
     @staticmethod
-    def day_15_Part_1() -> int:
+    def _day_15_Part_1() -> int:
         """
         Get solution for day 15, Part 1
         https://adventofcode.com/2015/day/15
@@ -1615,19 +1644,19 @@ class Year2015_Solution(Solution):
         tableOfIngredients: list[dict[str, int]]        # Table of used ingredients
         
         # Retrieve ingredients and their caracteristics
-        tableOfIngredients = Year2015_Solution.day_15_helper_constructTableOfIngredients()
+        tableOfIngredients = Year2015_Solution._day_15_helper_constructTableOfIngredients()
 
         # Re-initialize the max score ever found.
-        Year2015_Solution.day_15_cookieWithMaxScore = 0
+        Year2015_Solution._day_15_cookieWithMaxScore = 0
 
         # Find the cookie with the best score, without looking at calories.
-        Year2015_Solution.day_15_helper_getMaxScore(tableOfIngredients, [], False)
+        Year2015_Solution._day_15_helper_getMaxScore(tableOfIngredients, [], False)
 
         # Return the best score obtained.
-        return Year2015_Solution.day_15_cookieWithMaxScore
+        return Year2015_Solution._day_15_cookieWithMaxScore
 
     @staticmethod
-    def day_15_Part_2() -> int:
+    def _day_15_Part_2() -> int:
         """
         Get solution for day 15, Part 2
         https://adventofcode.com/2015/day/15#part2
@@ -1638,19 +1667,19 @@ class Year2015_Solution(Solution):
         tableOfIngredients: list[dict[str, int]]        # Table of used ingredients
         
         # Retrieve ingredients and their caracteristics
-        tableOfIngredients = Year2015_Solution.day_15_helper_constructTableOfIngredients()
+        tableOfIngredients = Year2015_Solution._day_15_helper_constructTableOfIngredients()
 
         # Re-initialize the max score ever found.
-        Year2015_Solution.day_15_cookieWithMaxScore = 0
+        Year2015_Solution._day_15_cookieWithMaxScore = 0
 
         # Find the cookie with the best score, and taking care of the number of calories.
-        Year2015_Solution.day_15_helper_getMaxScore(tableOfIngredients, [], True)
+        Year2015_Solution._day_15_helper_getMaxScore(tableOfIngredients, [], True)
 
         # Return the best score obtained.
-        return Year2015_Solution.day_15_cookieWithMaxScore
+        return Year2015_Solution._day_15_cookieWithMaxScore
 
     @staticmethod
-    def day_16_helper_getInformationFromMFCSAM() -> dict[str, int]:
+    def _day_16_helper_getInformationFromMFCSAM() -> dict[str, int]:
         """
         Helper for the solution for day 16. Create a dict with all information from the MFCSAM.
         https://adventofcode.com/2015/day/16
@@ -1676,7 +1705,7 @@ class Year2015_Solution(Solution):
         return informationFromMFCSAM
     
     @staticmethod
-    def day_16_Part_1() -> int:
+    def _day_16_Part_1() -> int:
         """
         Get solution for day 16, Part 1
         https://adventofcode.com/2015/day/16
@@ -1692,10 +1721,10 @@ class Year2015_Solution(Solution):
         areAllInformationCorrect: bool                              # States if all information are passing for the current Sue.
 
         # Retrieve the input of the problem.
-        lines = getLines(Year2015_Solution.year, 16)
+        lines = getLines(16)
 
         # Retrieve the information from the letter
-        informationFromMFCSAM = Year2015_Solution.day_16_helper_getInformationFromMFCSAM()
+        informationFromMFCSAM = Year2015_Solution._day_16_helper_getInformationFromMFCSAM()
 
         # Iterate among all aunts
         for index, line in enumerate(lines):
@@ -1722,7 +1751,7 @@ class Year2015_Solution(Solution):
         return -1
     
     @staticmethod
-    def day_16_Part_2() -> int:
+    def _day_16_Part_2() -> int:
         """
         Get solution for day 16, Part 2
         https://adventofcode.com/2015/day/16#part2
@@ -1738,10 +1767,10 @@ class Year2015_Solution(Solution):
         areAllInformationCorrect: bool                              # States if all information are passing for the current Sue.
 
         # Retrieve the input of the problem.
-        lines = getLines(Year2015_Solution.year, 16)
+        lines = getLines(16)
 
         # Retrieve the information from the letter
-        informationFromMFCSAM = Year2015_Solution.day_16_helper_getInformationFromMFCSAM()
+        informationFromMFCSAM = Year2015_Solution._day_16_helper_getInformationFromMFCSAM()
 
         # Iterate among all aunts
         for index, line in enumerate(lines):
@@ -1782,10 +1811,10 @@ class Year2015_Solution(Solution):
         # Should not be there, it would mean that no Sue is valid.
         return -1
     
-    day_17_dictOfCombination: dict[int, int] = {}
+    _day_17_dictOfCombination: dict[int, int] = {}
 
     @staticmethod
-    def day_17_helper_findNumberOfCombination(listOfContainers: list[int], indexOfContainer: int, eggnogMissing: int, currentNumber: int):
+    def _day_17_helper_findNumberOfCombination(listOfContainers: list[int], indexOfContainer: int, eggnogMissing: int, currentNumber: int):
         """
         Helper for the solution for day 17. Fill the dictOfCombination variable to find the quantity of possible combinaison
         for the different number of containers choosen.
@@ -1799,10 +1828,10 @@ class Year2015_Solution(Solution):
         """
         # If all the eggnog is in container, add the information in the dict and stop the function.
         if 0 == eggnogMissing:
-            if currentNumber not in Year2015_Solution.day_17_dictOfCombination:
-                Year2015_Solution.day_17_dictOfCombination[currentNumber] = 1
+            if currentNumber not in Year2015_Solution._day_17_dictOfCombination:
+                Year2015_Solution._day_17_dictOfCombination[currentNumber] = 1
             else:
-                Year2015_Solution.day_17_dictOfCombination[currentNumber] += 1
+                Year2015_Solution._day_17_dictOfCombination[currentNumber] += 1
             return
         
         # If we reached the end of the table, we don't have anymore containers.
@@ -1820,7 +1849,7 @@ class Year2015_Solution(Solution):
             
             # If there is still eggnog, call the function with the next container index
             if 0 <= eggnogMissing:
-                Year2015_Solution.day_17_helper_findNumberOfCombination(listOfContainers, indexOfContainer + 1, eggnogMissing, currentNumber)
+                Year2015_Solution._day_17_helper_findNumberOfCombination(listOfContainers, indexOfContainer + 1, eggnogMissing, currentNumber)
             
             # Decrement (or not) the number of container according to if we filled the current container.
             currentNumber += nbOfContainer
@@ -1830,7 +1859,7 @@ class Year2015_Solution(Solution):
             eggnogMissing += nbOfContainer * listOfContainers[indexOfContainer]
 
     @staticmethod
-    def day_17_Part_1() -> int:
+    def _day_17_Part_1() -> int:
         """
         Get solution for day 17, Part 1
         https://adventofcode.com/2015/day/17
@@ -1843,7 +1872,7 @@ class Year2015_Solution(Solution):
         containers: list[int]   # All possible containers.
 
         # Retrieve the input of the problem.
-        lines = getLines(Year2015_Solution.year, 17)
+        lines = getLines(17)
         
         # Get the list of all possible size.
         containers = [int(line) for line in lines]
@@ -1853,16 +1882,16 @@ class Year2015_Solution(Solution):
         containers.reverse()
 
         # Re-initialize the possible combination.
-        Year2015_Solution.day_17_dictOfCombination = {}
+        Year2015_Solution._day_17_dictOfCombination = {}
 
         # Call the dfs function to find all possibilities of storing eggnogs.
-        Year2015_Solution.day_17_helper_findNumberOfCombination(containers, 0, 150, 0)
+        Year2015_Solution._day_17_helper_findNumberOfCombination(containers, 0, 150, 0)
 
         # Return the total number of combination.
-        return sum(val for _, val in Year2015_Solution.day_17_dictOfCombination.items())
+        return sum(val for _, val in Year2015_Solution._day_17_dictOfCombination.items())
     
     @staticmethod
-    def day_17_Part_2() -> int:
+    def _day_17_Part_2() -> int:
         """
         Get solution for day 17, Part 2
         https://adventofcode.com/2015/day/17#part2
@@ -1878,7 +1907,7 @@ class Year2015_Solution(Solution):
         numberOfCombinations: int = 0               # Number of valid combinations.
         
         # Retrieve the input of the problem.
-        lines = getLines(Year2015_Solution.year, 17)
+        lines = getLines(17)
         
         # Get the list of all possible size.
         containers = [int(line) for line in lines]
@@ -1888,13 +1917,13 @@ class Year2015_Solution(Solution):
         containers.reverse()
 
         # Re-initialize the possible combination.
-        Year2015_Solution.day_17_dictOfCombination = {}
+        Year2015_Solution._day_17_dictOfCombination = {}
 
         # Call the dfs function to find all possibilities of storing eggnogs.
-        Year2015_Solution.day_17_helper_findNumberOfCombination(containers, 0, 150, 0)
+        Year2015_Solution._day_17_helper_findNumberOfCombination(containers, 0, 150, 0)
 
         # Find the smallest number of containers used and store the number of combination for this amount of container.
-        for key, val in Year2015_Solution.day_17_dictOfCombination.items():
+        for key, val in Year2015_Solution._day_17_dictOfCombination.items():
             if key < smallestNumberOfContainers:
                 smallestNumberOfContainers = key
                 numberOfCombinations = val
@@ -1903,7 +1932,7 @@ class Year2015_Solution(Solution):
         return numberOfCombinations
 
     @staticmethod
-    def day_18_helper_getNextStateForOneLight(currentLightState: int, sumSurrounding: int) -> int:
+    def _day_18_helper_getNextStateForOneLight(currentLightState: int, sumSurrounding: int) -> int:
         """
         Helper for the solution for day 18. Indicate if a given light should be on or off to next step according
         to the number of lights around it.
@@ -1929,7 +1958,7 @@ class Year2015_Solution(Solution):
         return nextState
 
     @staticmethod
-    def day_18_helper_getSurroundingSum(lightsState, rowIndex, colIndex) -> int:
+    def _day_18_helper_getSurroundingSum(lightsState, rowIndex, colIndex) -> int:
         """
         Helper for the solution for day 18. Returns the sum of all lights around the light given.
         https://adventofcode.com/2015/day/18
@@ -1987,7 +2016,7 @@ class Year2015_Solution(Solution):
                lightsState[rowIndex + 1][colIndex - 1] + lightsState[rowIndex + 1][colIndex] + lightsState[rowIndex + 1][colIndex + 1]
 
     @staticmethod
-    def day_18_helper_getNextSteps(lightsState: list[list[int]], numberOfSteps: int, areCornerStucked: bool) -> list[list[int]]:
+    def _day_18_helper_getNextSteps(lightsState: list[list[int]], numberOfSteps: int, areCornerStucked: bool) -> list[list[int]]:
         """
         Helper for the solution for day 18. Use the Santa's rules of switch on / off to get the state after a given number of steps.
         https://adventofcode.com/2015/day/18
@@ -2009,8 +2038,8 @@ class Year2015_Solution(Solution):
             
             # Iterate for all values. Get the surrounding sum of the light and update in the new board what it will be next time.
             for lineIndex, colIndex in product(range(nbLightsRow), range(nbLightsRow)):
-                currentSurrounding = Year2015_Solution.day_18_helper_getSurroundingSum(lightsState, lineIndex, colIndex)
-                lightsStateNew[lineIndex][colIndex] = Year2015_Solution.day_18_helper_getNextStateForOneLight(lightsState[lineIndex][colIndex], currentSurrounding)
+                currentSurrounding = Year2015_Solution._day_18_helper_getSurroundingSum(lightsState, lineIndex, colIndex)
+                lightsStateNew[lineIndex][colIndex] = Year2015_Solution._day_18_helper_getNextStateForOneLight(lightsState[lineIndex][colIndex], currentSurrounding)
             
             # Store the following state in the current state.
             lightsState = lightsStateNew.copy()
@@ -2029,7 +2058,7 @@ class Year2015_Solution(Solution):
         return lightsState
 
     @staticmethod
-    def day_18_Part_1() -> int:
+    def _day_18_Part_1() -> int:
         """
         Get solution for day 18, Part 1
         https://adventofcode.com/2015/day/18
@@ -2043,7 +2072,7 @@ class Year2015_Solution(Solution):
         numberOfSteps: int = 100                                    # Number of steps the process is repeated.
         
         # Retrieve the input of the problem.
-        lines = getLines(Year2015_Solution.year, 18)
+        lines = getLines(18)
 
         # Iterating among all lines. Create a matrix with 1 for on lights, and 0 for off lights.
         for line in lines:
@@ -2051,13 +2080,13 @@ class Year2015_Solution(Solution):
             lightsState.append([1 if "#" == letter else 0 for letter in line])
         
         # Get the state after numberOfSteps iterations.
-        lightsState = Year2015_Solution.day_18_helper_getNextSteps(lightsState, numberOfSteps, False)
+        lightsState = Year2015_Solution._day_18_helper_getNextSteps(lightsState, numberOfSteps, False)
 
         # Return the number of lights that are on.
         return sum(sum(lightLine) for lightLine in lightsState)
     
     @staticmethod
-    def day_18_Part_2() -> int:
+    def _day_18_Part_2() -> int:
         """
         Get solution for day 18, Part 2
         https://adventofcode.com/2015/day/18#part2
@@ -2071,7 +2100,7 @@ class Year2015_Solution(Solution):
         numberOfSteps: int = 100                                    # Number of steps the process is repeated.
         
         # Retrieve the input of the problem.
-        lines = getLines(Year2015_Solution.year, 18)
+        lines = getLines(18)
 
         # Iterating among all lines. Create a matrix with 1 for on lights, and 0 for off lights.
         for line in lines:
@@ -2079,13 +2108,13 @@ class Year2015_Solution(Solution):
             lightsState.append([1 if "#" == letter else 0 for letter in line])
         
         # Get the state after numberOfSteps iterations. The corner are stucked in this part.
-        lightsState = Year2015_Solution.day_18_helper_getNextSteps(lightsState, numberOfSteps, True)
+        lightsState = Year2015_Solution._day_18_helper_getNextSteps(lightsState, numberOfSteps, True)
 
         # Return the number of lights that are on.
         return sum(sum(lightLine) for lightLine in lightsState)
     
     @staticmethod
-    def day_19_Part_1() -> int:
+    def _day_19_Part_1() -> int:
         """
         Get solution for day 19, Part 1
         https://adventofcode.com/2015/day/19
@@ -2101,7 +2130,7 @@ class Year2015_Solution(Solution):
         setOfFoundMedecine: set[str] = set()                        # Set of all medecine that we can have after transformation.
         
         # Retrieve the input of the problem.
-        lines = getLines(Year2015_Solution.year, 19)
+        lines = getLines(19)
 
         # Iterate among all lines
         for line in lines:
@@ -2140,7 +2169,7 @@ class Year2015_Solution(Solution):
         return len(setOfFoundMedecine)
     
     @staticmethod
-    def day_20_helper_getFirstHouseThatRespectCondition(numberOfGiftPerElf: int, isMakingABreakAfterFifty: bool) -> int:
+    def _day_20_helper_getFirstHouseThatRespectCondition(numberOfGiftPerElf: int, isMakingABreakAfterFifty: bool) -> int:
         """
         Helper for the solution for day 20. Find the first house that receives at least the number of present in the input.
         https://adventofcode.com/2015/day/20
@@ -2152,7 +2181,7 @@ class Year2015_Solution(Solution):
             - Number of the first house that receive at least the desired amount of gift.
         """
         # Retrieve the number of present to deliver.
-        numberOfPresent: int = int(getLine(Year2015_Solution.year, 20))
+        numberOfPresent: int = int(getLine(20))
         # Write for each house the number of presents it will receive.
         presentsPerHouse: list[int] = [0 for _ in range(int(numberOfPresent / numberOfGiftPerElf) + 1)]
         
@@ -2184,7 +2213,7 @@ class Year2015_Solution(Solution):
         return 0
 
     @staticmethod
-    def day_20_Part_1() -> int:
+    def _day_20_Part_1() -> int:
         """
         Get solution for day 20, Part 1
         https://adventofcode.com/2015/day/20
@@ -2195,13 +2224,13 @@ class Year2015_Solution(Solution):
         numberOfFirstHouse: int         # Number of the first house that receives at least the input number of gift.
         
         # Retrieve the number of the house.
-        numberOfFirstHouse = Year2015_Solution.day_20_helper_getFirstHouseThatRespectCondition(10, False)
+        numberOfFirstHouse = Year2015_Solution._day_20_helper_getFirstHouseThatRespectCondition(10, False)
 
         # Return the number found.
         return numberOfFirstHouse
     
     @staticmethod
-    def day_20_Part_2() -> int:
+    def _day_20_Part_2() -> int:
         """
         Get solution for day 20, Part 2
         https://adventofcode.com/2015/day/20#part2
@@ -2212,13 +2241,13 @@ class Year2015_Solution(Solution):
         numberOfFirstHouse: int         # Number of the first house that receives at least the input number of gift.
         
         # Retrieve the number of the house.
-        numberOfFirstHouse = Year2015_Solution.day_20_helper_getFirstHouseThatRespectCondition(11, True)
+        numberOfFirstHouse = Year2015_Solution._day_20_helper_getFirstHouseThatRespectCondition(11, True)
         
         # Return the number found.
         return numberOfFirstHouse
 
     @staticmethod
-    def day_21_helper_addElement(currentStats: list[int], newElement: list[int]) -> None:
+    def _day_21_helper_addElement(currentStats: list[int], newElement: list[int]) -> None:
         """
         Helper for the solution for day 21. Add the stats of the new element (weapon / armor / ring) to the current stats of the player.
         https://adventofcode.com/2015/day/21
@@ -2235,7 +2264,7 @@ class Year2015_Solution(Solution):
         currentStats[2] += newElement[2]
 
     @staticmethod
-    def day_21_helper_deleteElement(currentStats: list[int], oldElement: list[int]) -> None:
+    def _day_21_helper_deleteElement(currentStats: list[int], oldElement: list[int]) -> None:
         """
         Helper for the solution for day 21. Delete the stats of the element (weapon / armor / ring) to the current stats of the player.
         https://adventofcode.com/2015/day/21
@@ -2252,7 +2281,7 @@ class Year2015_Solution(Solution):
         currentStats[2] -= oldElement[2]
 
     @staticmethod
-    def day_21_helper_createAllCombinations() -> list[list[int]]:
+    def _day_21_helper_createAllCombinations() -> list[list[int]]:
         """
         Helper for the solution for day 21. Create all combination of stuffs possible.
         https://adventofcode.com/2015/day/21
@@ -2280,39 +2309,39 @@ class Year2015_Solution(Solution):
             
             # Re-init the table values and add the weapon to the items.
             currentCombination = [0, 0, 0]
-            Year2015_Solution.day_21_helper_addElement(currentCombination, weapon)
+            Year2015_Solution._day_21_helper_addElement(currentCombination, weapon)
             
             # Iterating among all armors to make the player choose one of them (or not with the empty armor)
             for armor in armors:
                 # Add the armor to the items.
-                Year2015_Solution.day_21_helper_addElement(currentCombination, armor)
+                Year2015_Solution._day_21_helper_addElement(currentCombination, armor)
                 
                 # Iterating among all rings to make the player choose one of them (or not with the empty ring)
                 for firstRing in range(len(rings)):
                     
                     # Add the ring to the items.
-                    Year2015_Solution.day_21_helper_addElement(currentCombination, rings[firstRing])
+                    Year2015_Solution._day_21_helper_addElement(currentCombination, rings[firstRing])
                     
                     # Iterating among all other rings to make the player choose another one (or not with the empty ring)
                     for secondRing in range(firstRing + 1, len(rings)):
                         
                         # Add the ring to the items.
-                        Year2015_Solution.day_21_helper_addElement(currentCombination, rings[secondRing])
+                        Year2015_Solution._day_21_helper_addElement(currentCombination, rings[secondRing])
                         
                         # Store a copy of the combination the player just made.
                         allCombinations.append(currentCombination.copy())
                         
                         # Delete the second ring from the stuff bought by the player.
-                        Year2015_Solution.day_21_helper_deleteElement(currentCombination, rings[secondRing])
+                        Year2015_Solution._day_21_helper_deleteElement(currentCombination, rings[secondRing])
                     
                     # Delete the first ring from the stuff bought by the player.
-                    Year2015_Solution.day_21_helper_deleteElement(currentCombination, rings[firstRing])
+                    Year2015_Solution._day_21_helper_deleteElement(currentCombination, rings[firstRing])
                 
                 # Delete the armor from the stuff bought by the player.
-                Year2015_Solution.day_21_helper_deleteElement(currentCombination, armor)
+                Year2015_Solution._day_21_helper_deleteElement(currentCombination, armor)
             
             # Delete the last ring from the stuff bought by the player.
-            Year2015_Solution.day_21_helper_deleteElement(currentCombination, weapon)
+            Year2015_Solution._day_21_helper_deleteElement(currentCombination, weapon)
 
         # Sort the combination by price. If the combination are same price, it's then sorted by damage then armor, but what is 
         # Important is the price.
@@ -2322,7 +2351,7 @@ class Year2015_Solution(Solution):
         return allCombinations
 
     @staticmethod
-    def day_21_helper_getNumberOfTurnToKillSomeone(hitPointOtVictim: int, armorOfVictim: int, attackOfAttacker: int) -> int:
+    def _day_21_helper_getNumberOfTurnToKillSomeone(hitPointOtVictim: int, armorOfVictim: int, attackOfAttacker: int) -> int:
         """
         Helper for the solution for day 21. Compute the number of turn needed for an attacker to kill his victim.
         https://adventofcode.com/2015/day/21
@@ -2354,7 +2383,7 @@ class Year2015_Solution(Solution):
         return numberOfTurnNeeded 
     
     @staticmethod
-    def day_21_helper_getBossStats() -> tuple[int, int, int]:
+    def _day_21_helper_getBossStats() -> tuple[int, int, int]:
         """
         Helper for the solution for day 21. Retrieve from the input the stats of the boss
         https://adventofcode.com/2015/day/21
@@ -2372,7 +2401,7 @@ class Year2015_Solution(Solution):
         line: str                           # String representing the stats of the boss.
         
         # Retrieve the information from the input text.
-        lines = getLines(Year2015_Solution.year, 21)
+        lines = getLines(21)
 
         # Iterating among all information we got.
         # For each kind of information, fing the integer and store it in the corresponding argument.
@@ -2393,7 +2422,7 @@ class Year2015_Solution(Solution):
         return (bossHitPoints, bossAttack, bossArmor)
 
     @staticmethod
-    def day_21_Part_1():
+    def _day_21_Part_1():
         """
         Get solution for day 21, Part 1
         https://adventofcode.com/2015/day/21
@@ -2414,10 +2443,10 @@ class Year2015_Solution(Solution):
         nbTurnToKillMe: int                 # Number of turn it would take with the current combination to kill the player.
 
         # Retrieve information of the boss from the input text.
-        bossHitPoints, bossAttack, bossArmor = Year2015_Solution.day_21_helper_getBossStats()
+        bossHitPoints, bossAttack, bossArmor = Year2015_Solution._day_21_helper_getBossStats()
 
         # Retrieve all possible combinations of stuff the boss has.
-        allCombinationsOfStuff: list[list[int]] = Year2015_Solution.day_21_helper_createAllCombinations()
+        allCombinationsOfStuff: list[list[int]] = Year2015_Solution._day_21_helper_createAllCombinations()
 
         # Iterate among all possible combination that could be bought.
         for combination in allCombinationsOfStuff:
@@ -2427,8 +2456,8 @@ class Year2015_Solution(Solution):
             playerArmor = combination[2]
             
             # Compute the number of turns it would take for the player to kill the boss and for the player to kill the boss.
-            nbTurnToKillBoss = Year2015_Solution.day_21_helper_getNumberOfTurnToKillSomeone(bossHitPoints, bossArmor, playerAttack)
-            nbTurnToKillMe = Year2015_Solution.day_21_helper_getNumberOfTurnToKillSomeone(playerHitPoints, playerArmor, bossAttack)
+            nbTurnToKillBoss = Year2015_Solution._day_21_helper_getNumberOfTurnToKillSomeone(bossHitPoints, bossArmor, playerAttack)
+            nbTurnToKillMe = Year2015_Solution._day_21_helper_getNumberOfTurnToKillSomeone(playerHitPoints, playerArmor, bossAttack)
 
             # If the boss is killed in less or equal number of turn, the player wins (because he plays first).
             if nbTurnToKillBoss <= nbTurnToKillMe:
@@ -2440,7 +2469,7 @@ class Year2015_Solution(Solution):
         return -1
 
     @staticmethod
-    def day_21_Part_2():
+    def _day_21_Part_2():
         """
         Get solution for day 21, Part 2
         https://adventofcode.com/2015/day/21#part2
@@ -2461,10 +2490,10 @@ class Year2015_Solution(Solution):
         nbTurnToKillMe: int                 # Number of turn it would take with the current combination to kill the player.
 
         # Retrieve information of the boss from the input text.
-        bossHitPoints, bossAttack, bossArmor = Year2015_Solution.day_21_helper_getBossStats()
+        bossHitPoints, bossAttack, bossArmor = Year2015_Solution._day_21_helper_getBossStats()
 
         # Retrieve all possible combinations of stuff the boss has.
-        allCombinationsOfStuff: list[list[int]] = Year2015_Solution.day_21_helper_createAllCombinations()
+        allCombinationsOfStuff: list[list[int]] = Year2015_Solution._day_21_helper_createAllCombinations()
 
         # Reverse the combinations of stuff to have the most expensive first.
         allCombinationsOfStuff.reverse()
@@ -2477,8 +2506,8 @@ class Year2015_Solution(Solution):
             playerArmor = combination[2]
             
             # Compute the number of turns it would take for the player to kill the boss and for the player to kill the boss.
-            nbTurnToKillBoss = Year2015_Solution.day_21_helper_getNumberOfTurnToKillSomeone(bossHitPoints, bossArmor, playerAttack)
-            nbTurnToKillMe = Year2015_Solution.day_21_helper_getNumberOfTurnToKillSomeone(playerHitPoints, playerArmor, bossAttack)
+            nbTurnToKillBoss = Year2015_Solution._day_21_helper_getNumberOfTurnToKillSomeone(bossHitPoints, bossArmor, playerAttack)
+            nbTurnToKillMe = Year2015_Solution._day_21_helper_getNumberOfTurnToKillSomeone(playerHitPoints, playerArmor, bossAttack)
 
             # If the boss is killed in more turn, the player loose.
             if nbTurnToKillBoss > nbTurnToKillMe:
@@ -2490,7 +2519,7 @@ class Year2015_Solution(Solution):
         return -1
     
     @staticmethod
-    def day_23_helper_getValueOfBAfterOperations(initValueOfRegisterA: int) -> int:
+    def _day_23_helper_getValueOfBAfterOperations(initValueOfRegisterA: int) -> int:
         """
         Helper for the solution for day 23. Retrieve the value inside the register b once asm operations are executed.
         https://adventofcode.com/2015/day/23
@@ -2503,7 +2532,7 @@ class Year2015_Solution(Solution):
         """
 
         val: dict[str, int] = {'b': 0, 'a': initValueOfRegisterA}   # Register with their different values
-        lines: list[str] = getLines(Year2015_Solution.year, 23)     # All executions that may be executed.
+        lines: list[str] = getLines(23)     # All executions that may be executed.
         lineIndex: int = 0                                          # Index of the current execution
         elementsOfInstruction: list[str]                            # Elements that are on the instruction we are executing.
 
@@ -2550,7 +2579,7 @@ class Year2015_Solution(Solution):
         return val['b']
 
     @staticmethod
-    def day_23_Part_1():
+    def _day_23_Part_1():
         """
         Get solution for day 23, Part 21
         https://adventofcode.com/2015/day/23
@@ -2562,13 +2591,13 @@ class Year2015_Solution(Solution):
         valueOfRegisterBAfterExecutions: int        # Value of b after the execution of the instruction.
 
         # Retrieve the value of b after the executions
-        valueOfRegisterBAfterExecutions = Year2015_Solution.day_23_helper_getValueOfBAfterOperations(0)
+        valueOfRegisterBAfterExecutions = Year2015_Solution._day_23_helper_getValueOfBAfterOperations(0)
 
         # Return the final value of b.
         return valueOfRegisterBAfterExecutions
 
     @staticmethod
-    def day_23_Part_2():
+    def _day_23_Part_2():
         """
         Get solution for day 23, Part 2
         https://adventofcode.com/2015/day/23#part2
@@ -2580,15 +2609,15 @@ class Year2015_Solution(Solution):
         valueOfRegisterBAfterExecutions: int        # Value of b after the execution of the instruction.
 
         # Retrieve the value of b after the executions, when a is initialized to 1
-        valueOfRegisterBAfterExecutions = Year2015_Solution.day_23_helper_getValueOfBAfterOperations(1)
+        valueOfRegisterBAfterExecutions = Year2015_Solution._day_23_helper_getValueOfBAfterOperations(1)
 
         # Return the final value of b.
         return valueOfRegisterBAfterExecutions
 
-    day_24_minQEForEqualWeights: int = maxsize
+    _day_24_minQEForEqualWeights: int = maxsize
     
     @staticmethod
-    def day_24_helper_getQE(listOfWeight: list[int], listOfChoosen: list[bool]) -> int:
+    def _day_24_helper_getQE(listOfWeight: list[int], listOfChoosen: list[bool]) -> int:
         """
         Helper for the solution for day 24. Find the quantum entanglement of the current configuration.
         https://adventofcode.com/2015/day/24
@@ -2613,7 +2642,7 @@ class Year2015_Solution(Solution):
         return quantumEtranglement
     
     @staticmethod
-    def day_24_helper_dfsFoundSmallestQE(listOfWeight: list[int], indexOfPackage: int, currentWeight: int, targetWeight: int, listOfChoosen: list[bool]):
+    def _day_24_helper_dfsFoundSmallestQE(listOfWeight: list[int], indexOfPackage: int, currentWeight: int, targetWeight: int, listOfChoosen: list[bool]):
         """
         Helper for the solution for day 24. Find the smallest QE possible by using dfs.
         https://adventofcode.com/2015/day/24
@@ -2629,7 +2658,7 @@ class Year2015_Solution(Solution):
         # If the current weight is the one wanted, we can compute the QE of the new package and stop the function
         # (as long as no package has a null weight)
         if currentWeight == targetWeight:
-            Year2015_Solution.day_24_minQEForEqualWeights = min(Year2015_Solution.day_24_minQEForEqualWeights, Year2015_Solution.day_24_helper_getQE(listOfWeight, listOfChoosen))
+            Year2015_Solution._day_24_minQEForEqualWeights = min(Year2015_Solution._day_24_minQEForEqualWeights, Year2015_Solution._day_24_helper_getQE(listOfWeight, listOfChoosen))
             return
         
         # If we reached the end of the list, we can stop the call.
@@ -2645,14 +2674,14 @@ class Year2015_Solution(Solution):
             
             # If we can add more weight on the current group, call the function with the next package.
             if targetWeight >= currentWeight:
-                Year2015_Solution.day_24_helper_dfsFoundSmallestQE(listOfWeight, indexOfPackage + 1, currentWeight, targetWeight, listOfChoosen)
+                Year2015_Solution._day_24_helper_dfsFoundSmallestQE(listOfWeight, indexOfPackage + 1, currentWeight, targetWeight, listOfChoosen)
 
             # Delete the weight of the package we are not taking anymore.
             currentWeight -= listOfWeight[indexOfPackage] * int(isPackageChoosen)
             listOfChoosen[indexOfPackage] = False
             
     @staticmethod
-    def day_24_helper_getMinQEForNumberOfGroup(numberOfGroups: int) -> int:
+    def _day_24_helper_getMinQEForNumberOfGroup(numberOfGroups: int) -> int:
         """
         Helper for the solution for day 24. Construct the searching for the smallest QE, according to the number of groups done.
         https://adventofcode.com/2015/day/24
@@ -2667,10 +2696,10 @@ class Year2015_Solution(Solution):
         weightOfPackages: list[int]     # Weight of all packages.
         
         # Re-initialize the value of the QE to max because we want the smallest possible.
-        Year2015_Solution.day_24_minQEForEqualWeights = maxsize
+        Year2015_Solution._day_24_minQEForEqualWeights = maxsize
 
         # Retrieve the input of the problem.
-        lines = getLines(Year2015_Solution.year, 24)
+        lines = getLines(24)
 
         # Convert the weights to integer.
         weightOfPackages = [int(line) for line in lines]
@@ -2682,13 +2711,13 @@ class Year2015_Solution(Solution):
         isPackageChoosen = [False for _ in range(len(weightOfPackages))]
         
         # Use DFS to find the smallest QE possible.
-        Year2015_Solution.day_24_helper_dfsFoundSmallestQE(weightOfPackages, 0, 0, totalWeightPerArea, isPackageChoosen)
+        Year2015_Solution._day_24_helper_dfsFoundSmallestQE(weightOfPackages, 0, 0, totalWeightPerArea, isPackageChoosen)
         
         # Return the minimum QE that has been found.
-        return Year2015_Solution.day_24_minQEForEqualWeights
+        return Year2015_Solution._day_24_minQEForEqualWeights
 
     @staticmethod
-    def day_24_Part_1() -> int:
+    def _day_24_Part_1() -> int:
         """
         Get solution for day 24, Part 1
         https://adventofcode.com/2015/day/24
@@ -2700,13 +2729,13 @@ class Year2015_Solution(Solution):
         minQEForThreeParts: int        # Value of the QE
 
         # Retrieve the value of the smallest QE for 3 equal parts
-        minQEForThreeParts = Year2015_Solution.day_24_helper_getMinQEForNumberOfGroup(3)
+        minQEForThreeParts = Year2015_Solution._day_24_helper_getMinQEForNumberOfGroup(3)
 
         # Return the value of the QE.
         return minQEForThreeParts
 
     @staticmethod
-    def day_24_Part_2() -> int:
+    def _day_24_Part_2() -> int:
         """
         Get solution for day 24, Part 2
         https://adventofcode.com/2015/day/24#part2
@@ -2718,13 +2747,13 @@ class Year2015_Solution(Solution):
         minQEForThreeParts: int        # Value of the QE
 
         # Retrieve the value of the smallest QE for 4 equal parts
-        minQEForThreeParts = Year2015_Solution.day_24_helper_getMinQEForNumberOfGroup(4)
+        minQEForThreeParts = Year2015_Solution._day_24_helper_getMinQEForNumberOfGroup(4)
 
         # Return the value of the QE.
         return minQEForThreeParts
 
     @staticmethod
-    def day_25_Part_1():
+    def _day_25_Part_1():
         """
         Get solution for day 25, Part 1
         https://adventofcode.com/2015/day/25
@@ -2732,7 +2761,7 @@ class Year2015_Solution(Solution):
         Returns:
             Code to boot on the weather machine.
         """
-        line: str = getLine(Year2015_Solution.year, 25)     # Input of the problem, which contains the needed row / column that are the target.
+        line: str = getLine(25)     # Input of the problem, which contains the needed row / column that are the target.
         
         input: list[str] = findall(r"\d+", line)            # List of string representation of the target coordinates. 
 
