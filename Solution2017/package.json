@@ -1,0 +1,21 @@
+{
+  "name": "advent-of-code-2017",
+  "version": "1.0.0",
+  "description": "Solutions pour l'Advent of Code 2017",
+  "main": "main.js",
+  "type": "module",
+  "scripts": {
+    "start": "node main.js",
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.4"
+  },
+  "dependencies": {
+    "undici-types": "^6.19.8"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "license": "MIT"
+}

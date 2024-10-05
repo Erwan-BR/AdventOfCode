@@ -34,22 +34,35 @@ while getopts "hy:" OPT; do
                     echo "Solution for Year 2015 is done in Python. Here is the solution for my input:"
                     echo
                     cd Solution2015 || { echo "Error: Could not change directory to Solution2015"; exit 1; }
-                    python main.py
+                    python3 main.py
+                    rm -rf __pycache__
+                    cd ..
                     ;;
                 
                 2016)
                     echo "Solution for Year 2016 is done in Java. Here is the solution for my input:"
                     echo
                     cd Solution2016 || { echo "Error: Could not change directory to Solution2016"; exit 1; }
-                    javac -d . *.java
+                    javac -d . *.java -Xlint
                     if [ $? -eq 0 ]; then
                         java Solution2016.Main
                     else
                         echo "Compilation failed."
                     fi
+                    rm -rf Solution2016
                     cd ..
                     ;;
                 
+                2017) 
+                    echo "Solution for Year 2017 is done in TypeScript. Here is the solution for my input:"
+                    echo
+                    cd Solution2017 || { echo "Error: Could not change directory to Solution2017"; exit 1; }
+                    npm install
+                    npm run build
+                    clear
+                    npm start
+                    rm *.js
+                    ;;
                 *)
                     echo "Solution for year $OPTARG is not done yet."
                     ;;
