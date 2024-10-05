@@ -1,10 +1,13 @@
 package Solution2016;
 
 import java.lang.reflect.Method;
-
+import java.math.BigInteger;
+import java.security.MessageDigest;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.HashSet;
 
 import java.util.regex.Matcher;
@@ -429,5 +432,149 @@ public class Year2016_Solution
         
         // Return the number of triangles that are valid.
         return nbTriangles;
+    }
+
+    /*
+     * Helper for the solution to day 5.
+     * Find the MD5 hash in base 16 of the input string.
+     * 
+     * https://adventofcode.com/2016/day/5
+     * 
+     * @param inputString: String that needs to be hashed.
+     * @returns: Hash of the string given has the parameter.
+     */
+    private static String day_05_helper_getMd5(final String inputString)
+    {
+        // Try to get the Md5 hash of the string
+        try
+        {
+            // Static getInstance method is called with hashing MD5
+            MessageDigest md = MessageDigest.getInstance("MD5");
+
+            // digest() method is called to calculate message digest
+            // of an input digest() return array of byte
+            byte[] messageDigest = md.digest(inputString.getBytes());
+
+            // Convert byte array into signum representation
+            BigInteger no = new BigInteger(1, messageDigest);
+
+            // Convert message digest into hex value
+            String hashtext = no.toString(16);
+            
+            // Add a padding of zero before returning the hash text.
+            while (hashtext.length() < 32)
+            {
+                hashtext = "0" + hashtext;
+            }
+            return hashtext;
+        }
+
+        // For specifying wrong message digest algorithms
+        catch (Exception e)
+        {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /*
+     * Get solution for day 5 "How About a Nice Game of Chess?", Part 1.
+     *  https://adventofcode.com/2016/day/5
+     *
+     * @returns: Password of the door Santa needs to open.
+     */
+    @SuppressWarnings("unused")
+    private static String day_05_Part_1()
+    {
+        // Try to find the password.
+        try
+        {
+            // Get the puzzle input.
+            final String line = ReadFile.getLine(5);
+
+            // String that contains the password for the door.
+            String password = "";
+            
+            // Value to concatenate at the end of the line to find the hash that helps
+            // To get the next password.
+            Integer indexToConcatenate = 0;
+
+            // iterating 8 times to find the 8 characters of the password.
+            for(int index = 0; 8 > index; ++index)
+            {
+                // Create a local string and get the hash of the concatenation while the 5 first elements are not 0s.
+                String currentString;
+                do
+                {
+                    currentString = day_05_helper_getMd5(line + indexToConcatenate.toString());
+                    ++ indexToConcatenate;
+                } while (! currentString.substring(0, 5).equals("00000"));
+                
+                // Concatenate the value obtained at index 5 to the current password.
+                password += currentString.charAt(5);
+            }
+
+            return password;
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            return "";
+        }
+    }
+
+    /*
+     * Get solution for day 5 "How About a Nice Game of Chess?", Part 2.
+     *  https://adventofcode.com/2016/day/5#part2
+     *
+     * @returns: Password of the door Santa needs to open with a new method.
+     */
+    @SuppressWarnings("unused")
+    private static String day_05_Part_2()
+    {
+        // Try to find the password.
+        try
+        {
+            // Get the puzzle input.
+            final String line = ReadFile.getLine(5);
+
+            // String that contains the password for the door.
+            // Initialized with z to show that some elements are missing, and z should not be present in
+            // an hexadecimal representation.
+            String password = "zzzzzzzz";
+            
+            // Value to concatenate at the end of the line to find the hash that helps
+            // To get the next password.
+            Integer indexToConcatenate = 0;
+            
+            // While at least one element of the password is not found, we need to continue searching for new hash.
+            while(password.contains("z"))
+            {
+                // Create a local string and get the hash of the concatenation while the 5 first elements are not 0s.
+                String currentString;
+                do
+                {
+                    currentString = day_05_helper_getMd5(line + indexToConcatenate.toString());
+                    
+                    ++ indexToConcatenate;
+                } while (! currentString.substring(0, 5).equals("00000"));
+                
+                // Retrieve the index where the element should be written.
+                final int indexToWrite = Character.getNumericValue(currentString.charAt(5));
+                
+                // Write in password the element only if it is a correct index, and if nothing was written at this place already.
+                if (8 > indexToWrite && 'z' == password.charAt(indexToWrite))
+                {
+                    password = password.substring(0, Character.getNumericValue(currentString.charAt(5))) + currentString.charAt(6) + password.substring(Character.getNumericValue(currentString.charAt(5)) + 1);
+                }
+            }
+
+            return password;
+        }
+        catch (Exception e)
+        {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+            return "";
+        }
     }
 }
