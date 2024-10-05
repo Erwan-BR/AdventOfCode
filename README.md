@@ -15,26 +15,40 @@ The project is structured into several directories, each corresponding to a year
 ```
 AdventOfCode/
 │
-├── Global/
-│ ├── globals.py
-│ ├── __init__.py
-│
 ├── Solution_2015/
 │ ├── textfiles
 │ │   ├── 01.txt
-│ │   ├── 01.txt
-│ │   ├── 01.txt
+│ │   ├── ...txt
+│ │   ├── 25.txt
 │ ├── Year2015_Solution.py
-│ ├── globals.py
+│ ├── ReadFile.py
 │ ├── main.py
+│
+├── Solution_2016/
+│ ├── textfiles
+│ │   ├── 01.txt
+│ │   ├── ...txt
+│ │   ├── 25.txt
+│ ├── Year2016_Solution.java
+│ ├── ReadFile.java
+│ ├── Main.java
+│
+├── Solution_2017/
+│ ├── textfiles
+│ │   ├── 01.txt
+│ │   ├── ...txt
+│ │   ├── 25.txt
+│ ├── Year2017_Solution.ts
+│ ├── ReadFile.ts
+│ ├── main.ts
 │
 ├── .../
 │
 ├── Solution_2023/
 │ ├── textfiles
 │ │   ├── 01.txt
-│ │   ├── 01.txt
-│ │   ├── 01.txt
+│ │   ├── ...txt
+│ │   ├── 25.txt
 │
 └── main.sh
 ```
@@ -44,10 +58,22 @@ AdventOfCode/
 ### Prerequisites
 
 To run this project, you must have:
-- Python 3.12.4 installed on your machine. You can check the version of Python by running the following command:
+- For year 2015: Python 3.12.6 installed on your machine. You can check the version of Python by running the following command:
 
 ```bash
 python --version
+```
+
+- For year 2016: Java 21.0.4 installed on your machine. You can check the version of Java by running the following command:
+
+```bash
+java --version
+```
+
+- For year 2017: Node 20.18.0 installed on your machine. You can check the version of Node by running the following command:
+
+```bash
+node --version
 ```
 
 ### Installation
@@ -76,7 +102,7 @@ On Linux:
 ./main.sh -y <yearNumber>
 ```
 
-4. Customize the output displayed (optionnal): Fo each year, In main.xx, you can choose to display the answer you want. Foe the year 2015, you might want to display only a few responses so you would have to change main.py to:
+4. Customize the output displayed (optionnal): Fo each year, In main.xx, you can choose to display the answer you want. For the year 2015, you might want to display only a few responses so you would have to change main.py to:
 
 ```python
 if "__main__" == __name__:
