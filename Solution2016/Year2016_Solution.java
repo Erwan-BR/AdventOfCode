@@ -1179,4 +1179,104 @@ public class Year2016_Solution
         // Call the helper to find the value inside the register A when 'c' is initially 1.
         return day_12_helper_getAAfterInstruction(1);
     }
+
+    /*
+     * Helper for the solution to day 18.
+     * Find if a tile is going to be safe or not.
+     * If we look carefully the instruction, we may notice that the tile is dangerous when you have exactly one of the 
+     * ends above that is dangerous
+     * 
+     * https://adventofcode.com/2016/day/18
+     * 
+     * @param previousTiles: Line above the one you want to know if the tile is safe or not.
+     * @param indexStart: Index where we start looking the 3 previous tiles.
+     * @returns: '^' if the tile is unsafe, '.' if the tile is safe
+     */
+    private static Character day_18_helper_getSafetyOfTile(final String previousTiles, int indexStart)
+    {
+        return (('^' == previousTiles.charAt(indexStart)) ^ ('^' == previousTiles.charAt(indexStart + 2))) ? '^' : '.';
+    }
+
+    /*
+     * Helper for the solution to day 18.
+     * Find the number of safe tile if you have a given number of row.
+     * 
+     * https://adventofcode.com/2016/day/18
+     * 
+     * @param numberOfRow: Number of row you want to check, basically the number of time we need to loop.
+     * @returns: Number of safe tiles in numberOfRow rows.
+     */
+    private static int day_18_helper_getNumberOfSafeTilesInRows(final int numberOfRow)
+    {
+        // Get the puzzle input.
+        // Add '-' at the beginning and at the end to compute equally the first and last tiles (bacause we check only
+        // unsafe tiles in day_18_helper_getSafetyOfTile)
+        String line = "-" + ReadFile.getLine(18) + "-";
+        
+        // Initialize the number of safe tiles found.
+        int numberOfSafeTiles = 0;
+        
+        // Count the number of safe tiles in the input row.
+        for (int charIndex = 0; line.length() > charIndex; ++charIndex)
+        {
+            if ('.' == line.charAt(charIndex))
+            {
+                ++ numberOfSafeTiles ;
+            }
+        }
+
+        // Iterating numberOfRow - 1 time because one row is already given.
+        for (int index = 1; numberOfRow > index; ++index)
+        {
+            // Construct the newTiles that are on the new row.
+            String newTiles = "-";
+            
+            // Get the safety of the tiles according to the previous ones.
+            for (int indexTile = 0; (line.length() - 2) > indexTile; ++indexTile)
+            {
+                newTiles += day_18_helper_getSafetyOfTile(line, indexTile);
+            }
+            // Set a virtual tile as safe.
+            newTiles += "-";
+
+            // Save the new tiles in the line to have it for next iteration
+            line = newTiles;
+            
+            // Count the number of safe tiles in the new row.
+            for (int charIndex = 0; line.length() > charIndex; ++charIndex)
+            {
+                if ('.' == line.charAt(charIndex))
+                {
+                    ++ numberOfSafeTiles ;
+                }
+            }
+        }
+        
+        // Return the total number of safe tiles found.
+        return numberOfSafeTiles;
+    }
+
+    /*
+     * Get solution for day 18 "Like a Rogue", Part 1.
+     * https://adventofcode.com/2016/day/18
+     *
+     * @returns: Number of safe tiles if we have to go through 40 rows.
+     */
+    @SuppressWarnings("unused")
+    private static int day_18_Part_1()
+    {
+        return day_18_helper_getNumberOfSafeTilesInRows(40);
+    }
+
+    /*
+     * Get solution for day 18 "Like a Rogue", Part 2.
+     * https://adventofcode.com/2016/day/18#part2
+     *
+     * @returns: Number of safe tiles if we have to go through 400000 rows.
+     */
+    @SuppressWarnings("unused")
+    private static int day_18_Part_2()
+    {
+        return day_18_helper_getNumberOfSafeTilesInRows(400000);
+    }
 }
