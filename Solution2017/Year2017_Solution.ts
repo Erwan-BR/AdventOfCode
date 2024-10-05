@@ -790,4 +790,111 @@ export class Year2017_Solution
         // Return the number of steps that was needed.
         return numberOfSteps;
     }
+
+    /*
+     * Get solution for day 9 "Stream Processing", Part 1.
+     * https://adventofcode.com/2017/day/9
+     *
+     * @returns: Total score of the stream.
+     */
+    private static day_09_Part_1(): number
+    {
+        // Get the puzzle input.
+        const line: string = ReadFile.getLine(9);
+        
+        // Initialize a nested level and a score used to keep track of the point that we are making.
+        let currentNestedLevel: number = 0;
+        let totalScore: number = 0;
+
+        // Initialize a boolean to know if we are in the garbage, and do not mind of { then.
+        let isInGarbage: boolean = false;
+
+        // Iterating among everything in the stream.
+        for (let index = 0; line.length > index; ++index)
+        {
+            // If the next element should be cancelled, skip the following one.
+            if ('!' == line[index])
+            {
+                ++ index;
+                continue;
+            }
+            // If we are in the garbage, we should only look if we have a end of garbage as the following character.
+            if (isInGarbage)
+            {
+                if ('>' == line[index])
+                {
+                    isInGarbage = false;
+                }
+                continue;
+            }
+            // Oppening a new group, therefore the nested level increase.
+            if ('{' == line[index])
+            {
+                ++ currentNestedLevel;
+            }
+            // Closing a group so the score goes up and the nested level decrease.
+            else if ('}' == line[index])
+            {
+                totalScore += currentNestedLevel;
+                -- currentNestedLevel;
+            }
+            // Beginning of the garbage.
+            else if ('<' == line[index])
+            {
+                isInGarbage = true;
+            }
+        }
+
+        // Return the total score of the stream.
+        return totalScore;
+    }
+
+    /*
+     * Get solution for day 9 "Stream Processing", Part 2.
+     * https://adventofcode.com/2017/day/9#part2
+     *
+     * @returns: Number of elements in the stream that are going in the garbage, except the cancelled ones..
+     */
+    private static day_09_Part_2(): number
+    {
+        // Get the puzzle input.
+        const line: string = ReadFile.getLine(9);
+
+        // Initialize an integer counting the number of elements that are going in the garbage.
+        let nbElementOnGarbageNotCancelled: number = 0;
+        
+        // Initialize a boolean to know if we are in the garbage, and do not mind of { then.
+        let isInGarbage: boolean = false;
+        
+
+        // Iterating among everything in the stream.
+        for (let index = 0; line.length > index; ++index)
+        {
+            // If the next element should be cancelled, skip the following one.
+            if ('!' == line[index])
+            {
+                ++ index;
+            }
+            // If we are in the garbage, we should look if we are exiting, or if we increase the number of elements inside the garbage.
+            else if (isInGarbage)
+            {
+                if ('>' == line[index])
+                {
+                    isInGarbage = false;
+                }
+                else
+                {
+                    ++ nbElementOnGarbageNotCancelled;
+                }
+            }
+            // Beginning of the garbage.
+            else if ('<' == line[index])
+            {
+                isInGarbage = true;
+            }
+        }
+
+        // Return the number of non-canceled characters that are within the garbage 
+        return nbElementOnGarbageNotCancelled;
+    }
 }
