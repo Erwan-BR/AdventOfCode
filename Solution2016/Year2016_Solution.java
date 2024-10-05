@@ -52,7 +52,7 @@ public class Year2016_Solution
 
     /*
      * Get solution for day 1 "No Time for a Taxicab", Part 1.
-     *  https://adventofcode.com/2016/day/1
+     * https://adventofcode.com/2016/day/1
      *
      * @returns: Manhattan distance between Santa and the Easter Bunny HQ.
      */
@@ -111,7 +111,7 @@ public class Year2016_Solution
 
     /*
      * Get solution for day 1 "No Time for a Taxicab", Part 2.
-     *  https://adventofcode.com/2016/day/1#part2
+     * https://adventofcode.com/2016/day/1#part2
      *
      * @returns: First place visited 2 times.
      */
@@ -189,5 +189,245 @@ public class Year2016_Solution
 
         // Return -1 if the input is not making Santa going 2 times on the same coordinate.
         return -1;
+    }
+
+    /*
+     * Helper for the solution to day 2.
+     * Returns the keypad that is used to find the code. The keypad is surrounded by "0" to help finding if mooving
+     * the finger is possible or not.
+     * 
+     * https://adventofcode.com/2016/day/2
+     * 
+     * @param isPartOne: Boolean that indicate if we should take the keypad from the first part or the second part.
+     * @returns: Keypad used to solve the problem.
+     */
+    private static String[][] day_02_helper_getKeypadToSolve(boolean isPartOne)
+    {
+        // For the first part, the keypad is a regular keypad.
+        if (isPartOne)
+        {
+            final String[][] keypad = {{"0", "0", "0", "0", "0"},
+                                   {"0", "1", "2", "3", "0"},
+                                   {"0", "4", "5", "6", "0"},
+                                   {"0", "7", "8", "9", "0"},
+                                   {"0", "0", "0", "0", "0"}};
+            
+            return keypad;
+        }
+        
+        // For the second part, the keypad has a weird shape.
+        final String[][] keypad = {{"0", "0", "0", "0", "0", "0", "0"},
+                                   {"0", "0", "0", "1", "0", "0", "0"},
+                                   {"0", "0", "2", "3", "4", "0", "0"},
+                                   {"0", "5", "6", "7", "8", "9", "0"},
+                                   {"0", "0", "A", "B", "C", "0", "0"},
+                                   {"0", "0", "0", "D", "0", "0", "0"},
+                                   {"0", "0", "0", "0", "0", "0", "0"}};
+        
+        return keypad;
+    }
+
+    /*
+     * Helper for the solution to day 2.
+     * Returns the code of the bathroom according to the keypad that should be taken.
+     * 
+     * https://adventofcode.com/2016/day/2
+     * 
+     * @param isPartOne: Boolean that indicate if we should take the keypad from the first part or the second part.
+     * @returns: Code to access inside the bathroom.
+     */
+    private static String day_02_getSolutionFromProblem(boolean isPartOne)
+    {
+        // Get the puzzle input.
+        final ArrayList<String> lines = ReadFile.getLines(2);
+
+        // Code pannel shape.
+        final String[][] matrixVal = Year2016_Solution.day_02_helper_getKeypadToSolve(isPartOne);
+        
+        // Code that should be found when following instructions.
+        String codeFinal = "";
+
+        // Coordinates where Santa should have his finger now.
+        int[] currentCoordinates = {3, 3};
+
+        // Iterate among all instructions to find each elements of the code
+        for (String line: lines)
+        {
+            // Iterate among all instruction for one element of the code
+            for (int charIndex = 0; line.length() > charIndex; ++charIndex)
+            {
+                // Put the finger up means decreasing the number of line by one (if possible)
+                if ('U' == line.charAt(charIndex) && "0" != matrixVal[currentCoordinates[0] - 1][currentCoordinates[1]])
+                {
+                    -- currentCoordinates[0];
+                }
+                // Put the finger down means increasing the number of line by one (if possible)
+                if ('D' == line.charAt(charIndex) && "0" != matrixVal[currentCoordinates[0] + 1][currentCoordinates[1]])
+                {
+                    ++ currentCoordinates[0];
+                }
+                // Put the finger right means increasing the number of column by one (if possible)
+                if ('R' == line.charAt(charIndex) && "0" != matrixVal[currentCoordinates[0]][currentCoordinates[1] + 1])
+                {
+                    ++ currentCoordinates[1];
+                }
+                // Put the finger left means decreasing the number of column by one (if possible)
+                if ('L' == line.charAt(charIndex) && "0" != matrixVal[currentCoordinates[0]][currentCoordinates[1] - 1])
+                {
+                    -- currentCoordinates[1];
+                }
+            }
+            // Concatenate the new part of code to the code already found.
+            codeFinal += matrixVal[currentCoordinates[0]][currentCoordinates[1]];
+        }
+
+        // Return the code that Santa found.
+        return codeFinal;
+    }
+
+    /*
+     * Get solution for day 2 "Bathroom Security".
+     * https://adventofcode.com/2016/day/2
+     *
+     * @returns: Code to open the bathroom.
+     */
+    @SuppressWarnings("unused")
+    private static String day_02_Part_1()
+    {
+        // Retrieve the solution for the first part and return it.
+        return Year2016_Solution.day_02_getSolutionFromProblem(true);
+    }
+
+    /*
+     * Get solution for day 2 "Bathroom Security", Part 2.
+     *  https://adventofcode.com/2016/day/2#part2
+     *
+     * @returns: Code to open the bathroom with a weird keypad shape.
+     */
+    @SuppressWarnings("unused")
+    private static String day_02_Part_2()
+    {
+        // Retrieve the solution for the second part and return it.
+        return Year2016_Solution.day_02_getSolutionFromProblem(false);
+    }
+
+    /*
+     * Helper for the solution to day 3.
+     * Check if coordinates corresponds to triangles coordinates.
+     * 
+     * https://adventofcode.com/2016/day/3
+     * 
+     * @param dimensions: 3 length that may be the dimensions of a triangle.
+     * @returns: Boolean that states if the dimensions are valid for a triangle or not.
+     */
+    private static Boolean day_03_helper_checkIfTriangleIsValid(int[] dimensions)
+    {
+        // Compute the sum of all sides, and the max side.
+        final int sum = dimensions[0] + dimensions[1] + dimensions[2];
+        final int maxVal = Math.max(Math.max(dimensions[0], dimensions[1]), dimensions[2]);
+        
+        // This is a valid triangle if the max side is smaller than the sum of the two others.
+        return (maxVal < (sum - maxVal));
+    }
+
+    /*
+     * Get solution for day 3 "Squares With Three Sides", Part 1.
+     *  https://adventofcode.com/2016/day/3
+     *
+     * @returns: Number of possible triangles.
+     */
+    @SuppressWarnings("unused")
+    private static int day_03_Part_1()
+    {
+        // Get the puzzle input.
+        final ArrayList<String> lines = ReadFile.getLines(3);
+
+        // Pattern to search for with a regex (integers).
+        final Pattern patternToSearch = Pattern.compile("[0-9]+");
+        
+        // Number of valid triangles found on the input.
+        int nbTriangles = 0;
+        
+        // Iterate among all lines.
+        for (String line: lines)
+        {
+            // Retrieve information about the current line in a matcher.
+            Matcher m = patternToSearch.matcher(line);
+            
+            // Dimensions of the current triangle.
+            int[] dimensions = {0, 0, 0};
+
+            // Iterate among the 3 dimensions to write them in the dimensions table.
+            for (int index = 0; 3 > index; ++index)
+            {
+                if (! m.find())
+                {
+                    return -1;
+                }
+                dimensions[index] = Integer.valueOf(line.substring(m.start(), m.end()));
+            }
+
+            // If this is a triangle, increment by 1 the number of valid triangles.
+            if (day_03_helper_checkIfTriangleIsValid(dimensions))
+            {
+                ++ nbTriangles;
+            }
+        }
+        
+        // Return the number of triangles that are valid.
+        return nbTriangles;
+    }
+
+    /*
+     * Get solution for day 3 "Squares With Three Sides", Part 2.
+     *  https://adventofcode.com/2016/day/3#part2
+     *
+     * @returns: Number of possible triangles on the input when they are written vertically.
+     */
+    @SuppressWarnings("unused")
+    private static int day_03_Part_2()
+    {
+        // Get the puzzle input.
+        final ArrayList<String> lines = ReadFile.getLines(3);
+
+        // Pattern to search for with a regex (integers)
+        final Pattern patternToSearch = Pattern.compile("[0-9]+");
+        
+        // Number of valid triangles found on the input.
+        int nbTriangles = 0;
+        
+        // Iterate among all lines, 3 by 3 to take triangles vertically.
+        for (int indexLine = 2; lines.size() > indexLine; indexLine += 3)
+        {
+            // Retrieve information about the three lines in a matcher.
+            Matcher m1 = patternToSearch.matcher(lines.get(indexLine - 2));
+            Matcher m2 = patternToSearch.matcher(lines.get(indexLine - 1));
+            Matcher m3 = patternToSearch.matcher(lines.get(indexLine));
+            
+            // Dimensions of the current triangle.
+            int[] dimensions = {0, 0, 0};
+            
+            // Iterate among the 3 dimensions to write them in the dimensions table.
+            for (int index = 0; 3 > index; ++index)
+            {
+                if (! m1.find() || ! m2.find() || ! m3.find())
+                {
+                    return -1;
+                }
+                // Fill the information about the hypotetic triangles.
+                dimensions[0] = Integer.valueOf(lines.get(indexLine - 2).substring(m1.start(), m1.end()));
+                dimensions[1] = Integer.valueOf(lines.get(indexLine - 1).substring(m2.start(), m2.end()));
+                dimensions[2] = Integer.valueOf(lines.get(indexLine).substring(m3.start(), m3.end()));
+                
+                // If the element is a triangle, increment the number of triangle found.
+                if (day_03_helper_checkIfTriangleIsValid(dimensions))
+                {
+                    ++ nbTriangles;
+                }
+            }
+        }
+        
+        // Return the number of triangles that are valid.
+        return nbTriangles;
     }
 }
