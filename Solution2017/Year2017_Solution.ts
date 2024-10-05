@@ -120,7 +120,7 @@ export class Year2017_Solution
         const regexToFindNumbers: RegExp = /\d+/g;
 
         // Iterating among all lines.
-        for (let line of lines)
+        for (const line of lines)
         {
             // Retrieve all numbers found on the line.
             const numbersOfLineInString: string[] | null = line.match(regexToFindNumbers);
@@ -137,7 +137,7 @@ export class Year2017_Solution
             
             // Iterate among the number of those line of the spreadsheet and compare
             // To get the biggest and the smallest value of the line.
-            for (let numberInString of numbersOfLineInString)
+            for (const numberInString of numbersOfLineInString)
             {
                 minValue = Math.min(minValue, Number(numberInString));
                 maxValue = Math.max(maxValue, Number(numberInString));
@@ -169,7 +169,7 @@ export class Year2017_Solution
         const regexToFindNumbers: RegExp = /\d+/g;
 
         // Iterating among all lines.
-        for (let line of lines)
+        for (const line of lines)
         {
             // Retrieve all numbers found on the line.
             const numbersOfLineInString: string[] | null = line.match(regexToFindNumbers);
@@ -184,7 +184,7 @@ export class Year2017_Solution
             let numbersOfLineInNumber: number[] = [];
             
             // For all number that are on the lines, we repeat the same process
-            for (let numberInString of numbersOfLineInString)
+            for (const numberInString of numbersOfLineInString)
             {
                 // Get the newValue as an integer
                 const newValue: number = Number(numberInString)
@@ -338,7 +338,7 @@ export class Year2017_Solution
      * https://adventofcode.com/2016/day/3#part2
      * 
      * @param currentSquare: Square that we already have.
-     * @returns: The same square with 0 around it (above, bellow, on the right and the left)
+     * @returns: The same square with 0 around it (above, bellow, on the right and the left).
      */
     private static day_03_helper_constructBiggerSquare(currentSquare: number[][]) : number[][]
     {
@@ -485,7 +485,7 @@ export class Year2017_Solution
         const regexToFindWords: RegExp = /[a-z]+/g;
 
         // Iterating among all line to check if they are valid passphrase.
-        for (let line of lines)
+        for (const line of lines)
         {
             // Find all words from the line.
             const wordsFromLine: string[] | null = line.match(regexToFindWords);
@@ -529,7 +529,7 @@ export class Year2017_Solution
         const regexToFindWords: RegExp = /[a-z]+/g;
 
         // Iterating among all line to check if they are valid passphrase.
-        for (let line of lines)
+        for (const line of lines)
         {
             // Find all words from the line.
             const wordsFromLine: string[] | null = line.match(regexToFindWords);
@@ -545,7 +545,7 @@ export class Year2017_Solution
 
             // For each word found, add it but ordered in alphabetical order.
             // Like this, 'abc' and 'cba' are going to be the same on the set.
-            for (let word of wordsFromLine)
+            for (const word of wordsFromLine)
             {
                 setOfWords.add(word.split("").sort().join());
             }
@@ -577,7 +577,7 @@ export class Year2017_Solution
         let possibleJumps: number[] = [];
         
         // Fill the possibleJumps table with the different jumps.
-        for (let line of lines)
+        for (const line of lines)
         {
             possibleJumps.push(Number(line));
         }
@@ -618,7 +618,7 @@ export class Year2017_Solution
         let possibleJumps: number[] = [];
         
         // Fill the possibleJumps table with the different jumps.
-        for (let line of lines)
+        for (const line of lines)
         {
             possibleJumps.push(Number(line));
         }
@@ -648,6 +648,146 @@ export class Year2017_Solution
         }
 
         // Return the number of steps needed to reach the exit.
+        return numberOfSteps;
+    }
+
+    /*
+     * Helper for the solution to day 6.
+     * Find the number of redistribution cycle before having a configuration already seen.
+     * 
+     * https://adventofcode.com/2016/day/6
+     * 
+     * @param banks: State of the banks in the first place.
+     * @returns: The number of redistributions cycle it took to come to a known state.
+     */
+    private static day_06_helper_findNumberStepsTwoSameStates(banks: number[]): number
+    {
+        // Initialize the number of steps needed.
+        let numberOfSteps: number = 0;
+
+        // Initialize a set that contains all set already known.
+        let setOfSeenStates: Set<string> = new Set();
+
+        // While the current state is not on the set of seen states, we continue to make redistribution cycle.
+        // We join with '-' to avoid considering (11, 2) and (1, 12) as the same element.
+        while (! setOfSeenStates.has(banks.join('_')))
+        {
+            // Ad the current state to the states seen and increment the number of steps required.
+            setOfSeenStates.add(banks.join('_'));
+            ++ numberOfSteps;
+            
+            // Initialize and find the index of the bank with the maximal value to empty.
+            let indexOfBankToEmpty: number = 0;
+            for (let index = 1; banks.length > index; ++index)
+            {
+                if (banks[indexOfBankToEmpty] < banks[index])
+                {
+                    indexOfBankToEmpty = index;
+                }
+            }
+            
+            // Initialize the number of elements that has to be redistributed.
+            const numberOfElementsToGive: number = banks[indexOfBankToEmpty];
+            // Empty the current bank.
+            banks[indexOfBankToEmpty] = 0;
+
+            // Give to the bank the redistribution, one by one.
+            for (let nbElementsToGive = numberOfElementsToGive; 0 < nbElementsToGive; --nbElementsToGive)
+            {
+                // Increment the index of the bank that receives the amound. Re-init if it is equal to the size.
+                ++ indexOfBankToEmpty;
+                if (banks.length == indexOfBankToEmpty)
+                {
+                    indexOfBankToEmpty = 0;
+                }
+                // Increment the value of the current bank.
+                ++ banks[indexOfBankToEmpty];
+            }
+        }
+
+        // Return the number of steps that was needed to find a state already seen.
+        return numberOfSteps;
+    }
+
+    /*
+     * Get solution for day 6 "Memory Reallocation", Part 1.
+     * https://adventofcode.com/2017/day/6
+     *
+     * @returns: Number of steps needed find two times the same bank state after redistribution cycle.
+     */
+    private static day_06_Part_1(): number
+    {
+        // Get the puzzle input.
+        const line: string = ReadFile.getLine(6);
+        
+        // Regex to find all the numbers from the input.
+        const regexToFindNumbers: RegExp = /\d+/g;
+
+        // Table containing the number as strings.
+        const numbersOfLineInString: string[] | null = line.match(regexToFindNumbers);
+
+        // If no number are found, there is an issue and we can return -1 as an error.
+        if (null == numbersOfLineInString)
+        {
+            return -1;
+        }
+
+        // Initialize the bank table that contains the number as integers.
+        let banks: number[] = [];
+        
+        // Add the numbers to the bank
+        for (const numberString of numbersOfLineInString)
+        {
+            banks.push(Number(numberString));
+        }
+        
+        // Retrieve the number of steps needed to find 2 times the same state.
+        const numberOfSteps: number = Year2017_Solution.day_06_helper_findNumberStepsTwoSameStates(banks);
+
+        // Return the number of steps that was needed.
+        return numberOfSteps;
+    }
+
+    /*
+     * Get solution for day 6 "Memory Reallocation", Part 2.
+     * https://adventofcode.com/2017/day/6#part2
+     *
+     * @returns: Number of steps needed find two times the same bank state after redistribution cycle,
+     *           and then we try to find once again two times the same bank state after redistribution cycle.
+     */
+    private static day_06_Part_2(): number
+    {
+        // Get the puzzle input.
+        const line: string = ReadFile.getLine(6);
+        
+        // Regex to find all the numbers from the input.
+        const regexToFindNumbers: RegExp = /\d+/g;
+
+        // Table containing the number as strings.
+        const numbersOfLineInString: string[] | null = line.match(regexToFindNumbers);
+
+        // If no number are found, there is an issue and we can return -1 as an error.
+        if (null == numbersOfLineInString)
+        {
+            return -1;
+        }
+
+        // Initialize the bank table that contains the number as integers.
+        let banks: number[] = [];
+        
+        // Add the numbers to the bank
+        for (const numberString of numbersOfLineInString)
+        {
+            banks.push(Number(numberString));
+        }
+        
+        // Get two similar states a first time.
+        Year2017_Solution.day_06_helper_findNumberStepsTwoSameStates(banks);
+
+        // Find another time two similar states.
+        let numberOfSteps: number = Year2017_Solution.day_06_helper_findNumberStepsTwoSameStates(banks);
+
+        // Return the number of steps that was needed.
         return numberOfSteps;
     }
 }
