@@ -1045,4 +1045,138 @@ public class Year2016_Solution
             System.out.println("");
         }
     }
+
+    /*
+     * Helper for the solution to day 12.
+     * Find the value in the register A after making all instructions.
+     * 
+     * https://adventofcode.com/2016/day/12
+     * 
+     * @param initialValueOfC: Value that should be place before the beginning in the register C.
+     * @returns: Value of the register A once the code is finished.
+     */
+    private static int day_12_helper_getAAfterInstruction(int initialValueOfC)
+    {
+        // Get the puzzle input.
+        final ArrayList<String> lines = ReadFile.getLines(12);
+
+        // Pattern to search for in each line. Contains:
+        // 1. nameOfMoove: may be cpt, inc, dec, jnz.
+        // 2. instr1: The first element that is necessarly found.
+        // 3. instr2: The second element when a copy is done or on jnz instruction.
+        final Pattern patternToSearch = Pattern.compile("(?<nameOfMoove>[\\w]{3})\\s+(?<instr1>[-]?[\\w]+)(?:\\s+(?<instr2>[-]?[\\w]+))?");
+
+        // Matcher of the pattern
+        Matcher matcherToFind;
+
+        // Initialize the index of the line (instruction) that should be executed.
+        int indexLine = 0;
+
+        // Create the dictionnary with the 4 registers that may be found.
+        Map<Character, Integer> registers = new HashMap<Character, Integer>();
+        registers.put('a', 0);
+        registers.put('b', 0);
+        registers.put('c', initialValueOfC);
+        registers.put('d', 0);
+
+        // making an instruction while it's possible.
+        while (0 <= indexLine && lines.size() > indexLine)
+        {
+            // Find the pattern of the instruction in the current line.
+            matcherToFind = patternToSearch.matcher(lines.get(indexLine));
+            
+            // If the matcher is not working, return -1 to show there is an issue.
+            if (!matcherToFind.find())
+            {
+                return -1;
+            }
+
+            // Copy instruction
+            if (matcherToFind.group("nameOfMoove").equals("cpy"))
+            {
+                // If the instr1 is a key, we copy the value.
+                if (registers.containsKey(matcherToFind.group("instr1").charAt(0)))
+                {
+                    registers.put(matcherToFind.group("instr2").charAt(0), registers.get(matcherToFind.group("instr1").charAt(0)));
+                }
+                // Else, we copy the value.
+                else
+                {
+                    registers.put(matcherToFind.group("instr2").charAt(0), Integer.valueOf(matcherToFind.group("instr1")));
+                }
+                // Increment to make the next instruction next time.
+                ++ indexLine;
+            }
+            // Increment instruction
+            else if (matcherToFind.group("nameOfMoove").equals("inc"))
+            {
+                // Increment by one the register that is indicated.
+                registers.put(matcherToFind.group("instr1").charAt(0), 1 + registers.get(matcherToFind.group("instr1").charAt(0)));
+                
+                // Increment to make the next instruction next time.
+                ++ indexLine;
+            }
+            // Decrement instruction
+            else if (matcherToFind.group("nameOfMoove").equals("dec"))
+            {
+                // Decrement by one the register that is indicated.
+                registers.put(matcherToFind.group("instr1").charAt(0), -1 + registers.get(matcherToFind.group("instr1").charAt(0)));
+                
+                // Increment to make the next instruction next time.
+                ++ indexLine;
+            }
+            // Jump insctruction
+            else if (matcherToFind.group("nameOfMoove").equals("jnz"))
+            {
+                // If the element to check is a key, we have to check the value of the key
+                if (registers.containsKey(matcherToFind.group("instr1").charAt(0)))
+                {
+                    // If the value of the register is not 0, we make the jump as indicated.
+                    if (0 != registers.get(matcherToFind.group("instr1").charAt(0)))
+                    {
+                        indexLine += Integer.valueOf(matcherToFind.group("instr2"));
+                    }
+                    // Else, we just read increment to make the next instruction next time.
+                    else
+                    {
+                        ++ indexLine;
+                    }
+                }
+                // The value is an integer, so we always make the jump.
+                else
+                {
+                    indexLine += Integer.valueOf(matcherToFind.group("instr2"));
+                }
+            }
+        }
+
+        // Return the value stored in the register a.
+        return registers.get('a');
+    }
+
+    /*
+     * Get solution for day 12 "Leonardo's Monorail", Part 1.
+     * https://adventofcode.com/2016/day/12
+     *
+     * @returns: Value of the register A after all instruction when the initial value of 'c' is 0.
+     */
+    @SuppressWarnings("unused")
+    private static int day_12_Part_1()
+    {
+        // Call the helper to find the value inside the register A when 'c' is initially 0.
+        return day_12_helper_getAAfterInstruction(0);
+    }
+
+    /*
+     * Get solution for day 12 "Leonardo's Monorail", Part 2.
+     * https://adventofcode.com/2016/day/12#part2
+     *
+     * @returns: Value of the register A after all instruction when the initial value of 'c' is 1.
+     */
+    @SuppressWarnings("unused")
+    private static int day_12_Part_2()
+    {
+        // Call the helper to find the value inside the register A when 'c' is initially 1.
+        return day_12_helper_getAAfterInstruction(1);
+    }
 }
