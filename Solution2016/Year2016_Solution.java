@@ -893,4 +893,156 @@ public class Year2016_Solution
         // Return the number of IP that supports SSL.
         return nbIPSupportingSSL;
     }
+
+    
+    /*
+     * Helper for the solution to day 8.
+     * Find the matrix of 0 / 1 according to what should be on the screen.
+     * 
+     * https://adventofcode.com/2016/day/8
+     * 
+     * @returns: Matrix containing all elements after all the operation of the puzzle.
+     */
+    private static int[][] day_08_helper_getMatrixAfterOperations()
+    {
+        // Dimension of the matrix and creation of the matrix.
+        final int nbLines = 6;
+        final int nbCols = 50;
+        int matrix[][] = new int[nbLines][nbCols];
+
+        // Get the puzzle input.
+        final ArrayList<String> lines = ReadFile.getLines(8);
+
+        // Pattern to search for with a regex
+        final Pattern patternToSearch = Pattern.compile("[0-9]+");
+        
+        // Matcher that will contains the information about how to turn and the distance to walk.
+        Matcher matcherNumber; 
+
+        // Iterating among all instructions
+        for (String line: lines)
+        {
+            // Make the matcher find the elements on the current instruction.
+            matcherNumber = patternToSearch.matcher(line);
+            if (! matcherNumber.find())
+            {
+                return null;
+            }
+            // Find the first integer written on the line.
+            final int firstInteger = Integer.valueOf(line.substring(matcherNumber.start(), matcherNumber.end()));
+            
+            if (! matcherNumber.find())
+            {
+                return null;
+            }
+
+            // Find the second integer written on the line.
+            final int secondInteger = Integer.valueOf(line.substring(matcherNumber.start(), matcherNumber.end()));
+            
+            // If the rect instruction is written, all values on the rectangle should be .
+            if (line.startsWith("rect"))
+            {
+                for (int indexLine = 0; firstInteger > indexLine; ++indexLine)
+                {
+                    for (int indexCol = 0; secondInteger > indexCol; ++indexCol)
+                    {
+                        matrix[indexCol][indexLine] = 1;
+                    }
+                }
+            }
+
+            // If the row instruction is written, all values on the row firstInteger should be moved secondInteger time.
+            else if (line.contains("row"))
+            {
+
+                int [] lineFromMatrix = new int[nbCols];
+                for (int index = 0; nbCols > index; ++index)
+                {
+                    lineFromMatrix[index] = matrix[firstInteger][index];
+                }
+                
+                for (int columnIndex = 0; nbCols > columnIndex; ++columnIndex)
+                {
+                    matrix[firstInteger][columnIndex] = lineFromMatrix[(columnIndex + nbCols - secondInteger) % nbCols];
+                }
+            }
+            // If the column instruction is written, all values on the column firstInteger should be moved secondInteger time.
+            else if (line.contains("column"))
+            {
+                int [] columnFromMatrix = new int[nbLines];
+
+                for (int index = 0; nbLines > index; ++index)
+                {
+                    columnFromMatrix[index] = matrix[index][firstInteger];
+                }
+                
+                for (int rowIndex = 0; nbLines > rowIndex; ++rowIndex)
+                {
+                    matrix[rowIndex][firstInteger] = columnFromMatrix[(rowIndex + nbLines - secondInteger) % nbLines];
+                }
+            }
+        }
+        
+        // Return the matrix of the state after all operations are made.
+        return matrix;
+    }
+
+    /*
+     * Get solution for day 8 "Two-Factor Authentication", Part 1.
+     * https://adventofcode.com/2016/day/8
+     *
+     * @returns: Number of pixels that should be lit.
+     */
+    @SuppressWarnings("unused")
+    private static int day_08_Part_1()
+    {
+        // Retrieve the matrix after all operations on the instructions.
+        int[][] matrix = day_08_helper_getMatrixAfterOperations();
+
+        // Initialize the variable that count the nummber of pixels that should be lit.
+        int nbPixelsThatLit = 0;
+
+        // Iterating among all lines
+        for (int lineFromMatrix[]: matrix)
+        {
+            // Iterating among all pixels from the line
+            for (int elementOfMatrix: lineFromMatrix)
+            {
+                // Sum with the new value (1 if it's on, 0 if it's off)
+                nbPixelsThatLit += elementOfMatrix;
+            }
+        }
+
+        // Return the number of pixels that should be lite on the screen.
+        return nbPixelsThatLit;
+    }
+
+    /*
+     * Get solution for day 8 "Two-Factor Authentication", Part 2.
+     * https://adventofcode.com/2016/day/9#part2
+     *
+     * @returns: void. The answer is visual.
+     */
+    @SuppressWarnings("unused")
+    private static void day_08_Part_2()
+    {
+        // Retrieve the matrix after all operations on the instructions.
+        int[][] matrix = day_08_helper_getMatrixAfterOperations();
+
+        // Display a new line
+        System.out.println("");
+
+        // Iterating among all lines
+        for (int lineFromMatrix[]: matrix)
+        {
+            // Iterating among all pixels from the line
+            for (int elementOfMatrix: lineFromMatrix)
+            {
+                // Display a square if it should be lit, and a space if it should not.
+                System.out.print((1 == elementOfMatrix ? "#" : " "));
+            }
+            // Display a new line
+            System.out.println("");
+        }
+    }
 }
