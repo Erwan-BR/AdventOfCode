@@ -18,8 +18,8 @@ AdventOfCode/
 ├── Solution_2015/
 │ ├── textfiles
 │ │   ├── 01.txt
-│ │   ├── 01.txt
-│ │   ├── 01.txt
+│ │   ├── ...txt
+│ │   ├── 25.txt
 │ ├── Year2015_Solution.py
 │ ├── ReadFile.py
 │ ├── main.py
@@ -27,18 +27,18 @@ AdventOfCode/
 ├── Solution_2016/
 │ ├── textfiles
 │ │   ├── 01.txt
-│ │   ├── 01.txt
-│ │   ├── 01.txt
+│ │   ├── ...txt
+│ │   ├── 25.txt
 │ ├── Year2016_Solution.java
 │ ├── ReadFile.java
-│ ├── main.java
+│ ├── Main.java
 │
 ├── Solution_2017/
 │ ├── textfiles
 │ │   ├── 01.txt
-│ │   ├── 01.txt
-│ │   ├── 01.txt
-│ ├── Year2015_Solution.ts
+│ │   ├── ...txt
+│ │   ├── 25.txt
+│ ├── Year2017_Solution.ts
 │ ├── ReadFile.ts
 │ ├── main.ts
 │
@@ -47,8 +47,8 @@ AdventOfCode/
 ├── Solution_2023/
 │ ├── textfiles
 │ │   ├── 01.txt
-│ │   ├── 01.txt
-│ │   ├── 01.txt
+│ │   ├── ...txt
+│ │   ├── 25.txt
 │
 └── main.sh
 ```
