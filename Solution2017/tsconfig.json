@@ -1,0 +1,13 @@
+{
+    "compilerOptions":
+    {
+        "target": "es2023",
+        "paths":
+        {
+            "undici-types":
+            [
+                "./node_modules/undici-types/index.d.ts"
+            ]
+        }
+    }
+}
