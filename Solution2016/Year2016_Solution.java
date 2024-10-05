@@ -303,7 +303,7 @@ public class Year2016_Solution
 
     /*
      * Get solution for day 2 "Bathroom Security", Part 2.
-     *  https://adventofcode.com/2016/day/2#part2
+     * https://adventofcode.com/2016/day/2#part2
      *
      * @returns: Code to open the bathroom with a weird keypad shape.
      */
@@ -335,7 +335,7 @@ public class Year2016_Solution
 
     /*
      * Get solution for day 3 "Squares With Three Sides", Part 1.
-     *  https://adventofcode.com/2016/day/3
+     * https://adventofcode.com/2016/day/3
      *
      * @returns: Number of possible triangles.
      */
@@ -383,7 +383,7 @@ public class Year2016_Solution
 
     /*
      * Get solution for day 3 "Squares With Three Sides", Part 2.
-     *  https://adventofcode.com/2016/day/3#part2
+     * https://adventofcode.com/2016/day/3#part2
      *
      * @returns: Number of possible triangles on the input when they are written vertically.
      */
@@ -478,7 +478,7 @@ public class Year2016_Solution
 
     /*
      * Get solution for day 5 "How About a Nice Game of Chess?", Part 1.
-     *  https://adventofcode.com/2016/day/5
+     * https://adventofcode.com/2016/day/5
      *
      * @returns: Password of the door Santa needs to open.
      */
@@ -524,7 +524,7 @@ public class Year2016_Solution
 
     /*
      * Get solution for day 5 "How About a Nice Game of Chess?", Part 2.
-     *  https://adventofcode.com/2016/day/5#part2
+     * https://adventofcode.com/2016/day/5#part2
      *
      * @returns: Password of the door Santa needs to open with a new method.
      */
@@ -572,9 +572,325 @@ public class Year2016_Solution
         }
         catch (Exception e)
         {
-            System.out.println("An error occurred.");
+            System.err.println("An error occurred.");
             e.printStackTrace();
             return "";
         }
+    }
+
+    /*
+     * Helper for the solution to day 6.
+     * Get the frequencie by column of each character.
+     * 
+     * https://adventofcode.com/2016/day/6
+     * 
+     * @param numberOfCols: Number of columns in the problem.
+     * @returns: A matrix with 26 lines for all letters, and numberOfCols columns to reprensent the frequencie of all letter
+     *           in each column.
+     */
+    private static int[][] day_06_helper_getFrequenciesByColumn(final int numberOfCols)
+    {
+        // Get the puzzle input.
+        final ArrayList<String> lines = ReadFile.getLines(6);
+
+        // Create the matrix that will contains the number of each each letter for each column.
+        int[][] letterFrequencies = new int[26][numberOfCols];
+
+        // Initialize the table.
+        for (int indexLetter = 0; 26 > indexLetter; ++indexLetter)
+        {
+            for (int indexColumn = 0; numberOfCols > indexColumn; ++indexColumn)
+            {
+                letterFrequencies[indexLetter][indexColumn] = 0;
+            }
+        }
+
+        //  Iterate among all lines to change the frequencies of the different columns.
+        for (String line : lines)
+        {
+            // Iterate among the letters of the current string.
+            for (int charIndex = 0; numberOfCols > charIndex; ++charIndex)
+            {
+                // Retrieve the char frequencie that needs to be incremented on the current column.
+                final char currentChar = line.charAt(charIndex);
+                ++ letterFrequencies[currentChar - 'a'][charIndex];
+            }
+        }
+        
+        // Return the frequencie of each letter in each column.
+        return letterFrequencies;
+    }
+
+    /*
+     * Get solution for day 6 "Signals and Noise", Part 1.
+     * https://adventofcode.com/2016/day/6
+     *
+     * @returns: Error-corrected password sent to Santa.
+     */
+    @SuppressWarnings("unused")
+    private static String day_06_Part_1()
+    {
+        // Number of column of the problem.
+        final int numberOfCols = 8;
+
+        // Retrieve the frequencies of each letter, for all the column.
+        final int[][] lettersFrequenciePerColumn = day_06_helper_getFrequenciesByColumn(numberOfCols);
+
+        // Initialisation of the corrected password.
+        String correctedPassword = "";
+        
+        // Iterating among all columns.
+        for (int indexColumn = 0; numberOfCols > indexColumn; ++indexColumn)
+        {
+            int currentIndexLetterMax = 0;
+
+            // Iterating among all letters to find which one is the most used.
+            for(int indexLetter = 0; 26 > indexLetter; ++indexLetter)
+            {
+                // If the frequencie is strictly bigger, we update which 'letter' (by index) is the most used.
+                if (lettersFrequenciePerColumn[indexLetter][indexColumn] > lettersFrequenciePerColumn[currentIndexLetterMax][indexColumn])
+                {
+                    currentIndexLetterMax = indexLetter;
+                }
+            }
+            // Add to the password the corresponding character to the index with the biggest frequencie found.
+            correctedPassword += (char)('a' + currentIndexLetterMax);
+        }
+
+        // Return the error-corrected password.
+        return correctedPassword;
+    }
+
+    /*
+     * Get solution for day 6 "Signals and Noise", Part 2.
+     * https://adventofcode.com/2016/day/6#part2
+     *
+     * @returns: Error-corrected password sent to Santa when the less present element is the one sent.
+     */
+    @SuppressWarnings("unused")
+    private static String day_06_Part_2()
+    {
+        // Number of column of the problem.
+        final int numberOfCols = 8;
+
+        // Retrieve the frequencies of each letter, for all the column.
+        final int[][] lettersFrequenciePerColumn = day_06_helper_getFrequenciesByColumn(numberOfCols);
+
+        // Initialisation of the corrected password.
+        String correctedPassword = "";
+        
+        // Iterating among all columns.
+        for (int indexColumn = 0; numberOfCols > indexColumn; ++indexColumn)
+        {
+            int currentIndexLetterMax = 0;
+
+            // Iterating among all letters to find which one is the most used.
+            for(int indexLetter = 0; 26 > indexLetter; ++indexLetter)
+            {
+                // If the frequencie is strictly smaller, we update which 'letter' (by index) is the most used.
+                if (lettersFrequenciePerColumn[indexLetter][indexColumn] < lettersFrequenciePerColumn[currentIndexLetterMax][indexColumn])
+                {
+                    currentIndexLetterMax = indexLetter;
+                }
+            }
+            // Add to the password the corresponding character to the index with the smallest frequencie found.
+            correctedPassword += (char)('a' + currentIndexLetterMax);
+        }
+
+        // Return the error-corrected password.
+        return correctedPassword;
+    }
+
+    /*
+     * Helper for the solution to day 7.
+     * Check if a given string respect the condition of the TLS IP element (having a ABBA form).
+     * 
+     * https://adventofcode.com/2016/day/7
+     * 
+     * @param elementOfIP: Element of the IP that we want to check if it contains ABBA.
+     * @returns: A boolean athat states if the ABBA pattern is found.
+     */
+    private static Boolean day_07_helper_checkIfRespectConditionTLS(String elementOfIP)
+    {
+        // Boolean that check if the condition is respected.
+        Boolean isRespectingConditionTLS = false;
+
+        // Iterating among all possible 4 elements to check if the ABBA pattern is found.
+        for (int charIndex = 3; elementOfIP.length() > charIndex; ++charIndex)
+        {
+            // If the ABBA pattern is found, place the return value to TRUE and stop looping for something already checked.
+            if (elementOfIP.charAt(charIndex) == elementOfIP.charAt(charIndex - 3)
+            && elementOfIP.charAt(charIndex - 1) == elementOfIP.charAt(charIndex - 2)
+            && elementOfIP.charAt(charIndex) != elementOfIP.charAt(charIndex - 1))
+            {
+                isRespectingConditionTLS = true;
+                break;
+            }
+        }
+
+        // Return the boolean that states if the condition is respected.
+        return isRespectingConditionTLS;
+    }
+
+    /*
+     * Helper for the solution to day 7.
+     * Add to a set the two first letters of the elements that may respect the SSL condition (having a ABA form).
+     * 
+     * https://adventofcode.com/2016/day/7
+     * 
+     * @param elementOfIP: Element of the IP that we want to check if it contains ABBA.
+     * @param lettersThatRespectSSL: A set containing all the AB from the ABA form that are already found.
+     */
+    private static void day_07_helper_checkIfRespectConditionSSL(String elementOfIP, HashSet<String> lettersThatRespectSSL)
+    {
+        // Iterating among all three consecutive elements possible.
+        for (int charIndex = 2; elementOfIP.length() > charIndex; ++charIndex)
+        {
+            // If the ABA pattern is found, we have something to add to the set.
+            if (elementOfIP.charAt(charIndex) == elementOfIP.charAt(charIndex - 2)
+            && (elementOfIP.charAt(charIndex) != elementOfIP.charAt(charIndex - 1)))
+            {
+                // Add to the set AB from the ABA form (to avoid redondancy).
+                lettersThatRespectSSL.add("" + elementOfIP.charAt(charIndex) + elementOfIP.charAt(charIndex - 1));
+            }
+        }
+    }
+
+    /*
+     * Get solution for day 7 "Internet Protocol Version 7", Part 1.
+     * https://adventofcode.com/2016/day/7
+     *
+     * @returns: Number of IP that supports TLS.
+     */
+    @SuppressWarnings("unused")
+    private static int day_07_Part_1()
+    {
+        // Get the puzzle input.
+        ArrayList<String> lines = ReadFile.getLines(7);
+
+        // Initialize the number of IP that supports TLS.
+        int nbIPSupportingTLS = 0;
+
+        // Pattern to search for with a regex (consecutive letters)
+        final Pattern patternToSearch = Pattern.compile("[a-z]+");
+        
+        // Matcher that will contains the information the part of the IP adresses.
+        Matcher matcherOfIP; 
+        
+        // Iterating among all IP adresses
+        for (String line : lines)
+        {
+            // Boolean that states if the match is in the hypernet (inside the brackets)
+            Boolean isCurrentStringInHypernet = false;
+            
+            // Intialize the matcher with the line to look at
+            matcherOfIP = patternToSearch.matcher(line);
+
+            // Boolean that states if a ABBA pattern is found outside the brackets
+            Boolean isPatternFoundOutsideHypernet = false;
+            
+            // Looping while some sequence of the IP is found.
+            while (matcherOfIP.find())
+            {
+                // If the position is odd, we are inside hypernet.
+                if (isCurrentStringInHypernet)
+                {
+                    // If a ABBA pattern is found inside the hypernet, we know that this IP is not correct.
+                    if (day_07_helper_checkIfRespectConditionTLS(line.substring(matcherOfIP.start(), matcherOfIP.end())))
+                    {
+                        // Stop looping and state that nothing is found.
+                        isPatternFoundOutsideHypernet = false;
+                        break;
+                    }
+                }
+                // If the position is even, we are outside hypernet.
+                else
+                {
+                    // The boolean is updated if it was not already true by checking the new part.
+                    isPatternFoundOutsideHypernet |= day_07_helper_checkIfRespectConditionTLS(line.substring(matcherOfIP.start(), matcherOfIP.end()));
+                }
+                
+                // Changing the value of if we are in the hypernet or not.
+                isCurrentStringInHypernet = (! isCurrentStringInHypernet);
+            }
+            
+            // If a pattern is found outside the hypernet (and not inside, in this case the boolean would be false)
+            // Then we can increment the number of IP that respect our condition.
+            if (isPatternFoundOutsideHypernet)
+            {
+                ++ nbIPSupportingTLS;
+            }
+        }
+
+        // Return the total number of IP adress that support TLS.
+        return nbIPSupportingTLS;
+    }
+
+    /*
+     * Get solution for day 7 "Internet Protocol Version 7", Part 2.
+     * https://adventofcode.com/2016/day/7#part2
+     *
+     * @returns: Number of IP that supports SSL.
+     */
+    @SuppressWarnings("unused")
+    private static int day_07_Part_2()
+    {
+        // Get the puzzle input.
+        final ArrayList<String> lines = ReadFile.getLines(7);
+        
+        // Initialize the number of IP that supports SSL.
+        int nbIPSupportingSSL = 0;
+
+        // Pattern to search for with a regex (consecutive letters)
+        final Pattern patternToSearch = Pattern.compile("[a-z]+");
+        
+        // Matcher that will contains the information the part of the IP adresses.
+        Matcher matcherOfIP; 
+        
+        // Iterating among all IP adresses
+        for (String line : lines)
+        {
+            // Iterating two hashset to find if one ABA is found inside the hypernet and BAB outside the hypernet.
+            HashSet<String> outsideElements = new HashSet<>();
+            HashSet<String> insideElements = new HashSet<>();
+
+            // Boolean that states if the match is in the hypernet (inside the brackets)
+            Boolean isCurrentStringInHypernet = false;
+            
+            // Intialize the matcher with the line to look at
+            matcherOfIP = patternToSearch.matcher(line);
+
+            // While some elements of the IP are found, we continue iterating.
+            while (matcherOfIP.find())
+            {
+                // If we are inside the hypernet, fill the other set with the values that looks like ABA.
+                if (isCurrentStringInHypernet)
+                {
+                    day_07_helper_checkIfRespectConditionSSL(line.substring(matcherOfIP.start(), matcherOfIP.end()), insideElements);
+                }
+                // If we are outside the hypernet, fill the hypernet set with the values that looks like ABA.
+                else
+                {
+                    day_07_helper_checkIfRespectConditionSSL(line.substring(matcherOfIP.start(), matcherOfIP.end()), outsideElements);
+                }
+
+                // Changing the value of if we are in the hypernet or not.
+                isCurrentStringInHypernet = ! isCurrentStringInHypernet;
+            }
+            
+            // Iterating among all ABA pattern found on the hypernet.
+            for (String element: insideElements)
+            {
+                // If outside the hypernet BAB is found, we can count this line as a IP that support SSL and stop looping.
+                if (outsideElements.contains("" + element.charAt(1) + element.charAt(0)))
+                {
+                    ++ nbIPSupportingSSL;
+                    break;
+                }
+            }
+        }
+
+        // Return the number of IP that supports SSL.
+        return nbIPSupportingSSL;
     }
 }
