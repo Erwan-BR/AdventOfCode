@@ -581,13 +581,7 @@ export class Year2017_Solution
         const lines: string[] = ReadFile.getLines(5);
         
         // Puzzle input with numbers. Used to konw how much jump are going to be done.
-        let possibleJumps: number[] = [];
-        
-        // Fill the possibleJumps table with the different jumps.
-        for (const line of lines)
-        {
-            possibleJumps.push(Number(line));
-        }
+        let possibleJumps: number[] = lines.map(Number);
         
         // Initialize a variables to keep track of which jump should be done.
         let currentIndex: number = 0;
@@ -622,13 +616,7 @@ export class Year2017_Solution
         const lines: string[] = ReadFile.getLines(5);
         
         // Puzzle input with numbers. Used to konw how much jump are going to be done.
-        let possibleJumps: number[] = [];
-        
-        // Fill the possibleJumps table with the different jumps.
-        for (const line of lines)
-        {
-            possibleJumps.push(Number(line));
-        }
+        let possibleJumps: number[] = lines.map(Number);
         
         // Initialize a variables to keep track of which jump should be done.
         let currentIndex: number = 0;
@@ -730,22 +718,13 @@ export class Year2017_Solution
         // Regex to find all the numbers from the input.
         const regexToFindNumbers: RegExp = /\d+/g;
 
-        // Table containing the number as strings.
-        const numbersOfLineInString: string[] | null = line.match(regexToFindNumbers);
+        // Initialize the bank table that contains the number.
+        let banks: number[] | null = line.match(regexToFindNumbers).map(Number);
 
         // If no number are found, there is an issue and we can return -1 as an error.
-        if (null == numbersOfLineInString)
+        if (null == banks)
         {
             return -1;
-        }
-
-        // Initialize the bank table that contains the number as integers.
-        let banks: number[] = [];
-        
-        // Add the numbers to the bank
-        for (const numberString of numbersOfLineInString)
-        {
-            banks.push(Number(numberString));
         }
         
         // Retrieve the number of steps needed to find 2 times the same state.
@@ -770,23 +749,8 @@ export class Year2017_Solution
         // Regex to find all the numbers from the input.
         const regexToFindNumbers: RegExp = /\d+/g;
 
-        // Table containing the number as strings.
-        const numbersOfLineInString: string[] | null = line.match(regexToFindNumbers);
-
-        // If no number are found, there is an issue and we can return -1 as an error.
-        if (null == numbersOfLineInString)
-        {
-            return -1;
-        }
-
-        // Initialize the bank table that contains the number as integers.
-        let banks: number[] = [];
-        
-        // Add the numbers to the bank
-        for (const numberString of numbersOfLineInString)
-        {
-            banks.push(Number(numberString));
-        }
+        // Initialize the bank table that contains the number.
+        let banks: number[] | null = line.match(regexToFindNumbers).map(Number);
         
         // Get two similar states a first time.
         Year2017_Solution.day_06_helper_findNumberStepsTwoSameStates(banks);
