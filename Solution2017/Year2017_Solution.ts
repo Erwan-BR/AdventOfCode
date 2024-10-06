@@ -1037,6 +1037,180 @@ export class Year2017_Solution
     }
 
     /*
+     * Get solution for day 8 "I Heard You Like Registers", Part 1.
+     * https://adventofcode.com/2017/day/8
+     *
+     * @returns: Maximal value in registers after all operation are done.
+     */
+    private static day_08_Part_1(): number
+    {
+        // Get the puzzle input.
+        const lines: string[] = ReadFile.getLines(8);
+
+        // Create a maping that will contains the name of the registers and their value.
+        let mapOfRegisters: Map<string, number> = new Map();
+
+        // Regex to find the different elements of the operation.
+        const regexToFindElements: RegExp = /[^ .]+/g;
+
+        // Iterate among all lines that are the isntruction to follow.
+        // All lines should be created like this : {Register} inc/dec {integer} if {otherRegister} condition {integer}
+        for (const line of lines)
+        {
+            // Retrieve the elements of the current operation.
+            const elementsOfLine: string[] | null = line.match(regexToFindElements);
+
+            // If there is not the correct amount of elements, there is an issue with this line.
+            if (null == elementsOfLine || 7 != elementsOfLine.length)
+            {
+                continue;
+            }
+
+            // if one of the two register has not been discovered yet, add them with the initial value 0.
+            if (! mapOfRegisters.has(elementsOfLine[0]))
+            {
+                mapOfRegisters.set(elementsOfLine[0], 0); 
+            }
+            if (! mapOfRegisters.has(elementsOfLine[4]))
+            {
+                mapOfRegisters.set(elementsOfLine[4], 0); 
+            }
+
+            // Initialize the value that should be added (or retrieved) if the condition is true.
+            const valueToIncrOrDecr: number = Number(elementsOfLine[2]) * ("inc" == elementsOfLine[1] ? 1 : -1);
+            
+            // Retrieve the value to compare with a register.
+            const valueToCompare: number = Number(elementsOfLine[6])
+
+            // For all the possible operations, check if the symbol is the same and if the condition is true.
+            // If both conditions are true, we can update the register. 
+            if (("==" == elementsOfLine[5]) && (mapOfRegisters.get(elementsOfLine[4]) == valueToCompare))
+            {
+                mapOfRegisters.set(elementsOfLine[0], mapOfRegisters.get(elementsOfLine[0]) + valueToIncrOrDecr); 
+            }
+            else if ((">=" == elementsOfLine[5]) && (mapOfRegisters.get(elementsOfLine[4]) >= valueToCompare))
+            {
+                mapOfRegisters.set(elementsOfLine[0], mapOfRegisters.get(elementsOfLine[0]) + valueToIncrOrDecr); 
+            }
+            else if (("<=" == elementsOfLine[5]) && (mapOfRegisters.get(elementsOfLine[4]) <= valueToCompare))
+            {
+                mapOfRegisters.set(elementsOfLine[0], mapOfRegisters.get(elementsOfLine[0]) + valueToIncrOrDecr); 
+            }
+            else if ((">" == elementsOfLine[5]) && (mapOfRegisters.get(elementsOfLine[4]) > valueToCompare))
+            {
+                mapOfRegisters.set(elementsOfLine[0], mapOfRegisters.get(elementsOfLine[0]) + valueToIncrOrDecr); 
+            }
+            else if (("<" == elementsOfLine[5]) && (mapOfRegisters.get(elementsOfLine[4]) < valueToCompare))
+            {
+                mapOfRegisters.set(elementsOfLine[0], mapOfRegisters.get(elementsOfLine[0]) + valueToIncrOrDecr); 
+            }
+            else if (("!=" == elementsOfLine[5]) && (mapOfRegisters.get(elementsOfLine[4]) != valueToCompare))
+            {
+                mapOfRegisters.set(elementsOfLine[0], mapOfRegisters.get(elementsOfLine[0]) + valueToIncrOrDecr); 
+            }
+        }
+
+        // Initialize the maximal value in a register at the end.
+        let maximalValueInRegisters: number = - Infinity;
+
+        // Take the max value between both of them.
+        for (const [el, valueOfRegister] of mapOfRegisters)
+        {
+            maximalValueInRegisters = Math.max(maximalValueInRegisters, valueOfRegister);
+        }
+
+        // Reurn the maximal value found.
+        return maximalValueInRegisters;
+    }
+
+    /*
+     * Get solution for day 8 "I Heard You Like Registers", Part 2.
+     * https://adventofcode.com/2017/day/8#part2
+     *
+     * @returns: Maximal value in a register ever seen.
+     */
+    private static day_08_Part_2(): number
+    {
+        // Get the puzzle input.
+        const lines: string[] = ReadFile.getLines(8);
+
+        // Create a maping that will contains the name of the registers and their value.
+        let mapOfRegisters: Map<string, number> = new Map();
+
+        // Regex to find the different elements of the operation.
+        const regexToFindElements: RegExp = /[^ .]+/g;
+
+        // Maximale value ever found.
+        let maximalValueRegistered: number = 0;
+
+        // Iterate among all lines that are the isntruction to follow.
+        // All lines should be created like this : {Register} inc/dec {integer} if {otherRegister} condition {integer}
+        for (const line of lines)
+        {
+            // Retrieve the elements of the current operation.
+            const elementsOfLine: string[] | null = line.match(regexToFindElements);
+
+            // If there is not the correct amount of elements, there is an issue with this line.
+            if (null == elementsOfLine || 7 != elementsOfLine.length)
+            {
+                continue;
+            }
+
+            // if one of the two register has not been discovered yet, add them with the initial value 0.
+            if (! mapOfRegisters.has(elementsOfLine[0]))
+            {
+                mapOfRegisters.set(elementsOfLine[0], 0); 
+            }
+            if (! mapOfRegisters.has(elementsOfLine[4]))
+            {
+                mapOfRegisters.set(elementsOfLine[4], 0); 
+            }
+
+            // Initialize the value that should be added (or retrieved) if the condition is true.
+            const valueToIncrOrDecr: number = Number(elementsOfLine[2]) * ("inc" == elementsOfLine[1] ? 1 : -1);
+            
+            // Retrieve the value to compare with a register.
+            const valueToCompare: number = Number(elementsOfLine[6])
+
+            // For all the possible operations, check if the symbol is the same and if the condition is true.
+            // If both conditions are true, we can update the register, and update the max value encoutered.
+            if (("==" == elementsOfLine[5]) && (mapOfRegisters.get(elementsOfLine[4]) == valueToCompare))
+            {
+                mapOfRegisters.set(elementsOfLine[0], mapOfRegisters.get(elementsOfLine[0]) + valueToIncrOrDecr);
+                maximalValueRegistered = Math.max(maximalValueRegistered, mapOfRegisters.get(elementsOfLine[0]));
+            }
+            else if ((">=" == elementsOfLine[5]) && (mapOfRegisters.get(elementsOfLine[4]) >= valueToCompare))
+            {
+                mapOfRegisters.set(elementsOfLine[0], mapOfRegisters.get(elementsOfLine[0]) + valueToIncrOrDecr); 
+                maximalValueRegistered = Math.max(maximalValueRegistered, mapOfRegisters.get(elementsOfLine[0]));
+            }
+            else if (("<=" == elementsOfLine[5]) && (mapOfRegisters.get(elementsOfLine[4]) <= valueToCompare))
+            {
+                mapOfRegisters.set(elementsOfLine[0], mapOfRegisters.get(elementsOfLine[0]) + valueToIncrOrDecr); 
+                maximalValueRegistered = Math.max(maximalValueRegistered, mapOfRegisters.get(elementsOfLine[0]));
+            }
+            else if ((">" == elementsOfLine[5]) && (mapOfRegisters.get(elementsOfLine[4]) > valueToCompare))
+            {
+                mapOfRegisters.set(elementsOfLine[0], mapOfRegisters.get(elementsOfLine[0]) + valueToIncrOrDecr); 
+                maximalValueRegistered = Math.max(maximalValueRegistered, mapOfRegisters.get(elementsOfLine[0]));
+            }
+            else if (("<" == elementsOfLine[5]) && (mapOfRegisters.get(elementsOfLine[4]) < valueToCompare))
+            {
+                mapOfRegisters.set(elementsOfLine[0], mapOfRegisters.get(elementsOfLine[0]) + valueToIncrOrDecr); 
+                maximalValueRegistered = Math.max(maximalValueRegistered, mapOfRegisters.get(elementsOfLine[0]));
+            }
+            else if (("!=" == elementsOfLine[5]) && (mapOfRegisters.get(elementsOfLine[4]) != valueToCompare))
+            {
+                mapOfRegisters.set(elementsOfLine[0], mapOfRegisters.get(elementsOfLine[0]) + valueToIncrOrDecr); 
+                maximalValueRegistered = Math.max(maximalValueRegistered, mapOfRegisters.get(elementsOfLine[0]));
+            }
+        }
+
+        // Reurn the maximal value ever found.
+        return maximalValueRegistered;
+    }
+
+    /*
      * Get solution for day 9 "Stream Processing", Part 1.
      * https://adventofcode.com/2017/day/9
      *
