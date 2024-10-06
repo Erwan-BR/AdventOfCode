@@ -1,6 +1,13 @@
 import { execPath } from "process";
 import { ReadFile } from "./ReadFile.js";
 
+type day_07_elementOfTower = {
+    weightOfElement: number;
+    weightHolding: number;
+    elementsHolding: string[];
+    isHolded: boolean
+};
+
 export class Year2017_Solution
 {
     /*
@@ -789,6 +796,244 @@ export class Year2017_Solution
 
         // Return the number of steps that was needed.
         return numberOfSteps;
+    }
+
+    /*
+     * Helper for the solution to day 7.
+     * Construct the information about the tower (exxcept the weight holding by each program).
+     * 
+     * https://adventofcode.com/2016/day/7
+     * 
+     * @returns: A mapping that indicates for each program's name, it's weight, the programs it's directly holding,
+     *           0 as the weight it's holding and if it's holded if this program is holded or not.
+     */
+    private static day_07_helper_findBottomProgram() : Map<string, day_07_elementOfTower>
+    {
+        // Get the puzzle input.
+        const lines: string[] = ReadFile.getLines(7);
+
+        // Create a map that will contains all elements, and the information of those elements.
+        let allElementsOfTower: Map<string, day_07_elementOfTower> = new Map();
+
+        // Create a regex to find all elements of the tower.
+        const regexToFindWords: RegExp = /[a-z]+/g;
+        const regexToFindNumbers: RegExp = /[0-9]+/g;
+
+        // Iterate among all holding instructions.
+        for (const line of lines)
+        {
+            // Find the table of elements of the tower in the current line.
+            const elementsOfTower: string[] | null = line.match(regexToFindWords);
+            const weightOfCurrentElement: number | null = Number(line.match(regexToFindNumbers));
+
+            // If an uncorrect line is found, continue to the next one.
+            if (null == elementsOfTower || null == weightOfCurrentElement)
+            {
+                continue;
+            }
+
+            // If the first element is not in the map, we never seen it.
+            // State that it exists and it's not holded yet.
+            if (! allElementsOfTower.has(elementsOfTower[0]))
+            {
+                allElementsOfTower.set(elementsOfTower[0], {weightOfElement: weightOfCurrentElement,
+                                                            weightHolding: 0,
+                                                            elementsHolding: [],
+                                                            isHolded: false});
+            }
+            // If the element was found, we can setup it's weight.
+            else
+            {
+                allElementsOfTower.get(elementsOfTower[0]).weightOfElement = weightOfCurrentElement;
+            }
+
+            // For all the other elements, we can for sure say that they are holded.
+            for (let index = 1; elementsOfTower.length > index; ++index)
+            {
+                // Add the element holded to the holder.
+                allElementsOfTower.get(elementsOfTower[0]).elementsHolding.push(elementsOfTower[index]);
+                
+                // If it was never seen, create the element and set that it's holded.
+                if (! allElementsOfTower.has(elementsOfTower[index]))
+                {
+                    allElementsOfTower.set(elementsOfTower[index], {weightOfElement: 0, weightHolding: 0, elementsHolding: [], isHolded: true});
+                }
+                // Else, just state the element is holded.
+                else
+                {
+                    allElementsOfTower.get(elementsOfTower[index]).isHolded = true;
+                }
+            }
+        }
+
+        // Return the mapping that contains all information about the program.
+        return allElementsOfTower;
+    }
+
+    /*
+     * Helper for the solution to day 7.
+     * Fill a maping with the weights of all the program in the branch to avoid computing it multiple times.
+     * 
+     * https://adventofcode.com/2016/day/7
+     * 
+     * @param currentProgram: Program we are currently looking, to check for the weight of the branch.
+     * @param mapOfTower: Map that contains as the keys the different programs, and the values are the all information of those programs.
+     * @returns: Weight of the branch starting from currentProgram.
+     */
+    private static day_07_helper_fillWeightsOfMap(currentProgram: string, mapOfTower: Map<string, day_07_elementOfTower>) : number
+    {
+        // Intialize a variable with the weight of the branch starting from the currentProgram.
+        let totalWeightHolded: number = mapOfTower.get(currentProgram).weightOfElement;
+        
+        // Adding the weight of all childrens.
+        for (const elementHoldedByThisProgram of mapOfTower.get(currentProgram).elementsHolding)
+        {
+            totalWeightHolded += Year2017_Solution.day_07_helper_fillWeightsOfMap(elementHoldedByThisProgram, mapOfTower);
+        }
+        // Store the weight of the program and sub-programs in the map.
+        mapOfTower.get(currentProgram).weightHolding = totalWeightHolded;
+
+        // Return the weight of this branch.
+        return totalWeightHolded;
+    }
+    
+    /*
+     * Helper for the solution to day 7.
+     * Find by starting from the bottom the weight that should be adapted to have a balanced tower.
+     * 
+     * https://adventofcode.com/2016/day/7
+     * 
+     * @param currentProgram: Program weight we are currently looking, and for it's children too.
+     * @param mapOfTower: Map that contains as the keys the different programs, and the values are the all information of those programs.
+     * @param weightDiff: Difference of weight that should be applied to an element starting from this program.
+     * @returns: The adjusted weight of the element that is not the correct weight. -1 if multiple elements should be changed.
+     */
+    private static day_07_helper_findRecursivelyWeightToAdapt(currentProgram: string, mapOfTower: Map<string, day_07_elementOfTower>, weightDiff: number) : number
+    {
+        // Edge case : We don't have children anymore. The weight should be change at a program that does not hold anything.
+        if (0 == mapOfTower.get(currentProgram).elementsHolding.length)
+        {
+            return mapOfTower.get(currentProgram).weightOfElement + weightDiff;
+        }
+
+        // Initialize two variables for the weight, and check if all children are the same weight.
+        let weightFound1: string = "";
+        let weightFound2: string = "";
+
+        // Initialize a boolean that states if weight 1 is found multiple times
+        // Usefull if the configuration we have on the children is weightFound1, weightFound1, weightFound1, weightFound2.
+        let isWeightFound1MultipleTime: boolean = false;
+
+        // Initialize a variable to check which weight is problematic to continue on this branch.
+        let isWeightFound1Problematic: boolean = false;
+
+        // Iterating among all children.
+        for (const nameOfElement of mapOfTower.get(currentProgram).elementsHolding)
+        {
+            // If no weight is written, write in the place 1
+            if ("" == weightFound1)
+            {
+                weightFound1 = nameOfElement;
+            }
+            // If weightFound1 is written and the new is the same, we may want to stop if it's the second time we see this weight
+            // And a different weight is already stored on weightFound2.
+            else if (mapOfTower.get(nameOfElement).weightHolding == mapOfTower.get(weightFound1).weightHolding)
+            {
+                isWeightFound1MultipleTime = true;
+                // If another weight was found, weightFound2 was problematic.
+                if (""  != weightFound2)
+                {
+                    isWeightFound1Problematic = false;
+                    break;
+                }
+            }
+            // If the weight of the subbranch is different than the weightFound1, we can store the new weight.
+            else if ("" == weightFound2)
+            {
+                weightFound2 = nameOfElement;
+
+                // If we found multiple times the first weight and we have now the second weight, the second weight is the issue.
+                if (isWeightFound1MultipleTime)
+                {
+                    isWeightFound1Problematic = false;
+                    break;
+                }
+            }
+            // If the weight found is the same as weight 2, it means that weight 1 is problematic because it's weight is different.
+            else if (mapOfTower.get(nameOfElement).weightHolding == mapOfTower.get(weightFound2).weightHolding)
+            {
+                isWeightFound1Problematic = true;
+                break;
+            }
+            // Here, both values are written and a third value is discovered. Return an invalid value.
+            else
+            {
+                return -1;
+            }
+
+        }
+
+        // If all children have the same weight, the problem is coming from this program.
+        if ("" == weightFound2)
+        {
+            return mapOfTower.get(currentProgram).weightOfElement + weightDiff;
+        }
+
+        // If the first weight is problematic, we have to search on the corresponding branch.
+        // We also re-compute the weight difference because it might be 0 from the first iteration.
+        if (isWeightFound1Problematic)
+        {
+            return Year2017_Solution.day_07_helper_findRecursivelyWeightToAdapt(weightFound1, mapOfTower, mapOfTower.get(weightFound2).weightHolding - mapOfTower.get(weightFound1).weightHolding);
+        }
+
+        // If the second weight is problematic, we have to search on the corresponding branch.
+        // We also re-compute the weight difference because it might be 0 from the first iteration.
+        return Year2017_Solution.day_07_helper_findRecursivelyWeightToAdapt(weightFound1, mapOfTower, mapOfTower.get(weightFound1).weightHolding - mapOfTower.get(weightFound2).weightHolding);
+    }    
+    
+    /*
+     * Get solution for day 7 "Recursive Circus", Part 1.
+     * https://adventofcode.com/2017/day/7
+     *
+     * @returns: Name of the program that is at the bottom.
+     */
+    private static day_07_Part_1(): string
+    {
+        // Retrieve the map with all informations concerning the program.
+        const allElementsOfTower: Map<string, day_07_elementOfTower> = Year2017_Solution.day_07_helper_findBottomProgram();
+
+        // Retrieve the only element that is not holded by anyone and return it.
+        for (const [nameOfElement, characteristicsOfElement] of allElementsOfTower)
+        {
+            if (! characteristicsOfElement.isHolded)
+            {
+                return nameOfElement;
+            }
+        }
+
+        // Return an empty string if the input is not correctly written.
+        return "";
+    }
+
+    /*
+     * Get solution for day 7 "Recursive Circus", Part 2.
+     * https://adventofcode.com/2017/day/7#part2
+     *
+     * @returns: Adjusted weight of an element of the tower to balance it.
+     */
+    private static day_07_Part_2(): number
+    {
+        // Retrieve the map with all informations concerning the program.
+        const allElementsOfTower: Map<string, day_07_elementOfTower> = Year2017_Solution.day_07_helper_findBottomProgram();
+
+        // Retrieve the name of the program that is at the bottom to start filling the weights.
+        const nameOfBottomProgram: string = Year2017_Solution.day_07_Part_1();
+
+        // Fill the weights of each branch.
+        Year2017_Solution.day_07_helper_fillWeightsOfMap(nameOfBottomProgram, allElementsOfTower);
+
+        // Retrieve the adpated weight from the tower.
+        return Year2017_Solution.day_07_helper_findRecursivelyWeightToAdapt(nameOfBottomProgram, allElementsOfTower, 0);
     }
 
     /*
