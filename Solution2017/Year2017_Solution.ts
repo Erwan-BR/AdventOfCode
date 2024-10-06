@@ -807,7 +807,7 @@ export class Year2017_Solution
      * @returns: A mapping that indicates for each program's name, it's weight, the programs it's directly holding,
      *           0 as the weight it's holding and if it's holded if this program is holded or not.
      */
-    private static day_07_helper_findBottomProgram() : Map<string, day_07_elementOfTower>
+    private static day_07_helper_constructMapWithInfo() : Map<string, day_07_elementOfTower>
     {
         // Get the puzzle input.
         const lines: string[] = ReadFile.getLines(7);
@@ -1000,7 +1000,7 @@ export class Year2017_Solution
     private static day_07_Part_1(): string
     {
         // Retrieve the map with all informations concerning the program.
-        const allElementsOfTower: Map<string, day_07_elementOfTower> = Year2017_Solution.day_07_helper_findBottomProgram();
+        const allElementsOfTower: Map<string, day_07_elementOfTower> = Year2017_Solution.day_07_helper_constructMapWithInfo();
 
         // Retrieve the only element that is not holded by anyone and return it.
         for (const [nameOfElement, characteristicsOfElement] of allElementsOfTower)
@@ -1024,7 +1024,7 @@ export class Year2017_Solution
     private static day_07_Part_2(): number
     {
         // Retrieve the map with all informations concerning the program.
-        const allElementsOfTower: Map<string, day_07_elementOfTower> = Year2017_Solution.day_07_helper_findBottomProgram();
+        const allElementsOfTower: Map<string, day_07_elementOfTower> = Year2017_Solution.day_07_helper_constructMapWithInfo();
 
         // Retrieve the name of the program that is at the bottom to start filling the weights.
         const nameOfBottomProgram: string = Year2017_Solution.day_07_Part_1();
