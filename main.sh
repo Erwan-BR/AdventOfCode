@@ -23,8 +23,8 @@ while getopts "hy:" OPT; do
             ;;
         
         y)  # Check the year identifier       
-            if [[ "$OPTARG" -le 2014 || "$OPTARG" -ge 2024 ]]; then
-                echo "Year must be between 2015 and 2023."
+            if [[ "$OPTARG" -le 2014 || "$OPTARG" -ge 2025 ]]; then
+                echo "Year must be between 2015 and 2024."
                 exit 1
             fi
             
@@ -62,6 +62,16 @@ while getopts "hy:" OPT; do
                     clear
                     npm start
                     rm *.js
+                    ;;
+
+                2024) 
+                    echo "Solution for Year 2024 is done in C++. Here is the solution for my input:"
+                    echo
+                    cd Solution2024 || { echo "Error: Could not change directory to Solution2024"; exit 1; }
+                    g++ -O -std=c++23 main.cpp ReadFile.cpp Year2024_Solution.cpp -o main
+                    ./main
+                    rm main
+                    cd ..
                     ;;
                 *)
                     echo "Solution for year $OPTARG is not done yet."
