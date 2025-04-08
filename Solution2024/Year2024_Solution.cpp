@@ -9,8 +9,95 @@
 *
 * @returns: Answer of the given problem.
 */
-long long Year2024_Solution::getSolution(const int day, const bool isFirstPart)
+long long Year2024_Solution::getSolution(const unsigned int day, const bool isFirstPart)
 {
-    //
-    return 0LL;
+    // Table for method of part 1
+    static long long (*firstPartTable[])() = {
+        nullptr,
+        nullptr,
+        nullptr,
+        nullptr,
+        nullptr,
+        nullptr,
+        nullptr,
+        nullptr,
+        nullptr,
+        nullptr,
+        nullptr,
+        nullptr,
+        nullptr,
+        nullptr,
+        nullptr,
+        nullptr,
+        nullptr,
+        nullptr,
+        nullptr,
+        nullptr,
+        nullptr,
+        nullptr,
+        nullptr,
+        nullptr,
+        nullptr,
+        nullptr,
+    };
+
+    // Table for method of part 2
+    static long long (*secondPartTable[])() = {
+        nullptr,
+        nullptr,
+        nullptr,
+        nullptr,
+        nullptr,
+        nullptr,
+        nullptr,
+        nullptr,
+        nullptr,
+        nullptr,
+        nullptr,
+        nullptr,
+        nullptr,
+        nullptr,
+        nullptr,
+        nullptr,
+        nullptr,
+        nullptr,
+        nullptr,
+        nullptr,
+        nullptr,
+        nullptr,
+        nullptr,
+        nullptr,
+        nullptr,
+        nullptr,
+    };
+
+    // Checking index
+    if (0 == day || 25 < day)
+    {
+        std::cout << "The day should be between 1 and 25" << std::endl;
+        return 0LL;
+    }
+
+    // Checking if solution exist for the first part of the given day
+    if (isFirstPart)
+    {
+        if (nullptr == firstPartTable[day])
+        {
+            std::cout << "Solution for year 2024, day " << day << ", part one has not yet been developed." << std::endl;
+
+            return 0LL;
+        }
+        // Call the method for the first part
+        return (*firstPartTable[day])();
+    }
+    // Checking if solution exist for the second part of the given day
+    if (nullptr == firstPartTable[day])
+    {
+        std::cout << "Solution for year 2024, day " << day << ", part two has not yet been developed." << std::endl;
+
+        return 0LL;
+    }
+
+    // Call the method for the second part
+    return (*secondPartTable[day])();
 }
