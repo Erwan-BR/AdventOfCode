@@ -23,6 +23,9 @@ class Year2024_Solution
         static bool day_02_helper_isSafeReport(const std::vector<int>& report, unsigned int valueToCheckFirst, unsigned int valueToCheckSecond, unsigned int valueToSkip);
         static bool day_02_helper_isSafeIncreasing(const std::vector<int>& values, const unsigned int& indexToSkip);
         static bool day_02_helper_isSafeDecreasing(const std::vector<int>& values, const unsigned int& indexToSkip);
+
+        static long long day_03_Part_1();
+        static long long day_03_Part_2();
 };
 
 #endif // _YEAR2024_SOLUTION_HPP_

@@ -16,7 +16,7 @@ long long Year2024_Solution::getSolution(const unsigned int day, const bool isFi
         nullptr,
         &day_01_Part_1,
         &day_02_Part_1,
-        nullptr,
+        &day_03_Part_1,
         nullptr,
         nullptr,
         nullptr,
@@ -46,7 +46,7 @@ long long Year2024_Solution::getSolution(const unsigned int day, const bool isFi
         nullptr,
         &day_01_Part_2,
         &day_02_Part_2,
-        nullptr,
+        &day_03_Part_2,
         nullptr,
         nullptr,
         nullptr,
@@ -373,8 +373,8 @@ long long Year2024_Solution::day_02_Part_1()
 }
 
 /*
-* Get solution for day 2, Part 1.
-* https://adventofcode.com/2015/day/2
+* Get solution for day 2, Part 2.
+* https://adventofcode.com/2015/day/2#part2
 *
 * @returns: Number of safe reports when we can delete one value only of the report.
 */
@@ -435,4 +435,95 @@ long long Year2024_Solution::day_02_Part_2()
     }
 
     return numberOfSafeReport;
+}
+
+/*
+* Get solution for day 3, Part 1.
+* https://adventofcode.com/2015/day/3
+*
+* @returns: Sum of all results of multiplications.
+*/
+long long Year2024_Solution::day_03_Part_1()
+{
+    // Retrieve puzzle input
+    const std::vector<std::string> linesOfInput = ReadFile::getLines(3);
+
+    // Find all multiplication format.
+    const std::regex multipicationRegex(R"(mul\((\d+),(\d+)\))");
+
+    long long sumOfMultiplications = 0;
+
+    std::sregex_iterator words_begin;
+
+    const std::sregex_iterator words_end = std::sregex_iterator();
+
+    // Iterate among all lines of the input.
+    for (const std::string line: linesOfInput)
+    {
+        words_begin = std::sregex_iterator(line.begin(), line.end(), multipicationRegex);
+
+        // Add all products found.
+        for (std::sregex_iterator indexIterator = words_begin; words_end != indexIterator; ++indexIterator)
+        {
+            sumOfMultiplications += std::stoi((*indexIterator)[1]) * std::stoi((*indexIterator)[2]);
+        }
+    }
+
+    return sumOfMultiplications;
+}
+
+/*
+* Get solution for day 3, Part 2.
+* https://adventofcode.com/2015/day/3#part2
+*
+* @returns: Sum of all results of multiplications, when multiplications are enabled.
+*/
+long long Year2024_Solution::day_03_Part_2()
+{
+    // Retrieve puzzle input
+    const std::vector<std::string> linesOfInput = ReadFile::getLines(3);
+
+    // Find all multiplication format, but also the 'do()' and 'don't()'
+    const std::regex multipicationRegex(R"(mul\((\d+),(\d+)\)|(do\(\))|(don't\(\)))");
+
+    long long sumOfMultiplications = 0;
+
+    std::sregex_iterator words_begin;
+
+    // Multiplications are performed only when they are enabled.
+    bool shouldMultiply = true;
+
+    const std::sregex_iterator words_end = std::sregex_iterator();
+
+    // Iterate among all lines of the input.
+    for (const std::string line: linesOfInput)
+    {
+        words_begin = std::sregex_iterator(line.begin(), line.end(), multipicationRegex);
+
+        for (std::sregex_iterator indexIterator = words_begin; words_end != indexIterator; ++indexIterator)
+        {
+            const std::smatch match = *indexIterator;
+            
+            // Check if a multiplication is found. If a mult is found, compute it only if it s enabled.
+            if (match[1].matched)
+            {
+                if (shouldMultiply)
+                {
+                    sumOfMultiplications += std::stoi((*indexIterator)[1]) * std::stoi((*indexIterator)[2]);
+                }
+            }
+            // Enable the multiplication.
+            else if (match[3].matched)
+            {
+                shouldMultiply = true;
+            }
+            // Disable the multiplication.
+            else if (match[4].matched)
+            {
+                shouldMultiply = false;
+            }
+        }
+    }
+
+    return sumOfMultiplications;
 }
