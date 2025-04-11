@@ -15,7 +15,7 @@ long long Year2024_Solution::getSolution(const unsigned int day, const bool isFi
     static long long (*firstPartTable[])() = {
         nullptr,
         &day_01_Part_1,
-        nullptr,
+        &day_02_Part_1,
         nullptr,
         nullptr,
         nullptr,
@@ -45,7 +45,7 @@ long long Year2024_Solution::getSolution(const unsigned int day, const bool isFi
     static long long (*secondPartTable[])() = {
         nullptr,
         &day_01_Part_2,
-        nullptr,
+        &day_02_Part_2,
         nullptr,
         nullptr,
         nullptr,
@@ -103,7 +103,8 @@ long long Year2024_Solution::getSolution(const unsigned int day, const bool isFi
 }
 
 /*
-* Search for the distance between first and second list.
+* Get solution for day 1, Part 1.
+* https://adventofcode.com/2015/day/1
 *
 * @returns: Total distance the two given lists.
 */
@@ -156,13 +157,14 @@ long long Year2024_Solution::day_01_Part_1()
 }
 
 /*
-* Compute the similarity score of the two given lists.
+* Get solution for day 1, Part 2.
+* https://adventofcode.com/2015/day/1#part2
 *
 * @returns: Similarity score of the two given lists.
 */
 long long Year2024_Solution::day_01_Part_2()
 {
-    // Creating iterators to use regex
+    // Retrieve puzzle input
     const std::vector<std::string> linesOfInput = ReadFile::getLines(1);
 
     // Regex used to find both numbers.
@@ -202,4 +204,235 @@ long long Year2024_Solution::day_01_Part_2()
     }
 
     return result;
+}
+
+/*
+* Helper for the solution to day 2.
+* https://adventofcode.com/2015/day/2
+* 
+* @param values: Check if the values are considered 'safe' when increasing.
+* @param indexToSkip: Used for part 2. We want to 'skip' some value to avoid delete them for real.
+*
+* @returns: true if the values sequence is safe by increasing, false otherwise.
+*/
+bool Year2024_Solution::day_02_helper_isSafeIncreasing(const std::vector<int>& values, const unsigned int& indexToSkip)
+{
+    bool shouldBeAdded = true;
+
+    for (size_t index = 1; values.size() > index; ++index)
+    {
+        // If the index has to be skipped, we check a bigger window
+        if (index == indexToSkip)
+        {
+            // If the index to skip is the last one, no bigger window is available
+            if ((values.size() - 1) == index)
+            {
+                continue;
+            }
+            // Checking previous value with NEXT value.
+            if (((values[index + 1] - values[index - 1]) <= 0) || ((values[index + 1] - values[index - 1]) >= 4))
+            {
+                shouldBeAdded = false;
+                break;
+            }
+        }
+        // No need to make some check once again on the value to skip.
+        else if (index == (indexToSkip + 1))
+        {
+            continue;
+        }
+        // Check if values are increasing and if they are not increasing more than 4.
+        else if (((values[index] - values[index - 1]) <= 0) || ((values[index] - values[index - 1]) >= 4))
+        {
+            shouldBeAdded = false;
+            break;
+        }
+    }
+
+    return shouldBeAdded;
+}
+
+/*
+* Helper for the solution to day 2.
+* https://adventofcode.com/2015/day/2
+
+* @param values: Check if the values are considered 'safe' when decreasing.
+* @param indexToSkip: Used for part 2. We want to 'skip' some value to avoid delete them for real.
+*
+* @returns: true if the values sequence is safe by decreasing, false otherwise.
+*/
+bool Year2024_Solution::day_02_helper_isSafeDecreasing(const std::vector<int>& values, const unsigned int& indexToSkip)
+{
+    bool shouldBeAdded = true;
+    
+    for (size_t index = 1; values.size() > index; ++index)
+    {
+        // If the index has to be skipped, we check a bigger window
+        if (index == indexToSkip)
+        {
+            // If the index to skip is the last one, no bigger window is available
+            if ((values.size()) - 1 == index)
+            {
+                continue;
+            }
+            // Checking previous value with NEXT value.
+            if (((values[index - 1] - values[index + 1]) <= 0) || ((values[index - 1] - values[index + 1]) >= 4))
+            {
+                shouldBeAdded = false;
+                break;
+            }
+        }
+        // No need to make some check once again on the value to skip.
+        else if (index == (indexToSkip + 1))
+        {
+            continue;
+        }
+        // Check if values are decreasing and if they are not decreasing more than 4.
+        else if (((values[index - 1] - values[index]) <= 0) || ((values[index - 1] - values[index]) >= 4))
+        {
+            shouldBeAdded = false;
+            break;
+        }
+    }
+
+    return shouldBeAdded;
+}
+
+/*
+* Helper for the solution to day 2.
+* https://adventofcode.com/2015/day/2
+
+* @param report: Check if the report is safe.
+* @param valueToCheckFirst: Used to check if the report is increasing or decreasing. First value of the table.
+* @param valueToCheckSecond: Used to check if the report is increasing or decreasing. Second value of the table.
+* @param valueToSkip: Used to check if the report safe even if we skip a value.
+*
+* @returns: true if the values sequence is safe by decreasing, false otherwise.
+*/
+bool Year2024_Solution::day_02_helper_isSafeReport(const std::vector<int>& report, unsigned int valueToCheckFirst, unsigned int valueToCheckSecond, unsigned int valueToSkip)
+{
+    // Reports has to be stricly increasing / decreasing.
+    if (report[valueToCheckSecond] == report[valueToCheckFirst])
+    {
+        return false;
+    }
+    
+    // Call the increasing or decreasing method according to the order of the first two values.
+    if (report[valueToCheckSecond] > report[valueToCheckFirst])
+    {
+        return day_02_helper_isSafeIncreasing(report, valueToSkip);
+    }
+    
+    return day_02_helper_isSafeDecreasing(report, valueToSkip);
+}
+
+/*
+* Get solution for day 2, Part 1.
+* https://adventofcode.com/2015/day/2
+*
+* @returns: Number of safe reports.
+*/
+long long Year2024_Solution::day_02_Part_1()
+{
+    // Retrieve puzzle input
+    const std::vector<std::string> linesOfInput = ReadFile::getLines(2);
+
+    // Regex used to find the numbers written
+    const std::regex numberRegex(R"(\d+)");
+
+    // Vector that will store the values found at each line
+    std::vector<int> values;
+
+    // Value to return
+    long long numberOfSafeReport = 0;
+
+    std::sregex_iterator words_begin;
+
+    const std::sregex_iterator words_end = std::sregex_iterator();
+
+    // Iterate among all reports
+    for (const std::string line: linesOfInput)
+    {
+        words_begin = std::sregex_iterator(line.begin(), line.end(), numberRegex);
+
+        // write in values the different values that we found on a report
+        for (std::sregex_iterator indexIterator = words_begin; words_end != indexIterator; ++indexIterator)
+        {
+            values.push_back(std::stoi((*indexIterator).str()));
+        }
+
+        if (day_02_helper_isSafeReport(values, 0, 1, values.size()))
+        {
+            ++ numberOfSafeReport;
+        }
+
+        // Erase values that are stored on values for the next report.
+        values.clear();
+    }
+    return numberOfSafeReport;
+}
+
+/*
+* Get solution for day 2, Part 1.
+* https://adventofcode.com/2015/day/2
+*
+* @returns: Number of safe reports when we can delete one value only of the report.
+*/
+long long Year2024_Solution::day_02_Part_2()
+{
+    // Retrieve puzzle input
+    const std::vector<std::string> linesOfInput = ReadFile::getLines(2);
+
+    // Regex used to find the numbers written
+    const std::regex numberRegex(R"(\d+)");
+
+    // Vector that will store the values found at each line
+    std::vector<int> values;
+
+    // Value to return
+    long long numberOfSafeReport = 0;
+
+    std::sregex_iterator words_begin;
+
+    const std::sregex_iterator words_end = std::sregex_iterator();
+
+    // Iterate among all reports
+    for (const std::string line: linesOfInput)
+    {
+        words_begin = std::sregex_iterator(line.begin(), line.end(), numberRegex);
+
+        for (std::sregex_iterator indexIterator = words_begin; words_end != indexIterator; ++indexIterator)
+        {
+            values.push_back(std::stoi((*indexIterator).str()));
+        }
+
+        // Check if we have to consider the report safe when deleting the first element.
+        if (day_02_helper_isSafeReport(values, 1, 2, 0))
+        {
+            ++ numberOfSafeReport;
+            values.clear();
+            continue;
+        }
+
+        // Check if we have to consider the report safe when deleting the second element.
+        if (day_02_helper_isSafeReport(values, 0, 2, 1))
+        {
+            ++ numberOfSafeReport;
+            values.clear();
+            continue;
+        }
+
+        // We start iterating from at 2 because skipping 0 and 1 are already considered (edge cases).
+        for (size_t indexToSkip = 2; values.size() > indexToSkip; ++indexToSkip)
+        {
+            if (day_02_helper_isSafeReport(values, 0, 1, indexToSkip))
+            {
+                ++ numberOfSafeReport;
+                break;
+            }
+        }
+        values.clear();
+    }
+
+    return numberOfSafeReport;
 }
