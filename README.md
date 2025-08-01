@@ -1,142 +1,332 @@
-# Advent Of Code
+# IBA Cocktail Scraper 🍸
 
-## Description
+A comprehensive Python system for scraping, parsing, and analyzing cocktail recipes from the International Bartenders Association (IBA) official website.
 
-The aim of this project is to strengthen my skills by solving problems proposed by the Advent Of Code for different years. It is an excellent opportunity to improve my skills in algorithms, reading text files and regular expressions (REGEX). Each solution is designed to be efficient and well-structured, with readability and performance in mind.
+## Features
 
-For each year, I've decided to choose a different language in order to revise languages I know (Python, Java), or to improve my skills in languages I'm less familiar with (JavaScript).
+- **🌐 Web Scraping**: Extracts all official IBA cocktails from iba-world.com
+- **🔍 Smart Parsing**: Advanced regex-based quantity parser for ingredient measurements
+- **📊 Data Analysis**: Helper functions for cocktail discovery and analysis
+- **💾 Data Persistence**: Save/load cocktail data to/from JSON
+- **🍹 Recipe Search**: Find cocktails by ingredients, categories, or multiple criteria
+- **📏 Unit Conversion**: Handles various measurement units (ml, cl, oz, dashes, etc.)
 
-The Advent Of Code problems are published daily in December, and cover a variety of challenges ranging from string manipulation to more complex algorithms.
+## Installation
 
-## Structure of the project
-
-The project is structured into several directories, each corresponding to a year (and therefore a language) of the Advent Of Code. Within each directory, the challenges are organised by day, with a dedicated file for each problem.
-
-```
-AdventOfCode/
-│
-├── Solution_2015/
-│ ├── textfiles
-│ │   ├── 01.txt
-│ │   ├── ...txt
-│ │   ├── 25.txt
-│ ├── Year2015_Solution.py
-│ ├── ReadFile.py
-│ ├── main.py
-│
-├── Solution_2016/
-│ ├── textfiles
-│ │   ├── 01.txt
-│ │   ├── ...txt
-│ │   ├── 25.txt
-│ ├── Year2016_Solution.java
-│ ├── ReadFile.java
-│ ├── Main.java
-│
-├── Solution_2017/
-│ ├── textfiles
-│ │   ├── 01.txt
-│ │   ├── ...txt
-│ │   ├── 25.txt
-│ ├── Year2017_Solution.ts
-│ ├── ReadFile.ts
-│ ├── main.ts
-│
-├── .../
-│
-├── Solution_2023/
-│ ├── textfiles
-│ │   ├── 01.txt
-│ │   ├── ...txt
-│ │   ├── 25.txt
-│
-└── main.sh
-```
-
-## Setting up the project
-
-### Prerequisites
-
-To run this project, you must have:
-- For year 2015: Python 3.12.6 installed on your machine. You can check the version of Python by running the following command:
-
+1. Clone or download this repository
+2. Install dependencies:
 ```bash
-python --version
+pip install -r requirements.txt
 ```
 
-- For year 2016: Java 21.0.4 installed on your machine. You can check the version of Java by running the following command:
+## Quick Start
 
-```bash
-java --version
-```
-
-- For year 2017: Node 20.18.0 installed on your machine. You can check the version of Node by running the following command:
-
-```bash
-node --version
-```
-
-### Installation
-
-1. Clone this repository on your local machine using the following command:
-
-```bash
-git clone https://github.com/Erwan-Br/AdventofCode.git
-```
-
-2. Open the repository:
-
-```bash
-cd AdventofCode
-```
-
-3. Launch the file main.sh:
-
-On Windows:
-```bash
-sh main.sh -y <yearNumber>
-```
-
-On Linux:
-```bash
-./main.sh -y <yearNumber>
-```
-
-4. Customize the output displayed (optionnal): Fo each year, In main.xx, you can choose to display the answer you want. For the year 2015, you might want to display only a few responses so you would have to change main.py to:
+### Basic Usage
 
 ```python
-if "__main__" == __name__:
-    print(Year2015_Solution.getSolution(<dayNumber>, True)) # True for Part One, False for Part Two
+from iba_cocktail_scraper import IBACocktailScraper, CocktailHelper
+
+# Initialize scraper
+scraper = IBACocktailScraper(delay=1.5)
+
+# Scrape all cocktails
+cocktails = scraper.scrape_all_cocktails()
+
+# Initialize helper for searching
+helper = CocktailHelper(cocktails)
+
+# Find cocktails with gin
+gin_cocktails = helper.find_cocktails_by_ingredient("gin")
+print(f"Found {len(gin_cocktails)} cocktails with gin")
 ```
 
-### Compilation
+### Quantity Parsing
 
-The file main.sh will do everything for you, just launch it with the correct arguments!
+```python
+from iba_cocktail_scraper import QuantityParser
 
-## Tickets and Solutions
+parser = QuantityParser()
 
-These tickets contain the list of solutions to be implemented for each year, and for each ticket an associated branch is created, allowing the work on each year to be dissociated:
+# Parse various quantity formats
+quantities = ["30 ml", "1.5 oz", "1/2 oz", "2-3 dashes", "to taste"]
 
-- [Ticket 02: Year 2015](https://github.com/Erwan-Br/AdventofCode/issues/2)
-- [Ticket 03: Year 2016](https://github.com/Erwan-Br/AdventofCode/issues/3)
-- [Ticket 04: Year 2017](https://github.com/Erwan-Br/AdventofCode/issues/4)
-- ...
-- [Ticket 10: Year 2023](https://github.com/Erwan-Br/AdventofCode/issues/10)
+for qty in quantities:
+    parsed = parser.parse_quantity(qty)
+    print(f"{qty} → {parsed.amount} {parsed.unit}")
+```
 
-## Use the code to find your answers
+### Finding Cocktails by Ingredients
 
-All the problems retrieve input from text files, so it is possible to find your answer by using my code and changing the contents of the text files.
+```python
+# Find cocktails with specific ingredient
+vodka_cocktails = helper.find_cocktails_by_ingredient("vodka")
 
-I encourage you to try and understand the algorithms involved, and if you have any questions please don't hesitate to ask, I'll be happy to answer them.
+# Find cocktails with multiple ingredients (ALL required)
+gin_lemon_cocktails = helper.find_cocktails_by_multiple_ingredients(
+    ["gin", "lemon"], require_all=True
+)
 
-## Contribute
+# Find cocktails with any of the ingredients
+whiskey_cocktails = helper.find_cocktails_by_multiple_ingredients(
+    ["bourbon", "rye", "scotch"], require_all=False
+)
+```
 
-Contributions are welcome! If you would like to suggest improvements or correct errors, don't hesitate to submit a pull request or open an issue.
+## Demo Script
 
-## Authors
+Run the comprehensive demo to see all features in action:
 
-- **[Erwan BROUDIN](https://github.com/Erwan-Br)** - *Principal author*
+```bash
+python demo.py
+```
+
+The demo will:
+1. Test the quantity parser with various formats
+2. Scrape cocktails (or load from cache)
+3. Demonstrate search functions
+4. Show cocktail recommendations based on available ingredients
+5. Display detailed cocktail recipes
+
+## Core Classes
+
+### `IBACocktailScraper`
+
+Main scraper class for extracting cocktail data from the IBA website.
+
+**Key Methods:**
+- `scrape_all_cocktails()`: Scrapes all cocktails and returns a dictionary
+- `parse_cocktail_page(url, category)`: Parses individual cocktail page
+- `get_all_cocktail_urls()`: Discovers cocktail URLs by category
+
+### `QuantityParser`
+
+Advanced parser for ingredient quantities using regex patterns.
+
+**Supported Formats:**
+- Standard measurements: `30 ml`, `1.5 oz`, `2 cl`
+- Fractions: `1/2 oz`, `3/4 cl`, `1 1/2 oz`
+- Ranges: `2-3 dashes`, `15-20 ml`
+- Special units: `pinch`, `splash`, `slice`, `sprig`
+- Descriptive: `to taste`, `as needed`, `garnish`
+
+**Key Methods:**
+- `parse_quantity(text)`: Parses quantity text into structured format
+- `convert_to_ml(quantity)`: Converts any quantity to milliliters
+- `normalize_quantities(ingredients)`: Normalizes all quantities to ml
+
+### `CocktailHelper`
+
+Helper class providing search and analysis functions.
+
+**Key Methods:**
+- `find_cocktails_by_ingredient(ingredient, exact_match=False)`: Find by single ingredient
+- `find_cocktails_by_multiple_ingredients(ingredients, require_all=True)`: Find by multiple ingredients
+- `get_all_ingredients()`: Get ingredient usage statistics
+- `get_cocktails_by_category(category)`: Filter by IBA category
+- `get_cocktail_stats()`: Get database statistics
+
+### Data Structures
+
+#### `IngredientQuantity`
+```python
+@dataclass
+class IngredientQuantity:
+    amount: float
+    unit: str
+    original_text: str
+    is_range: bool = False
+    min_amount: Optional[float] = None
+    max_amount: Optional[float] = None
+```
+
+#### `Ingredient`
+```python
+@dataclass
+class Ingredient:
+    name: str
+    quantity: IngredientQuantity
+    category: str = "unknown"
+```
+
+#### `Cocktail`
+```python
+@dataclass
+class Cocktail:
+    name: str
+    category: str  # The Unforgettables, Contemporary Classics, New Era
+    ingredients: List[Ingredient]
+    method: str
+    garnish: str
+    glass_type: str = ""
+    views: int = 0
+    url: str = ""
+```
+
+## Advanced Usage Examples
+
+### Building a Home Bar Recommendation System
+
+```python
+def recommend_cocktails(home_bar_ingredients, cocktails):
+    helper = CocktailHelper(cocktails)
+    recommendations = []
+    
+    for cocktail in cocktails.values():
+        # Calculate ingredient match percentage
+        cocktail_ingredients = [ing.name.lower() for ing in cocktail.ingredients]
+        matches = sum(1 for bar_item in home_bar_ingredients 
+                     if any(bar_item.lower() in ci or ci in bar_item.lower() 
+                           for ci in cocktail_ingredients))
+        
+        match_percentage = matches / len(cocktail.ingredients)
+        
+        if match_percentage >= 0.7:  # 70% ingredient match
+            recommendations.append((cocktail, match_percentage))
+    
+    return sorted(recommendations, key=lambda x: x[1], reverse=True)
+
+# Example usage
+home_bar = ["gin", "vodka", "lime juice", "simple syrup", "tonic water"]
+recommendations = recommend_cocktails(home_bar, cocktails)
+```
+
+### Analyzing Cocktail Trends
+
+```python
+def analyze_ingredient_trends(cocktails):
+    helper = CocktailHelper(cocktails)
+    
+    # Get ingredient popularity by category
+    categories = ["The Unforgettables", "Contemporary Classics", "New Era"]
+    
+    for category in categories:
+        category_cocktails = helper.get_cocktails_by_category(category)
+        category_helper = CocktailHelper({c.name: c for c in category_cocktails})
+        
+        print(f"\n{category}:")
+        ingredients = category_helper.get_all_ingredients()
+        for ingredient, count in list(ingredients.items())[:5]:
+            print(f"  {ingredient}: {count} cocktails")
+```
+
+### Custom Quantity Analysis
+
+```python
+def analyze_alcohol_content(cocktail):
+    """Estimate alcohol content of a cocktail"""
+    parser = QuantityParser()
+    total_volume = 0
+    alcohol_volume = 0
+    
+    # Approximate alcohol percentages for common spirits
+    alcohol_percentages = {
+        'vodka': 0.4, 'gin': 0.4, 'rum': 0.4, 'whiskey': 0.4,
+        'bourbon': 0.4, 'scotch': 0.4, 'tequila': 0.4,
+        'liqueur': 0.2, 'vermouth': 0.15, 'wine': 0.12
+    }
+    
+    for ingredient in cocktail.ingredients:
+        volume_ml = parser.convert_to_ml(ingredient.quantity)
+        total_volume += volume_ml
+        
+        # Estimate alcohol content
+        for spirit, percentage in alcohol_percentages.items():
+            if spirit in ingredient.name.lower():
+                alcohol_volume += volume_ml * percentage
+                break
+    
+    if total_volume > 0:
+        abv = (alcohol_volume / total_volume) * 100
+        return round(abv, 1)
+    return 0
+```
+
+## Data Persistence
+
+Save and load cocktail data:
+
+```python
+from iba_cocktail_scraper import save_cocktails_to_json, load_cocktails_from_json
+
+# Save cocktails to JSON file
+save_cocktails_to_json(cocktails, "my_cocktails.json")
+
+# Load cocktails from JSON file
+loaded_cocktails = load_cocktails_from_json("my_cocktails.json")
+```
+
+## Error Handling
+
+The scraper includes comprehensive error handling:
+
+- Network timeouts and connection errors
+- Missing or malformed HTML elements
+- Invalid quantity formats
+- Rate limiting with respectful delays
+
+## Ethical Usage
+
+This scraper is designed to be respectful:
+- Uses delays between requests (default 1.5 seconds)
+- Includes proper User-Agent headers
+- Handles errors gracefully
+- Caches results to avoid repeated requests
+
+## IBA Categories
+
+The scraper organizes cocktails into three official IBA categories:
+
+1. **The Unforgettables**: Classic cocktails that have stood the test of time
+2. **Contemporary Classics**: Modern classics that have gained widespread acceptance
+3. **New Era**: Recently added cocktails representing current trends
+
+## Dependencies
+
+- `requests`: HTTP library for web scraping
+- `beautifulsoup4`: HTML parsing library
+- `lxml`: Fast XML/HTML parser (optional but recommended)
 
 ## License
 
-This project is licensed under the MIT license - see the [LICENSE](LICENSE) file for more details.
+This project is for educational and personal use. Please respect the IBA website's terms of service and use responsibly.
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit issues or pull requests.
+
+## Troubleshooting
+
+### Common Issues
+
+1. **No cocktails scraped**: Check internet connection and verify IBA website is accessible
+2. **Parsing errors**: Some cocktail pages may have different HTML structure
+3. **Rate limiting**: Increase delay between requests if you encounter 429 errors
+
+### Debug Mode
+
+Enable debug mode for verbose logging:
+
+```python
+scraper = IBACocktailScraper(delay=2.0)  # Increase delay
+# Add debug prints in the parsing methods
+```
+
+## Example Output
+
+```
+🍸 MARTINI
+Category: The Unforgettables
+Views: 150,000
+URL: https://iba-world.com/dry-martini/
+
+Ingredients:
+  • 60.0 ml Gin
+  • 10.0 ml Dry Vermouth
+
+Method: Stir over ice, strain into chilled glass
+Garnish: Lemon twist or olive
+```
+
+---
+
+**Happy mixing! 🥂**
