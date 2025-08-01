@@ -1,0 +1,3893 @@
+{
+  "Alexander": {
+    "name": "Alexander",
+    "category": "The Unforgettables",
+    "ingredients": [
+      {
+        "name": "ml Cognac",
+        "quantity": {
+          "amount": 30.0,
+          "unit": "ml",
+          "original_text": "30",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Crème de Cacao (Brown)",
+        "quantity": {
+          "amount": 30.0,
+          "unit": "ml",
+          "original_text": "30",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Fresh Cream",
+        "quantity": {
+          "amount": 30.0,
+          "unit": "ml",
+          "original_text": "30",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Pour all ingredients into cocktail shaker filled with ice cubes.\nShake and strain into a chilled cocktail glass.",
+    "garnish": "Sprinkle fresh ground nutmeg on top.",
+    "glass_type": "",
+    "views": 105323,
+    "url": "https://iba-world.com/alexander/"
+  },
+  "Americano": {
+    "name": "Americano",
+    "category": "The Unforgettables",
+    "ingredients": [
+      {
+        "name": "ml Bitter Campari",
+        "quantity": {
+          "amount": 30.0,
+          "unit": "ml",
+          "original_text": "30",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Sweet Red Vermouth",
+        "quantity": {
+          "amount": 30.0,
+          "unit": "ml",
+          "original_text": "30",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "A splash of Soda Water",
+        "quantity": {
+          "amount": 0,
+          "unit": "unknown",
+          "original_text": "",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Mix the ingredients directly in an old fashioned glass filled with ice cubes.\nAdd a splash of Soda Water. Stir gently.",
+    "garnish": "Garnish with half orange slice and a lemon zest.",
+    "glass_type": "",
+    "views": 136018,
+    "url": "https://iba-world.com/americano/"
+  },
+  "Angel Face": {
+    "name": "Angel Face",
+    "category": "The Unforgettables",
+    "ingredients": [
+      {
+        "name": "ml Gin",
+        "quantity": {
+          "amount": 30.0,
+          "unit": "ml",
+          "original_text": "30",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Apricot Brandy",
+        "quantity": {
+          "amount": 30.0,
+          "unit": "ml",
+          "original_text": "30",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Calvados",
+        "quantity": {
+          "amount": 30.0,
+          "unit": "ml",
+          "original_text": "30",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Pour all ingredients into cocktail shaker filled with ice cubes.\nShake and strain into a chilled cocktail glass.",
+    "garnish": "N/A",
+    "glass_type": "",
+    "views": 57607,
+    "url": "https://iba-world.com/angel-face/"
+  },
+  "Aviation": {
+    "name": "Aviation",
+    "category": "The Unforgettables",
+    "ingredients": [
+      {
+        "name": "ml Gin",
+        "quantity": {
+          "amount": 45.0,
+          "unit": "ml",
+          "original_text": "45",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Maraschino Luxardo",
+        "quantity": {
+          "amount": 15.0,
+          "unit": "ml",
+          "original_text": "15",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Fresh Lemon Juice",
+        "quantity": {
+          "amount": 15.0,
+          "unit": "ml",
+          "original_text": "15",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "Bar Spoon Crème de Violette",
+        "quantity": {
+          "amount": 1.0,
+          "unit": "ml",
+          "original_text": "1",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Add all ingredients into a cocktail shaker.\nShake with cracked ice and strain into a chilled cocktail glass.",
+    "garnish": "Optional Maraschino Cherry.",
+    "glass_type": "",
+    "views": 102935,
+    "url": "https://iba-world.com/aviation/"
+  },
+  "Bee’s Knees": {
+    "name": "Bee’s Knees",
+    "category": "New Era",
+    "ingredients": [
+      {
+        "name": "ml Dry Gin",
+        "quantity": {
+          "amount": 52.5,
+          "unit": "ml",
+          "original_text": "52.5",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "teaspoons Honey Syrup",
+        "quantity": {
+          "amount": 2.0,
+          "unit": "ml",
+          "original_text": "2",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Fresh Lemon Juice",
+        "quantity": {
+          "amount": 22.5,
+          "unit": "ml",
+          "original_text": "22.5",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Fresh Orange Juice",
+        "quantity": {
+          "amount": 22.5,
+          "unit": "ml",
+          "original_text": "22.5",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Stir honey with lemon and orange juices until it dissolves, add gin and shake with ice. Strain into a chilled cocktail glass.",
+    "garnish": "Optionally garnish with a lemon or orange zest.",
+    "glass_type": "",
+    "views": 72277,
+    "url": "https://iba-world.com/bees-knees/"
+  },
+  "Bellini": {
+    "name": "Bellini",
+    "category": "Contemporary Classics",
+    "ingredients": [
+      {
+        "name": "ml Prosecco",
+        "quantity": {
+          "amount": 100.0,
+          "unit": "ml",
+          "original_text": "100",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml White Peach Puree",
+        "quantity": {
+          "amount": 50.0,
+          "unit": "ml",
+          "original_text": "50",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Pour peach puree into the mixing glass with ice, add the Prosecco wine.\nStir gently and pour in a chilled flute glass.\nNOTE:\nPuccini – Fresh Mandarin Orange Juice;\nRossini – Fresh Strawberry Puree;\nTintoretto –  Fresh Pomegranate Juice.",
+    "garnish": "N/A.",
+    "glass_type": "",
+    "views": 78623,
+    "url": "https://iba-world.com/bellini/"
+  },
+  "Between the Sheets": {
+    "name": "Between the Sheets",
+    "category": "Unknown",
+    "ingredients": [
+      {
+        "name": "ml White Rum",
+        "quantity": {
+          "amount": 30.0,
+          "unit": "ml",
+          "original_text": "30",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Cognac",
+        "quantity": {
+          "amount": 30.0,
+          "unit": "ml",
+          "original_text": "30",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Triple Sec",
+        "quantity": {
+          "amount": 30.0,
+          "unit": "ml",
+          "original_text": "30",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Fresh Lemon Juice",
+        "quantity": {
+          "amount": 20.0,
+          "unit": "ml",
+          "original_text": "20",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Add all ingredients into a cocktail shaker.\nShake with ice and strain into a chilled cocktail glass.",
+    "garnish": "N/A",
+    "glass_type": "",
+    "views": 55154,
+    "url": "https://iba-world.com/between-the-sheets/"
+  },
+  "Black Russian": {
+    "name": "Black Russian",
+    "category": "Contemporary Classics",
+    "ingredients": [
+      {
+        "name": "ml Vodka",
+        "quantity": {
+          "amount": 50.0,
+          "unit": "ml",
+          "original_text": "50",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Coffee Liqueur",
+        "quantity": {
+          "amount": 20.0,
+          "unit": "ml",
+          "original_text": "20",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Pour the ingredients into the old fashioned glass filled with ice cubes.\nStir gently. strain ingredients into old fashioned glass filled with ice.\nNOTE:\nWHITE RUSSIAN – Float fresh cream on the top and stir in slowly.",
+    "garnish": "N/A",
+    "glass_type": "",
+    "views": 92781,
+    "url": "https://iba-world.com/black-russian/"
+  },
+  "Bloody Mary": {
+    "name": "Bloody Mary",
+    "category": "Contemporary Classics",
+    "ingredients": [
+      {
+        "name": "ml Vodka",
+        "quantity": {
+          "amount": 45.0,
+          "unit": "ml",
+          "original_text": "45",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Tomato Juice",
+        "quantity": {
+          "amount": 90.0,
+          "unit": "ml",
+          "original_text": "90",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Fresh Lemon Juice",
+        "quantity": {
+          "amount": 15.0,
+          "unit": "ml",
+          "original_text": "15",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "dashes Worcestershire Sauce",
+        "quantity": {
+          "amount": 2.0,
+          "unit": "ml",
+          "original_text": "2",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "Tabasco, Celery Salt, Pepper (Up to taste)",
+        "quantity": {
+          "amount": 0,
+          "unit": "unknown",
+          "original_text": "",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Stir gently all the ingredients in a mixing glass with ice, pour into rocks glass.\nNOTE:\nIf requested served with ice, pour into highball glass.",
+    "garnish": "Celery, lemon wedge (Optional).",
+    "glass_type": "",
+    "views": 69408,
+    "url": "https://iba-world.com/bloody-mary/"
+  },
+  "Boulevardier": {
+    "name": "Boulevardier",
+    "category": "Unknown",
+    "ingredients": [
+      {
+        "name": "ml Bourbon or Rye Whiskey",
+        "quantity": {
+          "amount": 45.0,
+          "unit": "ml",
+          "original_text": "45",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Bitter Campari",
+        "quantity": {
+          "amount": 30.0,
+          "unit": "ml",
+          "original_text": "30",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Sweet Red Vermouth",
+        "quantity": {
+          "amount": 30.0,
+          "unit": "ml",
+          "original_text": "30",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Pour all ingredients into mixing glass with ice cubes.\nStir well. Strain into chilled cocktail glass.",
+    "garnish": "Garnish with a orange zest, optionally a lemon zest.",
+    "glass_type": "",
+    "views": 117121,
+    "url": "https://iba-world.com/boulevardier/"
+  },
+  "Bramble": {
+    "name": "Bramble",
+    "category": "New Era",
+    "ingredients": [
+      {
+        "name": "ml Gin",
+        "quantity": {
+          "amount": 50.0,
+          "unit": "ml",
+          "original_text": "50",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Fresh Lemon Juice",
+        "quantity": {
+          "amount": 25.0,
+          "unit": "ml",
+          "original_text": "25",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Sugar Syrup",
+        "quantity": {
+          "amount": 12.5,
+          "unit": "ml",
+          "original_text": "12.5",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Crème de Mûre",
+        "quantity": {
+          "amount": 15.0,
+          "unit": "ml",
+          "original_text": "15",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Pour all ingredients into cocktail shaker except the Crème de Mûre, shake well with ice, strain into chilled old fashioned glass filled with crushed ice, then pour the blackberry liqueur (Crème de Mûre) over the top of the drink, in a circular motion.",
+    "garnish": "Garnish optionally with a lemon slice and blackberries.",
+    "glass_type": "",
+    "views": 72280,
+    "url": "https://iba-world.com/bramble/"
+  },
+  "Brandy Crusta": {
+    "name": "Brandy Crusta",
+    "category": "Unknown",
+    "ingredients": [
+      {
+        "name": "ml Brandy",
+        "quantity": {
+          "amount": 52.5,
+          "unit": "ml",
+          "original_text": "52.5",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Maraschino Luxardo",
+        "quantity": {
+          "amount": 7.5,
+          "unit": "ml",
+          "original_text": "7.5",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "Bar Spoon Curacao",
+        "quantity": {
+          "amount": 1.0,
+          "unit": "ml",
+          "original_text": "1",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Fresh Lemon Juice",
+        "quantity": {
+          "amount": 15.0,
+          "unit": "ml",
+          "original_text": "15",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "Bar Spoon Simple Syrup",
+        "quantity": {
+          "amount": 1.0,
+          "unit": "ml",
+          "original_text": "1",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "Dashes Aromatic Bitters",
+        "quantity": {
+          "amount": 2.0,
+          "unit": "ml",
+          "original_text": "2",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Mix together all ingredients with ice cubes in a mixing\nglass and strain into a prepared slim cocktail glass.",
+    "garnish": "Rub a slice of orange (or lemon) around the rim of the glass and dip it in\npulverized white sugar, so that the sugar will adhere to the edge of the glass.\nCarefully curling place the orange/lemon peel around the inside of the glass.",
+    "glass_type": "",
+    "views": 57408,
+    "url": "https://iba-world.com/brandy-crusta/"
+  },
+  "Caipirinha": {
+    "name": "Caipirinha",
+    "category": "Unknown",
+    "ingredients": [
+      {
+        "name": "ml Cachaça",
+        "quantity": {
+          "amount": 60.0,
+          "unit": "ml",
+          "original_text": "60",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "Lime cut into small wedges",
+        "quantity": {
+          "amount": 1.0,
+          "unit": "ml",
+          "original_text": "1",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "Teaspoons White Cane Sugar",
+        "quantity": {
+          "amount": 4.0,
+          "unit": "ml",
+          "original_text": "4",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Place lime and sugar into a double old fashioned glass and muddle gently.\nFill the glass with cracked ice and add Cachaça. Stir gently to involve ingredients.\nNote:\nCaipiroska – Instead of Cachaça use Vodka;\nCaipirissima – Instead of Cachaça use Rum.\nCaipirão – Instead of Cachaça use Licor Beirão.",
+    "garnish": "N/A",
+    "glass_type": "",
+    "views": 353342,
+    "url": "https://iba-world.com/caipirinha/"
+  },
+  "Canchanchara": {
+    "name": "Canchanchara",
+    "category": "Unknown",
+    "ingredients": [
+      {
+        "name": "ml Cuban Aguardiente",
+        "quantity": {
+          "amount": 60.0,
+          "unit": "ml",
+          "original_text": "60",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Fresh Lime Juice",
+        "quantity": {
+          "amount": 15.0,
+          "unit": "ml",
+          "original_text": "15",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Raw Honey",
+        "quantity": {
+          "amount": 15.0,
+          "unit": "ml",
+          "original_text": "15",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Water",
+        "quantity": {
+          "amount": 50.0,
+          "unit": "ml",
+          "original_text": "50",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Mix honey with water and lime juice and spread the mixture on the bottom and sides of the glass.\nAdd cracked ice, and then the rum.\nEnd by energetically stirring from bottom to top.",
+    "garnish": "Garnish with a lime wedge.",
+    "glass_type": "",
+    "views": 58495,
+    "url": "https://iba-world.com/canchanchara/"
+  },
+  "Cardinale": {
+    "name": "Cardinale",
+    "category": "Unknown",
+    "ingredients": [
+      {
+        "name": "ml Gin",
+        "quantity": {
+          "amount": 40.0,
+          "unit": "ml",
+          "original_text": "40",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Dry Vermouth",
+        "quantity": {
+          "amount": 20.0,
+          "unit": "ml",
+          "original_text": "20",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Bitter Campari",
+        "quantity": {
+          "amount": 10.0,
+          "unit": "ml",
+          "original_text": "10",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Pour all ingredients into mixing glass with ice cubes. Stir well.\nStrain into chilled cocktail glass.",
+    "garnish": "Garnish with a lemon zest.",
+    "glass_type": "",
+    "views": 40107,
+    "url": "https://iba-world.com/cardinale/"
+  },
+  "Casino": {
+    "name": "Casino",
+    "category": "Unknown",
+    "ingredients": [
+      {
+        "name": "ml Old Tom Gin",
+        "quantity": {
+          "amount": 40.0,
+          "unit": "ml",
+          "original_text": "40",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Maraschino Luxardo",
+        "quantity": {
+          "amount": 10.0,
+          "unit": "ml",
+          "original_text": "10",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Fresh Lemon Juice",
+        "quantity": {
+          "amount": 10.0,
+          "unit": "ml",
+          "original_text": "10",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "Dashes Orange Bitters",
+        "quantity": {
+          "amount": 2.0,
+          "unit": "ml",
+          "original_text": "2",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Pour all ingredients into cocktails shaker, shake well with ice, strain\ninto chilled rocks glass with ice.",
+    "garnish": "Garnish with a lemon zest and a maraschino cherry.",
+    "glass_type": "",
+    "views": 74157,
+    "url": "https://iba-world.com/casino/"
+  },
+  "Champagne Cocktail": {
+    "name": "Champagne Cocktail",
+    "category": "Unknown",
+    "ingredients": [
+      {
+        "name": "ml Chilled Champagne",
+        "quantity": {
+          "amount": 90.0,
+          "unit": "ml",
+          "original_text": "90",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Cognac",
+        "quantity": {
+          "amount": 10.0,
+          "unit": "ml",
+          "original_text": "10",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "dashes Angostura bitters",
+        "quantity": {
+          "amount": 2.0,
+          "unit": "ml",
+          "original_text": "2",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "Few drops of Grand Marnier (optional)",
+        "quantity": {
+          "amount": 0,
+          "unit": "unknown",
+          "original_text": "",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "sugar cube",
+        "quantity": {
+          "amount": 1.0,
+          "unit": "ml",
+          "original_text": "1",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Place the sugar cube with 2 dashes of bitters in a large Champagne glass, add the cognac.\nPour gently chilled Champagne.",
+    "garnish": "Garnish with orange zest and maraschino cherry.",
+    "glass_type": "",
+    "views": 40008,
+    "url": "https://iba-world.com/champagne-cocktail/"
+  },
+  "Chartreuse Swizzle": {
+    "name": "Chartreuse Swizzle",
+    "category": "New Era",
+    "ingredients": [
+      {
+        "name": "ml Green Chartreuse",
+        "quantity": {
+          "amount": 45.0,
+          "unit": "ml",
+          "original_text": "45",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Fresh Pineapple Juice",
+        "quantity": {
+          "amount": 30.0,
+          "unit": "ml",
+          "original_text": "30",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Fresh Lime Juice",
+        "quantity": {
+          "amount": 22.5,
+          "unit": "ml",
+          "original_text": "22.5",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Falernum",
+        "quantity": {
+          "amount": 15.0,
+          "unit": "ml",
+          "original_text": "15",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Pour all ingredients into a tall glass, add pebble ice.\nWith the help of a swizzle stick (or cocktail spoon) mix vigorously, complete by filling the glass with more pebble ice.",
+    "garnish": "Garnish with mint leaves and grated nutmeg.",
+    "glass_type": "",
+    "views": 54541,
+    "url": "https://iba-world.com/chartreuse-swizzle/"
+  },
+  "Clover Club": {
+    "name": "Clover Club",
+    "category": "Unknown",
+    "ingredients": [
+      {
+        "name": "ml Gin",
+        "quantity": {
+          "amount": 45.0,
+          "unit": "ml",
+          "original_text": "45",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Raspberry Syrup",
+        "quantity": {
+          "amount": 15.0,
+          "unit": "ml",
+          "original_text": "15",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Fresh Lemon Juice",
+        "quantity": {
+          "amount": 15.0,
+          "unit": "ml",
+          "original_text": "15",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "Few Drops of Egg White",
+        "quantity": {
+          "amount": 0,
+          "unit": "unknown",
+          "original_text": "",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Pour all ingredients into cocktails shaker, shake well with ice, strain into chilled cocktail glass.",
+    "garnish": "Fresh raspberries.",
+    "glass_type": "",
+    "views": 65619,
+    "url": "https://iba-world.com/clover-club/"
+  },
+  "Corpse Reviver #2": {
+    "name": "Corpse Reviver #2",
+    "category": "Unknown",
+    "ingredients": [
+      {
+        "name": "ml Gin",
+        "quantity": {
+          "amount": 30.0,
+          "unit": "ml",
+          "original_text": "30",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Cointreau",
+        "quantity": {
+          "amount": 30.0,
+          "unit": "ml",
+          "original_text": "30",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Lillet Blanc",
+        "quantity": {
+          "amount": 30.0,
+          "unit": "ml",
+          "original_text": "30",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Fresh Lemon Juice",
+        "quantity": {
+          "amount": 30.0,
+          "unit": "ml",
+          "original_text": "30",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "dash Absinthe",
+        "quantity": {
+          "amount": 1.0,
+          "unit": "ml",
+          "original_text": "1",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Pour all ingredients into shaker with ice.\nShake well and strain in chilled cocktail glass.",
+    "garnish": "Garnish with an orange zest.",
+    "glass_type": "",
+    "views": 56686,
+    "url": "https://iba-world.com/corpse-reviver-2/"
+  },
+  "Cosmopolitan": {
+    "name": "Cosmopolitan",
+    "category": "Unknown",
+    "ingredients": [
+      {
+        "name": "ml Vodka Citron",
+        "quantity": {
+          "amount": 40.0,
+          "unit": "ml",
+          "original_text": "40",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Cointreau",
+        "quantity": {
+          "amount": 15.0,
+          "unit": "ml",
+          "original_text": "15",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Fresh Lime Juice",
+        "quantity": {
+          "amount": 15.0,
+          "unit": "ml",
+          "original_text": "15",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Cranberry Juice",
+        "quantity": {
+          "amount": 30.0,
+          "unit": "ml",
+          "original_text": "30",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Add all ingredients into cocktail shaker filled with ice.\nShake well and strain into large cocktail glass.",
+    "garnish": "Garnish with lemon twist.",
+    "glass_type": "",
+    "views": 129619,
+    "url": "https://iba-world.com/cosmopolitan/"
+  },
+  "Cuba Libre": {
+    "name": "Cuba Libre",
+    "category": "Unknown",
+    "ingredients": [
+      {
+        "name": "ml White Rum",
+        "quantity": {
+          "amount": 50.0,
+          "unit": "ml",
+          "original_text": "50",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Cola",
+        "quantity": {
+          "amount": 120.0,
+          "unit": "ml",
+          "original_text": "120",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Fresh Lime Juice",
+        "quantity": {
+          "amount": 10.0,
+          "unit": "ml",
+          "original_text": "10",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Build all ingredients in a highball glass filled with ice.",
+    "garnish": "Garnish with lime wedge.",
+    "glass_type": "",
+    "views": 61736,
+    "url": "https://iba-world.com/cuba-libre/"
+  },
+  "Daiquiri": {
+    "name": "Daiquiri",
+    "category": "Unknown",
+    "ingredients": [
+      {
+        "name": "ml White Cuban Ron",
+        "quantity": {
+          "amount": 60.0,
+          "unit": "ml",
+          "original_text": "60",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Fresh Lime Juice",
+        "quantity": {
+          "amount": 20.0,
+          "unit": "ml",
+          "original_text": "20",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "Bar Spoons Superfine Sugar",
+        "quantity": {
+          "amount": 2.0,
+          "unit": "ml",
+          "original_text": "2",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "In a cocktail shaker add all ingredients. Stir well to dissolve the sugar.\nAdd ice and shake. Strain into chilled cocktail glass.",
+    "garnish": "N/A",
+    "glass_type": "",
+    "views": 89678,
+    "url": "https://iba-world.com/daiquiri/"
+  },
+  "Dark ‘N’ Stormy": {
+    "name": "Dark ‘N’ Stormy",
+    "category": "Unknown",
+    "ingredients": [
+      {
+        "name": "ml Goslings Rum",
+        "quantity": {
+          "amount": 60.0,
+          "unit": "ml",
+          "original_text": "60",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Ginger Beer",
+        "quantity": {
+          "amount": 100.0,
+          "unit": "ml",
+          "original_text": "100",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "In a highball glass filled with ice pour the ginger beer and top floating with the Rum.",
+    "garnish": "Garnish with a lime wedge or slice.",
+    "glass_type": "",
+    "views": 57713,
+    "url": "https://iba-world.com/dark-n-stormy/"
+  },
+  "Dry Martini": {
+    "name": "Dry Martini",
+    "category": "Unknown",
+    "ingredients": [
+      {
+        "name": "ml Gin",
+        "quantity": {
+          "amount": 60.0,
+          "unit": "ml",
+          "original_text": "60",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Dry Vermouth",
+        "quantity": {
+          "amount": 10.0,
+          "unit": "ml",
+          "original_text": "10",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Pour all ingredients into mixing glass with ice cubes. Stir well.\nStrain into chilled martini cocktail glass.",
+    "garnish": "Squeeze oil from lemon peel onto the drink, or garnish with a green olives if requested.",
+    "glass_type": "",
+    "views": 131738,
+    "url": "https://iba-world.com/dry-martini/"
+  },
+  "Espresso Martini": {
+    "name": "Espresso Martini",
+    "category": "Unknown",
+    "ingredients": [
+      {
+        "name": "ml Vodka",
+        "quantity": {
+          "amount": 50.0,
+          "unit": "ml",
+          "original_text": "50",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Kahlúa",
+        "quantity": {
+          "amount": 30.0,
+          "unit": "ml",
+          "original_text": "30",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Sugar Syrup",
+        "quantity": {
+          "amount": 10.0,
+          "unit": "ml",
+          "original_text": "10",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "strong Espresso",
+        "quantity": {
+          "amount": 1.0,
+          "unit": "ml",
+          "original_text": "1",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Pour all ingredients into cocktail shaker, shake well with ice, strain into chilled cocktail glass.",
+    "garnish": "3 coffee beans",
+    "glass_type": "",
+    "views": 135235,
+    "url": "https://iba-world.com/espresso-martini/"
+  },
+  "French 75": {
+    "name": "French 75",
+    "category": "Unknown",
+    "ingredients": [
+      {
+        "name": "ml Gin",
+        "quantity": {
+          "amount": 30.0,
+          "unit": "ml",
+          "original_text": "30",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Fresh Lemon Juice",
+        "quantity": {
+          "amount": 15.0,
+          "unit": "ml",
+          "original_text": "15",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Sugar Syrup",
+        "quantity": {
+          "amount": 15.0,
+          "unit": "ml",
+          "original_text": "15",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Champagne",
+        "quantity": {
+          "amount": 60.0,
+          "unit": "ml",
+          "original_text": "60",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Pour all the ingredients, except Champagne, into a shaker.\nShake well and strain into a Champagne flute.\nTop up with Champagne.\nStir gently.",
+    "garnish": "N/A",
+    "glass_type": "",
+    "views": 50136,
+    "url": "https://iba-world.com/french-75/"
+  },
+  "French Martini": {
+    "name": "French Martini",
+    "category": "Unknown",
+    "ingredients": [
+      {
+        "name": "ml Vodka",
+        "quantity": {
+          "amount": 45.0,
+          "unit": "ml",
+          "original_text": "45",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Raspberry Liqueur",
+        "quantity": {
+          "amount": 15.0,
+          "unit": "ml",
+          "original_text": "15",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Fresh Pineapple Juice",
+        "quantity": {
+          "amount": 15.0,
+          "unit": "ml",
+          "original_text": "15",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Pour all ingredients into cocktail shaker, shake well with ice, strain into chilled cocktail glass.",
+    "garnish": "Squeeze oil from lemon peel onto the drink.",
+    "glass_type": "",
+    "views": 39742,
+    "url": "https://iba-world.com/french-martini/"
+  },
+  "Gin Fizz": {
+    "name": "Gin Fizz",
+    "category": "Unknown",
+    "ingredients": [
+      {
+        "name": "ml Gin",
+        "quantity": {
+          "amount": 45.0,
+          "unit": "ml",
+          "original_text": "45",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Fresh Lemon Juice",
+        "quantity": {
+          "amount": 30.0,
+          "unit": "ml",
+          "original_text": "30",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Simple Syrup",
+        "quantity": {
+          "amount": 10.0,
+          "unit": "ml",
+          "original_text": "10",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "Splash of Soda Water",
+        "quantity": {
+          "amount": 0,
+          "unit": "unknown",
+          "original_text": "",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Shake all ingredients with ice except soda water.\nPour into thin tall Tumbler glass , top with a splash soda water.\nNOTE:\nServe without ice.",
+    "garnish": "Garnish with lemon slice, optional lemon zest.",
+    "glass_type": "",
+    "views": 91094,
+    "url": "https://iba-world.com/gin-fizz/"
+  },
+  "Grasshopper": {
+    "name": "Grasshopper",
+    "category": "Unknown",
+    "ingredients": [
+      {
+        "name": "ml Crème de Cacao (White)",
+        "quantity": {
+          "amount": 20.0,
+          "unit": "ml",
+          "original_text": "20",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Crème de Menthe (Green)",
+        "quantity": {
+          "amount": 20.0,
+          "unit": "ml",
+          "original_text": "20",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Fresh Cream",
+        "quantity": {
+          "amount": 20.0,
+          "unit": "ml",
+          "original_text": "20",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Pour all ingredients into shaker filled with ice.\nShake briskly for few seconds. Strain into chilled cocktail glass.",
+    "garnish": "N/A, optional mint leave.",
+    "glass_type": "",
+    "views": 44501,
+    "url": "https://iba-world.com/grasshopper/"
+  },
+  "Hemingway Special": {
+    "name": "Hemingway Special",
+    "category": "Unknown",
+    "ingredients": [
+      {
+        "name": "ml Rum",
+        "quantity": {
+          "amount": 60.0,
+          "unit": "ml",
+          "original_text": "60",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Grapefruit Juice",
+        "quantity": {
+          "amount": 40.0,
+          "unit": "ml",
+          "original_text": "40",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Maraschino Luxardo",
+        "quantity": {
+          "amount": 15.0,
+          "unit": "ml",
+          "original_text": "15",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Fresh Lime",
+        "quantity": {
+          "amount": 15.0,
+          "unit": "ml",
+          "original_text": "15",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Pour all ingredients into a shaker with ice.\nShake well and strain into a large cocktail glass.",
+    "garnish": "N/A",
+    "glass_type": "",
+    "views": 49329,
+    "url": "https://iba-world.com/hemingway-special/"
+  },
+  "Irish Coffee": {
+    "name": "Irish Coffee",
+    "category": "Unknown",
+    "ingredients": [
+      {
+        "name": "ml Irish Whiskey",
+        "quantity": {
+          "amount": 50.0,
+          "unit": "ml",
+          "original_text": "50",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Hot coffee",
+        "quantity": {
+          "amount": 120.0,
+          "unit": "ml",
+          "original_text": "120",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Fresh cream (Chilled)",
+        "quantity": {
+          "amount": 50.0,
+          "unit": "ml",
+          "original_text": "50",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "teaspoon Sugar",
+        "quantity": {
+          "amount": 1.0,
+          "unit": "ml",
+          "original_text": "1",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Warm black coffee is poured into a preheated Irish coffee glass.\nWhiskey and at least one teaspoon of sugar is added and stirred until dissolved.\nFresh thick chilled cream is carefully poured over the back of a spoon held just above the surface of the coffee.\nThe layer of cream will float on the coffee without mixing.\nPlain sugar can be replaced with sugar syrup",
+    "garnish": "N/A",
+    "glass_type": "",
+    "views": 44160,
+    "url": "https://iba-world.com/irish-coffee/"
+  },
+  "John Collins": {
+    "name": "John Collins",
+    "category": "Unknown",
+    "ingredients": [
+      {
+        "name": "ml Gin",
+        "quantity": {
+          "amount": 45.0,
+          "unit": "ml",
+          "original_text": "45",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Fresh Lemon Juice",
+        "quantity": {
+          "amount": 30.0,
+          "unit": "ml",
+          "original_text": "30",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Simple Syrup",
+        "quantity": {
+          "amount": 15.0,
+          "unit": "ml",
+          "original_text": "15",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml  Soda Water",
+        "quantity": {
+          "amount": 60.0,
+          "unit": "ml",
+          "original_text": "60",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Pour all ingredients directly into highball filled with ice. Stir gently.\nNOTE:\nUse ‘Old Tom’ Gin for Tom Collins.",
+    "garnish": "Garnish with lemon slice and maraschino cherry.",
+    "glass_type": "",
+    "views": 54706,
+    "url": "https://iba-world.com/john-collins/"
+  },
+  "Kir": {
+    "name": "Kir",
+    "category": "Unknown",
+    "ingredients": [
+      {
+        "name": "ml Dry White Wine",
+        "quantity": {
+          "amount": 90.0,
+          "unit": "ml",
+          "original_text": "90",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Crème de Cassis",
+        "quantity": {
+          "amount": 10.0,
+          "unit": "ml",
+          "original_text": "10",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Pour Crème de Cassis into glass, top up with white wine.\nNOTE:\nKir Royal – Use Champagne instead of white wine",
+    "garnish": "N/A",
+    "glass_type": "",
+    "views": 32442,
+    "url": "https://iba-world.com/kir/"
+  },
+  "Long Island Iced Tea": {
+    "name": "Long Island Iced Tea",
+    "category": "Unknown",
+    "ingredients": [
+      {
+        "name": "ml Vodka",
+        "quantity": {
+          "amount": 15.0,
+          "unit": "ml",
+          "original_text": "15",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Tequila",
+        "quantity": {
+          "amount": 15.0,
+          "unit": "ml",
+          "original_text": "15",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml White rum",
+        "quantity": {
+          "amount": 15.0,
+          "unit": "ml",
+          "original_text": "15",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Gin",
+        "quantity": {
+          "amount": 15.0,
+          "unit": "ml",
+          "original_text": "15",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Cointreau",
+        "quantity": {
+          "amount": 15.0,
+          "unit": "ml",
+          "original_text": "15",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Lemon juice",
+        "quantity": {
+          "amount": 25.0,
+          "unit": "ml",
+          "original_text": "25",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Simple syrup",
+        "quantity": {
+          "amount": 30.0,
+          "unit": "ml",
+          "original_text": "30",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "Top with Cola",
+        "quantity": {
+          "amount": 0,
+          "unit": "unknown",
+          "original_text": "",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Add all ingredients into highball glass filled with ice.\nStir gently.",
+    "garnish": "Garnish with lemon slice (Optional).",
+    "glass_type": "",
+    "views": 82516,
+    "url": "https://iba-world.com/long-island-iced-tea/"
+  },
+  "Mai-Tai": {
+    "name": "Mai-Tai",
+    "category": "Unknown",
+    "ingredients": [
+      {
+        "name": "ml Amber Jamaican Rum",
+        "quantity": {
+          "amount": 30.0,
+          "unit": "ml",
+          "original_text": "30",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Martinique Molasses Rhum*",
+        "quantity": {
+          "amount": 30.0,
+          "unit": "ml",
+          "original_text": "30",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Orange Curacao",
+        "quantity": {
+          "amount": 15.0,
+          "unit": "ml",
+          "original_text": "15",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Orgeat Syrup (Almond)",
+        "quantity": {
+          "amount": 15.0,
+          "unit": "ml",
+          "original_text": "15",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Fresh Squeezed Lime Juice",
+        "quantity": {
+          "amount": 30.0,
+          "unit": "ml",
+          "original_text": "30",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Simple Syrup",
+        "quantity": {
+          "amount": 7.5,
+          "unit": "ml",
+          "original_text": "7.5",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Add all ingredients into a shaker with ice.\nShake and pour into a double rocks glass or an highball glass.\n* The Martinique molasses rum used by Trader Vic was not an Agricole Rhum but a type of “rummy” from molasses.",
+    "garnish": "Garnish with pineapple spear, mint leaves and lime peel.",
+    "glass_type": "",
+    "views": 76098,
+    "url": "https://iba-world.com/mai-tai/"
+  },
+  "Manhattan": {
+    "name": "Manhattan",
+    "category": "Unknown",
+    "ingredients": [
+      {
+        "name": "ml Rye Whiskey",
+        "quantity": {
+          "amount": 50.0,
+          "unit": "ml",
+          "original_text": "50",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Sweet Red Vermouth",
+        "quantity": {
+          "amount": 20.0,
+          "unit": "ml",
+          "original_text": "20",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "dash Angostura Bitters",
+        "quantity": {
+          "amount": 1.0,
+          "unit": "ml",
+          "original_text": "1",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Pour all ingredients into mixing glass with ice cubes.\nStir well. Strain into chilled cocktail glass.",
+    "garnish": "Garnish with cocktail cherry.",
+    "glass_type": "",
+    "views": 94274,
+    "url": "https://iba-world.com/manhattan/"
+  },
+  "Margarita": {
+    "name": "Margarita",
+    "category": "Unknown",
+    "ingredients": [
+      {
+        "name": "ml Tequila 100% Agave",
+        "quantity": {
+          "amount": 50.0,
+          "unit": "ml",
+          "original_text": "50",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Triple Sec",
+        "quantity": {
+          "amount": 20.0,
+          "unit": "ml",
+          "original_text": "20",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Freshly Squeezed Lime Juice",
+        "quantity": {
+          "amount": 15.0,
+          "unit": "ml",
+          "original_text": "15",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Add all ingredients into a shaker with ice.\nShake and strain into a chilled cocktail glass.",
+    "garnish": "Half salt rim (Optional).",
+    "glass_type": "",
+    "views": 129649,
+    "url": "https://iba-world.com/margarita/"
+  },
+  "Martinez": {
+    "name": "Martinez",
+    "category": "Unknown",
+    "ingredients": [
+      {
+        "name": "ml London Dry Gin",
+        "quantity": {
+          "amount": 45.0,
+          "unit": "ml",
+          "original_text": "45",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Sweet Red Vermouth",
+        "quantity": {
+          "amount": 45.0,
+          "unit": "ml",
+          "original_text": "45",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "Bar Spoon Maraschino Luxardo",
+        "quantity": {
+          "amount": 1.0,
+          "unit": "ml",
+          "original_text": "1",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "Dashes Orange Bitters",
+        "quantity": {
+          "amount": 2.0,
+          "unit": "ml",
+          "original_text": "2",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Pour all ingredients into mixing glass with ice cubes.\nStir well. Strain into chilled cocktail glass.",
+    "garnish": "Lemon zest.",
+    "glass_type": "",
+    "views": 46293,
+    "url": "https://iba-world.com/martinez/"
+  },
+  "Mary Pickford": {
+    "name": "Mary Pickford",
+    "category": "Unknown",
+    "ingredients": [
+      {
+        "name": "ml White Rum",
+        "quantity": {
+          "amount": 45.0,
+          "unit": "ml",
+          "original_text": "45",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Fresh Pineapple Juice",
+        "quantity": {
+          "amount": 45.0,
+          "unit": "ml",
+          "original_text": "45",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Maraschino Luxardo",
+        "quantity": {
+          "amount": 7.5,
+          "unit": "ml",
+          "original_text": "7.5",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Grenadine Syrup",
+        "quantity": {
+          "amount": 5.0,
+          "unit": "ml",
+          "original_text": "5",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Pour all ingredients into cocktail shaker, shake well with ice, strain into chilled cocktail glass.",
+    "garnish": "N/A",
+    "glass_type": "",
+    "views": 35656,
+    "url": "https://iba-world.com/mary-pickford/"
+  },
+  "Mimosa": {
+    "name": "Mimosa",
+    "category": "Unknown",
+    "ingredients": [
+      {
+        "name": "ml Freshly Squeezed  Orange Juice",
+        "quantity": {
+          "amount": 75.0,
+          "unit": "ml",
+          "original_text": "75",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Prosecco",
+        "quantity": {
+          "amount": 75.0,
+          "unit": "ml",
+          "original_text": "75",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Pour orange juice into flute glass and gently pour the sparkling wine.\nStir gently.\nNOTE:\nAlso known as Buck’s Fizz.",
+    "garnish": "Garnish with orange twist (optional).",
+    "glass_type": "",
+    "views": 41285,
+    "url": "https://iba-world.com/mimosa/"
+  },
+  "Mint Julep": {
+    "name": "Mint Julep",
+    "category": "Unknown",
+    "ingredients": [
+      {
+        "name": "ml Bourbon Whiskey",
+        "quantity": {
+          "amount": 60.0,
+          "unit": "ml",
+          "original_text": "60",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "fresh Mint sprigs",
+        "quantity": {
+          "amount": 4.0,
+          "unit": "ml",
+          "original_text": "4",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "tsp Powdered Sugar",
+        "quantity": {
+          "amount": 1.0,
+          "unit": "ml",
+          "original_text": "1",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "tsp Water",
+        "quantity": {
+          "amount": 2.0,
+          "unit": "ml",
+          "original_text": "2",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "In Julep Stainless Steel Cup gently muddle the mint with sugar and water.\nFill the glass with cracked ice, add the Bourbon and stir well until the cup frosts.",
+    "garnish": "Garnish with a mint sprig.",
+    "glass_type": "",
+    "views": 32417,
+    "url": "https://iba-world.com/mint-julep/"
+  },
+  "Mojito": {
+    "name": "Mojito",
+    "category": "Unknown",
+    "ingredients": [
+      {
+        "name": "ml White Cuban Ron",
+        "quantity": {
+          "amount": 45.0,
+          "unit": "ml",
+          "original_text": "45",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml  Fresh Lime Juice",
+        "quantity": {
+          "amount": 20.0,
+          "unit": "ml",
+          "original_text": "20",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "pcs Mint Sprigs",
+        "quantity": {
+          "amount": 6.0,
+          "unit": "ml",
+          "original_text": "6",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "tsp White Cane Sugar",
+        "quantity": {
+          "amount": 2.0,
+          "unit": "ml",
+          "original_text": "2",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "Soda Water",
+        "quantity": {
+          "amount": 0,
+          "unit": "unknown",
+          "original_text": "",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Mix mint springs with sugar and lime juice.\nAdd splash of soda water and fill the glass with ice.\nPour the rum and top with soda water. Light stir to involve all ingredients.",
+    "garnish": "Garnish with sprigs of mint and slice of lime.",
+    "glass_type": "",
+    "views": 80518,
+    "url": "https://iba-world.com/mojito/"
+  },
+  "Moscow Mule": {
+    "name": "Moscow Mule",
+    "category": "Unknown",
+    "ingredients": [
+      {
+        "name": "ml Smirnoff Vodka",
+        "quantity": {
+          "amount": 45.0,
+          "unit": "ml",
+          "original_text": "45",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Ginger Beer",
+        "quantity": {
+          "amount": 120.0,
+          "unit": "ml",
+          "original_text": "120",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Fresh lime juice",
+        "quantity": {
+          "amount": 10.0,
+          "unit": "ml",
+          "original_text": "10",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "In an Mule Cup or rocks glass, combine the vodka and ginger beer.\nAdd lime juice and gently stir to involve all ingredients.",
+    "garnish": "Garnish with a lime slice.",
+    "glass_type": "",
+    "views": 66119,
+    "url": "https://iba-world.com/moscow-mule/"
+  },
+  "Negroni": {
+    "name": "Negroni",
+    "category": "Unknown",
+    "ingredients": [
+      {
+        "name": "ml Gin",
+        "quantity": {
+          "amount": 30.0,
+          "unit": "ml",
+          "original_text": "30",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Bitter Campari",
+        "quantity": {
+          "amount": 30.0,
+          "unit": "ml",
+          "original_text": "30",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Sweet Red Vermouth",
+        "quantity": {
+          "amount": 30.0,
+          "unit": "ml",
+          "original_text": "30",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Pour all ingredients directly into chilled old fashioned glass filled with ice.\nStir gently.",
+    "garnish": "Garnish with half orange slice.",
+    "glass_type": "",
+    "views": 70026,
+    "url": "https://iba-world.com/negroni/"
+  },
+  "New York Sour": {
+    "name": "New York Sour",
+    "category": "Unknown",
+    "ingredients": [
+      {
+        "name": "ml Rye Whiskey or Bourbon",
+        "quantity": {
+          "amount": 60.0,
+          "unit": "ml",
+          "original_text": "60",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Simple syrup",
+        "quantity": {
+          "amount": 22.5,
+          "unit": "ml",
+          "original_text": "22.5",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Fresh lemon juice",
+        "quantity": {
+          "amount": 30.0,
+          "unit": "ml",
+          "original_text": "30",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "Few Drops of Egg White",
+        "quantity": {
+          "amount": 0,
+          "unit": "unknown",
+          "original_text": "",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Red wine (Shiraz or Malbech)",
+        "quantity": {
+          "amount": 15.0,
+          "unit": "ml",
+          "original_text": "15",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Pour all ingredients into the shaker. Shake vigorously with ice.\nStrain into a chilled rocks glass filled with ice. Float the wine on top.",
+    "garnish": "Garnish with lemon or orange zest with cherry.",
+    "glass_type": "",
+    "views": 40885,
+    "url": "https://iba-world.com/new-york-sour/"
+  },
+  "Old Fashioned": {
+    "name": "Old Fashioned",
+    "category": "Unknown",
+    "ingredients": [
+      {
+        "name": "ml Bourbon or Rye Whiskey",
+        "quantity": {
+          "amount": 45.0,
+          "unit": "ml",
+          "original_text": "45",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "Sugar Cube",
+        "quantity": {
+          "amount": 1.0,
+          "unit": "ml",
+          "original_text": "1",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "Few Dashes Angostura Bitters",
+        "quantity": {
+          "amount": 0,
+          "unit": "unknown",
+          "original_text": "",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "Few Dashes Plain Water",
+        "quantity": {
+          "amount": 0,
+          "unit": "unknown",
+          "original_text": "",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Place sugar cube in old fashioned glass and saturate with bitter, add few dashes of plain water. Muddle until dissolved. Fill the glass with ice cubes and add whiskey.\nStir gently.",
+    "garnish": "Garnish with orange slice or zest, and a cocktail cherry.",
+    "glass_type": "",
+    "views": 79049,
+    "url": "https://iba-world.com/old-fashioned/"
+  },
+  "Paloma": {
+    "name": "Paloma",
+    "category": "Unknown",
+    "ingredients": [
+      {
+        "name": "ml 100% Agave Tequila",
+        "quantity": {
+          "amount": 50.0,
+          "unit": "ml",
+          "original_text": "50",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Fresh lime",
+        "quantity": {
+          "amount": 5.0,
+          "unit": "ml",
+          "original_text": "5",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "A pinch of Salt",
+        "quantity": {
+          "amount": 0,
+          "unit": "unknown",
+          "original_text": "",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Pink Grapefruit Soda",
+        "quantity": {
+          "amount": 100.0,
+          "unit": "ml",
+          "original_text": "100",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Poor the tequila into a highball glass, squeeze the lime juice.\nAdd ice and salt, fill up pink grapefruit soda.\nStir gently.",
+    "garnish": "Garnish with a slice of lime.",
+    "glass_type": "",
+    "views": 61870,
+    "url": "https://iba-world.com/paloma/"
+  },
+  "Paper Plane": {
+    "name": "Paper Plane",
+    "category": "Unknown",
+    "ingredients": [
+      {
+        "name": "ml Bourbon Whiskey",
+        "quantity": {
+          "amount": 30.0,
+          "unit": "ml",
+          "original_text": "30",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Amaro Nonino",
+        "quantity": {
+          "amount": 30.0,
+          "unit": "ml",
+          "original_text": "30",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Aperol",
+        "quantity": {
+          "amount": 30.0,
+          "unit": "ml",
+          "original_text": "30",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Fresh Lemon Juice",
+        "quantity": {
+          "amount": 30.0,
+          "unit": "ml",
+          "original_text": "30",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Pour all ingredients into cocktail shaker, shake well with ice, strain into chilled cocktail glass.",
+    "garnish": "N/A",
+    "glass_type": "",
+    "views": 55533,
+    "url": "https://iba-world.com/paper-plane/"
+  },
+  "Penicillin": {
+    "name": "Penicillin",
+    "category": "Unknown",
+    "ingredients": [
+      {
+        "name": "ml Blended scotch whisky",
+        "quantity": {
+          "amount": 60.0,
+          "unit": "ml",
+          "original_text": "60",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Lagavulin 16y",
+        "quantity": {
+          "amount": 7.5,
+          "unit": "ml",
+          "original_text": "7.5",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Fresh lemon juice",
+        "quantity": {
+          "amount": 22.5,
+          "unit": "ml",
+          "original_text": "22.5",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Honey syrup",
+        "quantity": {
+          "amount": 22.5,
+          "unit": "ml",
+          "original_text": "22.5",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "quarter size sliced fresh ginger",
+        "quantity": {
+          "amount": 0,
+          "unit": "unknown",
+          "original_text": "2-3 quarter",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Muddle fresh ginger in a shaker and add the remaining ingredients except for the Islay single malt whisky.\nFill the shaker with ice and shake.\nFine train into a chilled Old Fashioned glass with ice.\nFloat the single malt whisky on top.",
+    "garnish": "Garnish with candied ginger slices.",
+    "glass_type": "",
+    "views": 45529,
+    "url": "https://iba-world.com/penicillin/"
+  },
+  "Pina Colada": {
+    "name": "Pina Colada",
+    "category": "Unknown",
+    "ingredients": [
+      {
+        "name": "ml White Rum",
+        "quantity": {
+          "amount": 50.0,
+          "unit": "ml",
+          "original_text": "50",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Coconut Cream",
+        "quantity": {
+          "amount": 30.0,
+          "unit": "ml",
+          "original_text": "30",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Fresh Pineapple Juice",
+        "quantity": {
+          "amount": 50.0,
+          "unit": "ml",
+          "original_text": "50",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Blend all the ingredients with ice in a electric blender,\npour into a large glass and serve with straws.\nNote:\nHistorically a few drops of fresh lime juice was added to taste. 4 slices of fresh pineapple can be used instead of juice",
+    "garnish": "Garnish with a slice of pineapple with a cocktail cherry.",
+    "glass_type": "",
+    "views": 71215,
+    "url": "https://iba-world.com/pina-colada/"
+  },
+  "Pisco Sour": {
+    "name": "Pisco Sour",
+    "category": "Unknown",
+    "ingredients": [
+      {
+        "name": "ml Pisco",
+        "quantity": {
+          "amount": 60.0,
+          "unit": "ml",
+          "original_text": "60",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Fresh Lemon Juice",
+        "quantity": {
+          "amount": 30.0,
+          "unit": "ml",
+          "original_text": "30",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Simple Syrup",
+        "quantity": {
+          "amount": 20.0,
+          "unit": "ml",
+          "original_text": "20",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "Raw whole Egg White",
+        "quantity": {
+          "amount": 1.0,
+          "unit": "ml",
+          "original_text": "1",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Add all ingredients into a shaker with ice.\nShake and strain into a chilled goblet glass.",
+    "garnish": "Few dashes of Amargo bitters on top as an aromatic garnish.",
+    "glass_type": "",
+    "views": 32418,
+    "url": "https://iba-world.com/pisco-sour/"
+  },
+  "Planters Punch": {
+    "name": "Planters Punch",
+    "category": "Unknown",
+    "ingredients": [
+      {
+        "name": "ml Jamaican Rum",
+        "quantity": {
+          "amount": 45.0,
+          "unit": "ml",
+          "original_text": "45",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Lime Juice",
+        "quantity": {
+          "amount": 15.0,
+          "unit": "ml",
+          "original_text": "15",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Sugar Cane Juice",
+        "quantity": {
+          "amount": 30.0,
+          "unit": "ml",
+          "original_text": "30",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Pour all ingredients directly in a small tumbler or a typical terracotta glass.\nNOTE:\nAdd dilution up to taste, it can be given by water, ice or fresh juices.",
+    "garnish": "Garnish with orange zest.",
+    "glass_type": "",
+    "views": 35301,
+    "url": "https://iba-world.com/planters-punch/"
+  },
+  "Porto Flip": {
+    "name": "Porto Flip",
+    "category": "Unknown",
+    "ingredients": [
+      {
+        "name": "ml Brandy",
+        "quantity": {
+          "amount": 15.0,
+          "unit": "ml",
+          "original_text": "15",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Red Tawny Port Wine",
+        "quantity": {
+          "amount": 45.0,
+          "unit": "ml",
+          "original_text": "45",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Egg Yolk",
+        "quantity": {
+          "amount": 10.0,
+          "unit": "ml",
+          "original_text": "10",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Pour all ingredients into cocktail shaker, shake well with ice, strain into chilled cocktail glass.",
+    "garnish": "Sprinkle with fresh ground nutmeg.",
+    "glass_type": "",
+    "views": 37545,
+    "url": "https://iba-world.com/porto-flip/"
+  },
+  "Porn Star Martini": {
+    "name": "Porn Star Martini",
+    "category": "Unknown",
+    "ingredients": [
+      {
+        "name": "ml Vanilla Vodka",
+        "quantity": {
+          "amount": 50.0,
+          "unit": "ml",
+          "original_text": "50",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Passion Fruit Liqueur",
+        "quantity": {
+          "amount": 20.0,
+          "unit": "ml",
+          "original_text": "20",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Passion Fruit Puree",
+        "quantity": {
+          "amount": 50.0,
+          "unit": "ml",
+          "original_text": "50",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "Bar Spoons Vanilla Sugar",
+        "quantity": {
+          "amount": 2.0,
+          "unit": "ml",
+          "original_text": "2",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Champagne to serve on the side",
+        "quantity": {
+          "amount": 50.0,
+          "unit": "ml",
+          "original_text": "50",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Pour all ingredients into cocktail shaker, shake well with ice, double strain into a large chilled cocktail glass.\nAccompany with a shot of champagne.",
+    "garnish": "Garnish with passion fruit cup and sugar.",
+    "glass_type": "",
+    "views": 307732,
+    "url": "https://iba-world.com/porn-star-martini/"
+  },
+  "Rusty Nail": {
+    "name": "Rusty Nail",
+    "category": "Unknown",
+    "ingredients": [
+      {
+        "name": "ml Scotch Whisky",
+        "quantity": {
+          "amount": 45.0,
+          "unit": "ml",
+          "original_text": "45",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Drambuie",
+        "quantity": {
+          "amount": 25.0,
+          "unit": "ml",
+          "original_text": "25",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Pour all ingredients directly into an old fashioned glass filled with ice.\nStir gently.",
+    "garnish": "Garnish with lemon zest.",
+    "glass_type": "",
+    "views": 32545,
+    "url": "https://iba-world.com/rusty-nail/"
+  },
+  "Sazerac": {
+    "name": "Sazerac",
+    "category": "Unknown",
+    "ingredients": [
+      {
+        "name": "ml Cognac",
+        "quantity": {
+          "amount": 50.0,
+          "unit": "ml",
+          "original_text": "50",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Absinthe",
+        "quantity": {
+          "amount": 10.0,
+          "unit": "ml",
+          "original_text": "10",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "Sugar Cube",
+        "quantity": {
+          "amount": 1.0,
+          "unit": "ml",
+          "original_text": "1",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "Dashes Peychaud’s Bitters",
+        "quantity": {
+          "amount": 2.0,
+          "unit": "ml",
+          "original_text": "2",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Rinse a chilled old-fashioned glass with the absinthe, add crushed ice and set it aside. Stir the remaining ingredients over ice in a mixing glass.\nDiscard the ice and any excess absinthe from the prepared glass, strain the mixed drink into the glass.\nNOTE:\nThe original recipe changed after the American Civil War, Rye Whiskey substituted Cognac as it became hard to obtain.",
+    "garnish": "Garnish with lemon zest.",
+    "glass_type": "",
+    "views": 45500,
+    "url": "https://iba-world.com/sazerac/"
+  },
+  "Sea Breeze": {
+    "name": "Sea Breeze",
+    "category": "Unknown",
+    "ingredients": [
+      {
+        "name": "ml Vodka",
+        "quantity": {
+          "amount": 40.0,
+          "unit": "ml",
+          "original_text": "40",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Cranberry Juice",
+        "quantity": {
+          "amount": 120.0,
+          "unit": "ml",
+          "original_text": "120",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Grapefruit Juice",
+        "quantity": {
+          "amount": 30.0,
+          "unit": "ml",
+          "original_text": "30",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Build all ingredients in a highball glass filled with ice.",
+    "garnish": "Garnish with an orange zest and cherry.",
+    "glass_type": "",
+    "views": 32173,
+    "url": "https://iba-world.com/sea-breeze/"
+  },
+  "Sex on the Beach": {
+    "name": "Sex on the Beach",
+    "category": "Unknown",
+    "ingredients": [
+      {
+        "name": "ml Vodka",
+        "quantity": {
+          "amount": 40.0,
+          "unit": "ml",
+          "original_text": "40",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Peach Schnapps",
+        "quantity": {
+          "amount": 20.0,
+          "unit": "ml",
+          "original_text": "20",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Fresh Orange Juice",
+        "quantity": {
+          "amount": 40.0,
+          "unit": "ml",
+          "original_text": "40",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Cranberry Juice",
+        "quantity": {
+          "amount": 40.0,
+          "unit": "ml",
+          "original_text": "40",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Build all ingredients in a highball glass filled with ice.",
+    "garnish": "Garnish with half orange slice.",
+    "glass_type": "",
+    "views": 193619,
+    "url": "https://iba-world.com/sex-on-the-beach/"
+  },
+  "Sidecar": {
+    "name": "Sidecar",
+    "category": "Unknown",
+    "ingredients": [
+      {
+        "name": "ml Cognac",
+        "quantity": {
+          "amount": 50.0,
+          "unit": "ml",
+          "original_text": "50",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Triple Sec",
+        "quantity": {
+          "amount": 20.0,
+          "unit": "ml",
+          "original_text": "20",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Fresh Lemon Juice",
+        "quantity": {
+          "amount": 20.0,
+          "unit": "ml",
+          "original_text": "20",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Pour all ingredients into cocktail shaker, shake well with ice, strain into chilled cocktail glass.",
+    "garnish": "N/A",
+    "glass_type": "",
+    "views": 53163,
+    "url": "https://iba-world.com/sidecar/"
+  },
+  "Singapore Sling": {
+    "name": "Singapore Sling",
+    "category": "Unknown",
+    "ingredients": [
+      {
+        "name": "ml Gin",
+        "quantity": {
+          "amount": 30.0,
+          "unit": "ml",
+          "original_text": "30",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Cherry Sangue Morlacco",
+        "quantity": {
+          "amount": 15.0,
+          "unit": "ml",
+          "original_text": "15",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Cointreau",
+        "quantity": {
+          "amount": 7.5,
+          "unit": "ml",
+          "original_text": "7.5",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml DOM Bénédictine",
+        "quantity": {
+          "amount": 7.5,
+          "unit": "ml",
+          "original_text": "7.5",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Fresh Pineapple Juice",
+        "quantity": {
+          "amount": 120.0,
+          "unit": "ml",
+          "original_text": "120",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Fresh Lime Juice",
+        "quantity": {
+          "amount": 15.0,
+          "unit": "ml",
+          "original_text": "15",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Grenadine Syrup",
+        "quantity": {
+          "amount": 10.0,
+          "unit": "ml",
+          "original_text": "10",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "A dash of Angostura bitters",
+        "quantity": {
+          "amount": 0,
+          "unit": "unknown",
+          "original_text": "",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Pour all ingredients into cocktail shaker filled with ice cubes.\nShake well.\nStrain into Hurricane glass.",
+    "garnish": "Garnish with pineapple and maraschino cherry.",
+    "glass_type": "",
+    "views": 38855,
+    "url": "https://iba-world.com/singapore-sling/"
+  },
+  "Spritz": {
+    "name": "Spritz",
+    "category": "Unknown",
+    "ingredients": [
+      {
+        "name": "ml Prosecco",
+        "quantity": {
+          "amount": 90.0,
+          "unit": "ml",
+          "original_text": "90",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Aperol",
+        "quantity": {
+          "amount": 60.0,
+          "unit": "ml",
+          "original_text": "60",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "Splash of Soda water",
+        "quantity": {
+          "amount": 0,
+          "unit": "unknown",
+          "original_text": "",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Build all ingredients into a wine glass filled with ice.\nStir gently.\nNOTE:\nThere are other versions of the Spritz that use Campari, Cynar or Select instead of Aperol.",
+    "garnish": "Garnish with a slice of orange.",
+    "glass_type": "",
+    "views": 58539,
+    "url": "https://iba-world.com/spritz/"
+  },
+  "Stinger": {
+    "name": "Stinger",
+    "category": "Unknown",
+    "ingredients": [
+      {
+        "name": "ml Cognac",
+        "quantity": {
+          "amount": 50.0,
+          "unit": "ml",
+          "original_text": "50",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml White Crème de Menthe",
+        "quantity": {
+          "amount": 20.0,
+          "unit": "ml",
+          "original_text": "20",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Pour all ingredients into mixing glass with ice cubes. Stir well.\nStrain into chilled martini cocktail glass.",
+    "garnish": "Optional mint leave.",
+    "glass_type": "",
+    "views": 32175,
+    "url": "https://iba-world.com/stinger/"
+  },
+  "Tequila Sunrise": {
+    "name": "Tequila Sunrise",
+    "category": "Unknown",
+    "ingredients": [
+      {
+        "name": "ml Tequila",
+        "quantity": {
+          "amount": 45.0,
+          "unit": "ml",
+          "original_text": "45",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Fresh Orange Juice",
+        "quantity": {
+          "amount": 90.0,
+          "unit": "ml",
+          "original_text": "90",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Grenadine Syrup",
+        "quantity": {
+          "amount": 15.0,
+          "unit": "ml",
+          "original_text": "15",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Pour tequila and orange juice directly into highball glass filled with ice cubes.\nAdd the grenadine syrup to create chromatic effect (sunrise), do not stir.",
+    "garnish": "Garnish with half orange slice or an orange zest.",
+    "glass_type": "",
+    "views": 49466,
+    "url": "https://iba-world.com/tequila-sunrise/"
+  },
+  "Trinidad Sour": {
+    "name": "Trinidad Sour",
+    "category": "Unknown",
+    "ingredients": [
+      {
+        "name": "ml Angostura Bitters",
+        "quantity": {
+          "amount": 45.0,
+          "unit": "ml",
+          "original_text": "45",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Orgeat Syrup",
+        "quantity": {
+          "amount": 30.0,
+          "unit": "ml",
+          "original_text": "30",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Fresh Lemon Juice",
+        "quantity": {
+          "amount": 22.5,
+          "unit": "ml",
+          "original_text": "22.5",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Rye Whiskey",
+        "quantity": {
+          "amount": 15.0,
+          "unit": "ml",
+          "original_text": "15",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Pour all ingredients into a cocktail shaker, shake well with ice.\nStrain into chilled cocktail glass.",
+    "garnish": "N/A",
+    "glass_type": "",
+    "views": 31949,
+    "url": "https://iba-world.com/trinidad-sour/"
+  },
+  "Vesper": {
+    "name": "Vesper",
+    "category": "Unknown",
+    "ingredients": [
+      {
+        "name": "ml Gin",
+        "quantity": {
+          "amount": 45.0,
+          "unit": "ml",
+          "original_text": "45",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Vodka",
+        "quantity": {
+          "amount": 15.0,
+          "unit": "ml",
+          "original_text": "15",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Lillet Blanc",
+        "quantity": {
+          "amount": 7.5,
+          "unit": "ml",
+          "original_text": "7.5",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Pour all ingredients into cocktail shaker filled with ice cubes.\nShake and strain into a chilled cocktail glass.",
+    "garnish": "Garnish with lemon zest.",
+    "glass_type": "",
+    "views": 45598,
+    "url": "https://iba-world.com/vesper/"
+  },
+  "Whiskey Sour": {
+    "name": "Whiskey Sour",
+    "category": "Unknown",
+    "ingredients": [
+      {
+        "name": "ml Bourbon Whiskey",
+        "quantity": {
+          "amount": 45.0,
+          "unit": "ml",
+          "original_text": "45",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Fresh Lemon Juice",
+        "quantity": {
+          "amount": 25.0,
+          "unit": "ml",
+          "original_text": "25",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Sugar Syrup",
+        "quantity": {
+          "amount": 20.0,
+          "unit": "ml",
+          "original_text": "20",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "Few Drops of Egg White (Optional)",
+        "quantity": {
+          "amount": 0,
+          "unit": "unknown",
+          "original_text": "",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Pour all ingredients into cocktail shaker filled with ice. Shake well.\nStrain into cobbler glass. If served “On the rocks”, strain ingredients\ninto old fashioned glass filled with ice.\nNOTE:\nIf egg white is used shake little harder to release and incorporate the foam from the egg white.",
+    "garnish": "Garnish with half orange slice and maraschino cherry, optionally use orange zest.",
+    "glass_type": "",
+    "views": 71734,
+    "url": "https://iba-world.com/whiskey-sour/"
+  },
+  "White Lady": {
+    "name": "White Lady",
+    "category": "Unknown",
+    "ingredients": [
+      {
+        "name": "ml Gin",
+        "quantity": {
+          "amount": 40.0,
+          "unit": "ml",
+          "original_text": "40",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Triple Sec",
+        "quantity": {
+          "amount": 30.0,
+          "unit": "ml",
+          "original_text": "30",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Fresh Lemon Juice",
+        "quantity": {
+          "amount": 20.0,
+          "unit": "ml",
+          "original_text": "20",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Pour all ingredients into cocktail shaker, shake well with ice, strain into chilled cocktail glass.",
+    "garnish": "N/A",
+    "glass_type": "",
+    "views": 53265,
+    "url": "https://iba-world.com/white-lady/"
+  },
+  "Zombie": {
+    "name": "Zombie",
+    "category": "Unknown",
+    "ingredients": [
+      {
+        "name": "ml Jamaican dark rum",
+        "quantity": {
+          "amount": 45.0,
+          "unit": "ml",
+          "original_text": "45",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Gold Puerto Rican rum",
+        "quantity": {
+          "amount": 45.0,
+          "unit": "ml",
+          "original_text": "45",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Demerara Rum",
+        "quantity": {
+          "amount": 30.0,
+          "unit": "ml",
+          "original_text": "30",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Fresh lime juice",
+        "quantity": {
+          "amount": 20.0,
+          "unit": "ml",
+          "original_text": "20",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Falernum",
+        "quantity": {
+          "amount": 15.0,
+          "unit": "ml",
+          "original_text": "15",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "ml Donn’s Mix*",
+        "quantity": {
+          "amount": 15.0,
+          "unit": "ml",
+          "original_text": "15",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "tsp Grenadine syrup",
+        "quantity": {
+          "amount": 1.0,
+          "unit": "ml",
+          "original_text": "1",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "dash Angostura bitters",
+        "quantity": {
+          "amount": 1.0,
+          "unit": "ml",
+          "original_text": "1",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      },
+      {
+        "name": "drops Pernod",
+        "quantity": {
+          "amount": 6.0,
+          "unit": "ml",
+          "original_text": "6",
+          "is_range": false,
+          "min_amount": null,
+          "max_amount": null
+        },
+        "category": "unknown"
+      }
+    ],
+    "method": "Add all ingredients into an electric blender with 170 grams of cracked ice.\nWith pulse bottom blend for a few seconds. Serve in a tall tumbler glass.\nNote:\n*Donn’s Mix: 2 parts of fresh yellow grapefruit and 1 part of cinnamon syrup",
+    "garnish": "Garnish with mint leaves.",
+    "glass_type": "",
+    "views": 46249,
+    "url": "https://iba-world.com/zombie/"
+  }
+}
